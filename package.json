@@ -1,0 +1,37 @@
+{
+	"name": "larana-js",
+	"version": "0.0.2",
+	"description": "Real SSR framework",
+	"main": "index.js",
+	"scripts": {
+		"test": "vitest run",
+		"format": "prettier --write src/"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/laranatech/larana-js.git"
+	},
+	"keywords": [
+		"js",
+		"framework",
+		"ssr",
+		"larana",
+		"larana-js",
+		"laranatech"
+	],
+	"author": "Evgenii Kucheriavyi",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/laranatech/larana-js/issues"
+	},
+	"homepage": "https://github.com/laranatech/larana-js#readme",
+	"devDependencies": {
+		"prettier": "^3.3.3",
+		"vitest": "^2.0.5"
+	},
+	"dependencies": {
+		"@laranatech/schemer": "^1.0.6",
+		"canvas": "^2.11.2",
+		"ws": "^8.18.0"
+	}
+}
