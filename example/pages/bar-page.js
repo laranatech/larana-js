@@ -36,7 +36,7 @@ class BarPage extends Page {
 	prepareRoot() {
 		return new LayoutComponent({
 			style: new Style({
-				...styles.get('body'),
+				...styles.get('body').json(),
 				gap: 8,
 				direction: 'column',
 			}),

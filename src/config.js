@@ -34,8 +34,8 @@ const configSchemer = new Schemer({
 
 const defaultConfig = {
 	debug: false,
-	port: 3000,
-	wsPath: '',
+	port: 1610,
+	wsPath: 'ws://localhost:1610/',
 	maxFPS: 30,
 	maxBandwidth: 10 * 1024,
 	sessionLifetime: 5 * (60 * 1000),

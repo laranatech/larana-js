@@ -1,8 +1,10 @@
 class BaseRenderer {
 	debug = false
+	trimOffset = 10
 
-	constructor({ debug }) {
+	constructor({ debug, trimOffset = 10 }) {
 		this.debug = debug
+		this.trimOffset = trimOffset
 	}
 
 	get clientCode() {
@@ -26,6 +28,10 @@ class BaseRenderer {
 	}
 
 	diff(a, b) {
+		throw new Error('not implemented')
+	}
+
+	trim(canvas) {
 		throw new Error('not implemented')
 	}
 }

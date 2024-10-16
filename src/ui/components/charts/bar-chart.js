@@ -58,14 +58,12 @@ class BarChartComponent extends BaseComponent {
 					}),
 					children: [
 						new LayoutComponent({
-							style: new Style({
-								size: 10 - s,
-							}),
+							style: new Style({ size: 10 - s }),
 						}),
 						new LayoutComponent({
 							style: new Style({
 								size: s,
-								bg: this.getStyle().bg,
+								bg: item.color ?? this.getStyle().bg,
 							}),
 							children: [
 								new TextComponent({
@@ -84,7 +82,6 @@ class BarChartComponent extends BaseComponent {
 		})
 
 		root.render(queue, state)
-	
 
 		return queue
 	}

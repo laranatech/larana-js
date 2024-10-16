@@ -1,11 +1,14 @@
-const { Page, LayoutComponent, TextComponent } = require('larana-js')
+const { Page, LayoutComponent, TextComponent, Style } = require('larana-js')
 
 const { styles } = require('../styles')
 
 class NotFoundPage extends Page {
-	init() {
-		this.root = new LayoutComponent({
-			style: styles.get('body'),
+	prepareRoot({ w, h }) {
+		return new LayoutComponent({
+			style: new Style({
+				...styles.get('body').json(),
+				direction: w > 1028 ? 'row' : 'column',
+			}),
 			children: [
 				new TextComponent({
 					text: '404',

@@ -29,6 +29,39 @@ class ServerRenderer extends BaseRenderer {
 		return canvas
 	}
 
+	arc(canvas, options) {
+		const ctx = canvas.getContext('2d')
+
+		const {
+			x,
+			y,
+			radius,
+			startAngle = 0,
+			endAngle = Math.PI*2,
+			strokeStyle,
+			lineWidth = 1,
+			fillStyle,
+		} = options
+
+
+		ctx.lineWidth = lineWidth
+
+		ctx.beginPath()
+
+		ctx.arc(x, y, radius, startAngle, endAngle)
+
+		if (strokeStyle) {
+			ctx.strokeStyle = strokeStyle
+			ctx.stroke()
+		}
+		if (fillStyle) {
+			ctx.fillStyle = fillStyle
+			ctx.fill()
+		}
+
+		return canvas
+	}
+
 	image(canvas, options) {
 		const ctx = canvas.getContext('2d')
 
@@ -190,6 +223,26 @@ class ServerRenderer extends BaseRenderer {
 			if (x < firstX) {
 				firstX = x
 			}
+		}
+
+		firstX -= this.trimOffset
+		if (firstX < 0) {
+			firstX = 0
+		}
+
+		firstY -= this.trimOffset
+		if (firstY < 0) {
+			firstY = 0
+		}
+
+		lastX += this.trimOffset
+		if (lastX > w) {
+			lastX = w
+		}
+
+		lastY += this.trimOffset
+		if (lastY > h) {
+			lastY = h
 		}
 
 		const newW = Math.abs(lastX - firstX)

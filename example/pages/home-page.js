@@ -7,10 +7,16 @@ const {
 } = require('larana-js')
 
 const { styles } = require('../styles')
-const { HeaderComponent } = require('../components')
+const { HeaderComponent, CircleComponent } = require('../components')
 
 class HomePage extends Page {
 	title = 'Home'
+
+	init() {
+		this.state = {
+			radius: 2,
+		}
+	}
 
 	prepareRoot({ w, h }) {
 		return new LayoutComponent({
@@ -27,6 +33,13 @@ class HomePage extends Page {
 					style: new Style({ size: 9 }),
 					children: [
 						new TextComponent({ text: 'Home' }),
+						new CircleComponent({
+							style: new Style({ size: 1 }),
+							radius: this.state.radius,
+							onAnimate: (radius) => {
+								this.setState({ radius })
+							},
+						}),
 					],
 				}),
 			],

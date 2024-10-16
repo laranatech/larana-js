@@ -13,4 +13,3 @@ module.exports = {
 		{ path: '404', name: 'not-found', page: NotFoundPage },
 	],
 }
-

@@ -3,11 +3,10 @@ const { createServer } = require('http')
 const { MemoryStateManager } = require('./state')
 const { ServerRenderer } = require('./ui/rendering')
 const { defaultConfig } = require('./config.js')
+const { Response, Request } = require('./network')
 
 class LaranaApp {
-	config = {
-		...defaultConfig,
-	}
+	config = { ...defaultConfig }
 	router = null
 	renderer = new ServerRenderer({ debug: false })
 	stateManager = new MemoryStateManager()
@@ -79,11 +78,8 @@ class LaranaApp {
 			}
 		})
 
-		const session = this.stateManager.addSession(sessionId, {
-			page,
-			lang: 'en',
-			url: req.url,
-		})
+		const session = { page, lang: 'en', url: req.url, theme: 'main' }
+		this.stateManager.addSession(sessionId, session)
 
 		const w = 512
 		const h = 512
@@ -118,12 +114,8 @@ class LaranaApp {
 		this.onConnect({ ws })
 
 		const send = (image, x, y) => {
-			ws.send(JSON.stringify({
-				x,
-				y,
-				image: image.toDataURL(),
-				ts: Date.now(),
-			}))
+			const r = new Response({ image: image.toDataURL(), x, y })
+			ws.send(r.jsonString())
 		}
 
 		const onOpen = (payload, session) => {
