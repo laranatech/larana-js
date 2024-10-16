@@ -8,7 +8,7 @@ npm install larana-js
 
 ## Quickstart
 
-Docs will be added ASAP. For now you can [ee example](https://github.com/laranatech/larana-js/examplex)
+Docs will be added ASAP. For now you can [see example](https://github.com/laranatech/larana-js/tree/main/example)
 
 ## Credits
 
