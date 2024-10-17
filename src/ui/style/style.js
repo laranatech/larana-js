@@ -38,6 +38,26 @@ const textScheme = {
 			]),
 		],
 	},
+	minWidth: {
+		...common.positiveInt,
+		required: false,
+		nullable: true,
+	},
+	maxWidth: {
+		...common.positiveInt,
+		required: false,
+		nullable: true,
+	},
+	minHeight: {
+		...common.positiveInt,
+		required: false,
+		nullable: true,
+	},
+	maxHeight: {
+		...common.positiveInt,
+		required: false,
+		nullable: true,
+	},
 }
 
 const borderScheme = {
@@ -95,6 +115,10 @@ class Style {
 	alignment = 'start'
 	direction = 'row'
 	size = 1
+	minWidth = null
+	maxWidth = null
+	minHeight = null
+	maxHeight = null
 	fg = null
 	bg = null
 	padding = 0
@@ -118,6 +142,10 @@ class Style {
 			alignment,
 			direction,
 			size,
+			minWidth,
+			maxWidth,
+			minHeight,
+			maxHeight,
 			fg,
 			bg,
 			padding,
@@ -136,6 +164,19 @@ class Style {
 		if (size !== undefined) {
 			this.size = size
 		}
+		if (minWidth !== undefined) {
+			this.minWidth = minWidth
+		}
+		if (maxWidth !== undefined) {
+			this.maxWidth = maxWidth
+		}
+		if (minHeight !== undefined) {
+			this.minHeight = minHeight
+		}
+		if (maxHeight !== undefined) {
+			this.maxHeight = maxHeight
+		}
+
 		if (gap !== undefined) {
 			this.gap = gap
 		}
@@ -192,6 +233,10 @@ class Style {
 	json() {
 		return {
 			size: this.size ?? undefined,
+			minWidth: this.minWidth ?? undefined,
+			maxWidth: this.maxWidth ?? undefined,
+			minHeight: this.minHeight ?? undefined,
+			maxHeight: this.maxHeight ?? undefined,
 			alignment: this.alignment ?? undefined,
 			direction: this.direction ?? undefined,
 			fg: this.fg ?? undefined,

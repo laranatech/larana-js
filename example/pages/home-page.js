@@ -27,7 +27,7 @@ class HomePage extends Page {
 			}),
 			children: [
 				new HeaderComponent({
-					style: new Style({ size: 1 }),
+					style: new Style({ size: 1, minHeight: 80, maxHeight: 100 }),
 				}),
 				new LayoutComponent({
 					style: new Style({ size: 9 }),

@@ -134,6 +134,24 @@ class BaseComponent {
 			d.h = (this.getStyle().size / totalSize) * (workingDimensions.h - totalGap)
 		}
 
+		const { minWidth, maxWidth, minHeight, maxHeight } = this.getStyle()
+
+		if (minWidth && minWidth > d.w) {
+			d.w = minWidth
+		}
+
+		if (maxWidth && maxWidth < d.w) {
+			d.w = maxWidth
+		}
+
+		if (minHeight && minHeight > d.h) {
+			d.h = minHeight
+		}
+
+		if (maxHeight && maxHeight < d.h) {
+			d.h = maxHeight
+		}
+
 		state.dimensions.set(this.id, d)
 
 		return d

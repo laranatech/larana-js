@@ -1,3 +1,8 @@
+# 0.0.4
+
+- **feat:** added route info to pages
+- **feat:** added `minWidth`, `maxWidth`, `minHeight`, `maxHeight`
+
 # 0.0.3
 
 - **feat:** default port changed to `1610`
