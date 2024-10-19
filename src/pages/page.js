@@ -22,7 +22,8 @@ class Page {
 
 	title = ''
 	meta = ''
-	scripts = ''
+	scripts = '123'
+	styles = ''
 
 	rerenderTimeout = null
 
@@ -42,8 +43,11 @@ class Page {
 		this.init()
 	}
 
-	setState(newState, needsRerender = true) {
+	setState(newState, options = { needsRerender: true }) {
 		this.state = { ...this.state, ...newState }
+
+		const { needsRerender } = options
+
 		if (needsRerender) {
 			this.rerender()
 		}
@@ -53,16 +57,20 @@ class Page {
 		return Object.freeze(structuredClone(this.state))
 	}
 
-	getTitle() {
+	prepareTitle() {
 		return this.title
 	}
 
-	getMeta() {
+	prepareMeta() {
 		return this.meta
 	}
 
-	getScripts() {
+	prepareScripts() {
 		return this.scripts
+	}
+
+	prepareStyles() {
+		return this.styles
 	}
 
 	send() {}

@@ -94,6 +94,10 @@ class RenderQueue {
 			options,
 		})
 	}
+
+	json() {
+		return this.commands
+	}
 }
 
 module.exports = { RenderQueue }

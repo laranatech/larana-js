@@ -42,9 +42,7 @@ class BaseComponent {
 
 		this.focusable = focusable
 
-		this.events = [
-			...events.map((e) => e(this)),
-		]
+		this.events = events.map((e) => e(this))
 
 		if (page !== undefined) {
 			this.page = page
@@ -195,7 +193,7 @@ class BaseComponent {
 		}
 
 		this.activeEvents.forEach((e) => {
-			console.log(e, this.eventStyles.get(e).json())
+			// console.log(e, this.eventStyles.get(e).json())
 			styles = {
 				...styles,
 				...this.eventStyles.get(e).json(),

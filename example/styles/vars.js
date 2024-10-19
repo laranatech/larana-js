@@ -6,7 +6,7 @@ const initStyleVars = () => {
 		bg: hex('#eee'),
 		accent: hex('#3caa3c'),
 		componentBg: hex('#fff'),
-		fontWeight: 500,
+		fontWeight: 'medium',
 		fontFamily: 'monospace',
 		h1FontSize: 32,
 		h2FontSize: 28,

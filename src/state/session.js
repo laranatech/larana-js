@@ -1,23 +1,24 @@
 class Session {
 	sessionId = ''
-	userId = ''
-	page = ''
 	lastUpdate = 0
+	page = null
 	state = {}
 
-	constructor({ sessionId, userId, page, state }) {
+	constructor({ sessionId, page, state }) {
 		this.sessionId = sessionId
-		this.userId = userId
 		this.page = page
 		this.state = state
 
 		this.lastUpdate = Date.now()
 	}
 
+	update() {
+		this.lastUpdate = Date.now()
+	}
+
 	json() {
 		return {
 			sessionId: this.sessionId,
-			userId: this.userId,
 			page: this.page,
 			state: this.state,
 		}

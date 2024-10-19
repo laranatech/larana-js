@@ -1,7 +1,14 @@
 const { Schemer, rules, common } = require('@laranatech/schemer')
 
 const responseSchemer = new Schemer({
-	image: 'string',
+	image: {
+		type: 'string',
+		required: false,
+	},
+	queue: {
+		type: 'any',
+		required: false,
+	},
 	x: common.positiveNumber,
 	y: common.positiveNumber,
 	w: {
@@ -16,6 +23,7 @@ const responseSchemer = new Schemer({
 
 class Response {
 	image = ''
+	queue = []
 	x = 0
 	y = 0
 	w = 0
@@ -25,9 +33,10 @@ class Response {
 	constructor(data) {
 		responseSchemer.validate(data)
 
-		const { image, x, y, w = 0, h = 0 } = data
+		const { image = '', queue = [], x, y, w = 0, h = 0 } = data
 
 		this.image = image
+		this.queue = queue
 		this.x = x
 		this.y = y
 		this.w = w
@@ -38,6 +47,7 @@ class Response {
 	json() {
 		return {
 			image: this.image,
+			queue: this.queue,
 			x: this.x,
 			y: this.y,
 			w: this.w,

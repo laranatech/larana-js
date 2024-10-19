@@ -1,4 +1,10 @@
-const { MemoryStateManager, ServerRenderer, LaranaApp, DefaultRouter } = require('larana-js')
+const {
+	MemoryStateManager,
+	ServerRenderer,
+	ClientRenderer,
+	LaranaApp,
+	DefaultRouter
+} = require('larana-js')
 
 const config = require('./config.js')
 
@@ -14,7 +20,7 @@ const router = new DefaultRouter({
 	routes,
 })
 
-const renderer = new ServerRenderer({
+const renderer = new ClientRenderer({
 	debug: config.debug,
 	DRM: false,
 	maxFPS: config.maxFPS,

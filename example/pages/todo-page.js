@@ -25,9 +25,7 @@ class TodoPage extends Page {
 				direction: 'column',
 			}),
 			children: [
-				new HeaderComponent({
-					style: new Style({ size: 1 }),
-				}),
+				new HeaderComponent({}),
 				new LayoutComponent({
 					style: new Style({ size: 9 }),
 					children: [

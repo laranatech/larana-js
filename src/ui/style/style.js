@@ -1,12 +1,29 @@
 const { Schemer, rules, common } = require('@laranatech/schemer')
 
+const fontWeights = {
+	'100': 'thin',
+	'200': 'extra light',
+	'300': 'light',
+	'400': 'regular',
+	'500': 'medium',
+	'600': 'semi-bold',
+	'700': 'bold',
+	'800': 'extra bold',
+	'900': 'black',
+	'950': 'extra black',
+}
+
 
 const textScheme = {
 	fg: 'any',
 	fontWeight: {
-		type: 'int',
+		type: 'string',
 		rules: [
-			rules.allowlist([100, 200, 300, 400, 500, 600, 700, 800, 900]),
+			rules.allowlist([
+				...Object.keys(fontWeights),
+				...Object.keys(fontWeights).map((k) => String(k)),
+				...Object.values(fontWeights),
+			]),
 		],
 	},
 	fontFamily: {
@@ -126,7 +143,7 @@ class Style {
 	radius = 0
 
 	fontSize = 16
-	fontWeight = 400
+	fontWeight = '400'
 	fontFamily = 'monospace'
 	textAlign = 'center'
 	textBaseline = 'middle'
@@ -227,7 +244,8 @@ class Style {
 	}
 
 	get font() {
-		return `${this.fontSize}px ${this.fontWeight} ${this.fontFamily}`
+		const fw = fontWeights[this.fontWeight] ?? this.fontWeight
+		return `${this.fontSize}px ${fw} ${this.fontFamily}`
 	}
 
 	json() {

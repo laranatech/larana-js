@@ -11,19 +11,7 @@ class BaseRenderer {
 		return ''
 	}
 
-	rect(canvas, { rect, color, border = null, radius = 0 }) {
-		throw new Error('not implemented')
-	}
-
-	text(canvas, { rect, color, text, size }) {
-		throw new Error('not implemented')
-	}
-
-	circle(canvas, { x, y, r, color, border = null }) {
-		throw new Error('not implemented')
-	}
-
-	image(canvas, { rect, image }) {
+	render(queue, { w, h }, initialCanvas = null) {
 		throw new Error('not implemented')
 	}
 

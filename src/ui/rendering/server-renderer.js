@@ -3,9 +3,10 @@ const path = require('path')
 const { createCanvas, ImageData } = require('canvas')
 
 const { BaseRenderer } = require('./base-renderer.js')
+const { CanvasRenderer } = require('./canvas-renderer.js')
 
 const readStaticCode = () => {
-	const clientPath = path.join(__dirname, 'static', 'server-renderer-static.html')
+	const clientPath = path.join(__dirname, 'static', 'server-renderer-client.js')
 	return fs.readFileSync(clientPath, 'utf-8')
 }
 
@@ -19,122 +20,9 @@ class ServerRenderer extends BaseRenderer {
 		return clientCode
 	}
 
-	render(queue, { w, h }) {
-		let canvas = createCanvas(w, h)
-
-		queue.commands.forEach(({command, options}) => {
-			canvas = this[command](canvas, options)
-		})
-
-		return canvas
-	}
-
-	arc(canvas, options) {
-		const ctx = canvas.getContext('2d')
-
-		const {
-			x,
-			y,
-			radius,
-			startAngle = 0,
-			endAngle = Math.PI*2,
-			strokeStyle,
-			lineWidth = 1,
-			fillStyle,
-		} = options
-
-
-		ctx.lineWidth = lineWidth
-
-		ctx.beginPath()
-
-		ctx.arc(x, y, radius, startAngle, endAngle)
-
-		if (strokeStyle) {
-			ctx.strokeStyle = strokeStyle
-			ctx.stroke()
-		}
-		if (fillStyle) {
-			ctx.fillStyle = fillStyle
-			ctx.fill()
-		}
-
-		return canvas
-	}
-
-	image(canvas, options) {
-		const ctx = canvas.getContext('2d')
-
-		const { x, y, w, h, data } = options
-
-		ctx.drawImage(data, x, y, w, h)
-
-		return canvas
-	}
-
-	text(canvas, options) {
-		const ctx = canvas.getContext('2d')
-
-		const {
-			text,
-			x,
-			y,
-			font,
-			fg,
-			align,
-			baseline,
-			maxWidth,
-		} = options
-
-		// console.log(options)
-
-		if (font) {
-			ctx.font = font
-		}
-
-		if (fg) {
-			ctx.fillStyle = fg
-		}
-
-		if (align) {
-			ctx.textAlign = align
-			ctx.textAlign = ''
-		}
-		
-		if (baseline) {
-			ctx.textBaseline = baseline
-		}
-
-		ctx.fillText(text, x, y, maxWidth)
-		
-		return canvas
-	}
-
-	rect(canvas, options) {
-		const ctx = canvas.getContext('2d')
-
-		const {
-			x,
-			y,
-			w,
-			h,
-			strokeStyle,
-			fillStyle,
-			maxWidth,
-		} = options
-
-		// console.log(options)
-
-		if (fillStyle) {
-			ctx.fillStyle = fillStyle
-			ctx.fillRect(x, y, w, h)
-		}
-		if (strokeStyle) {
-			ctx.strokeStyle = strokeStyle
-			ctx.strokeRect(x, y, w, h)
-		}
-
-		return canvas
+	render(queue, { w, h }, initialCanvas = null) {
+		const r = new CanvasRenderer({ trimOffset: this.trimOffset, debug: this.debug })
+		return r.render(queue.commands, { w, h }, initialCanvas ?? createCanvas(w, h))
 	}
 
 	diff(a, b) {

@@ -9,6 +9,13 @@ class HeaderComponent extends BaseComponent {
 		{ label: 'Todo list', name: 'todo-list' },
 	]
 
+	constructor(data) {
+		super(data)
+
+		this.style.minHeight = 80
+		this.style.maxHeight = 100
+	}
+
 	getChildren(state) {
 		return [
 			new LayoutComponent({

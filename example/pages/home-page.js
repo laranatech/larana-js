@@ -12,9 +12,15 @@ const { HeaderComponent, CircleComponent } = require('../components')
 class HomePage extends Page {
 	title = 'Home'
 
+	prepareMeta() {
+		return [
+			'<meta name="description" content="Larana-js example home page"/>',
+		].join('\n')
+	}
+
 	init() {
 		this.state = {
-			radius: 2,
+			radius: 30,
 		}
 	}
 
@@ -26,9 +32,7 @@ class HomePage extends Page {
 				direction: 'column',
 			}),
 			children: [
-				new HeaderComponent({
-					style: new Style({ size: 1, minHeight: 80, maxHeight: 100 }),
-				}),
+				new HeaderComponent({}),
 				new LayoutComponent({
 					style: new Style({ size: 9 }),
 					children: [

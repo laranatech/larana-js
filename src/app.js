@@ -1,9 +1,10 @@
 const { WebSocketServer } = require('ws')
 const { createServer } = require('http')
-const { MemoryStateManager } = require('./state')
+const { MemoryStateManager, Session } = require('./state')
 const { ServerRenderer } = require('./ui/rendering')
 const { defaultConfig } = require('./config.js')
 const { Response, Request } = require('./network')
+const { prepareTemplate } = require('./ui/client')
 
 class LaranaApp {
 	config = { ...defaultConfig }
@@ -79,29 +80,38 @@ class LaranaApp {
 			route,
 		})
 
-		const session = { page, lang: 'en', url: req.url, theme: 'main' }
+		const session = new Session({
+			sessionId,
+			page,
+			state: { lang: 'en', url: req.url, theme: 'main' },
+		})
 		this.stateManager.addSession(sessionId, session)
 
 		const w = 512
 		const h = 512
 
 		const queue = page.renderInitialDraw({ w, h })
-
 		const image = this.renderer.render(queue, { w, h })
 
 		res.statusCode = 200
 		res.setHeader('Content-type', 'text/html')
 
-		const clientCode = this.renderer.clientCode
-			.replace('%WS_PATH%', this.config.wsPath)
-			.replace('%TITLE%', page.getTitle())
-			.replace('%LANG%', session.lang)
-			.replace('%META%', page.getMeta())
-			.replace('%SCRIPTS%', page.getScripts())
-			.replace('%INITIAL_DRAW%', image.toDataURL())
-			.replace('%INITIAL_W%', w)
-			.replace('%INITIAL_H%', h)
-			.replace('%SESSION_ID%', sessionId)
+		const clientCode = prepareTemplate({
+			wsPath: this.config.wsPath,
+			sessionId,
+			lang: session.state.lang,
+			title: page.prepareTitle(),
+			meta: page.prepareMeta(),
+			styles: page.prepareStyles(),
+			scripts: page.prepareScripts(),
+			clientCode: this.renderer.clientCode,
+			w,
+			h,
+			initialResponse: JSON.stringify({
+				image: image ? image.toDataURL() : '',
+				queue: queue.json(),
+			}),
+		})
 
 		res.end(clientCode)
 		this.onServe({ req, route, sessionId })
@@ -114,8 +124,8 @@ class LaranaApp {
 
 		this.onConnect({ ws })
 
-		const send = (image, x, y) => {
-			const r = new Response({ image: image.toDataURL(), x, y })
+		const send = ({ image, queue, x, y }) => {
+			const r = new Response({ image: image ? image.toDataURL() : '', queue: queue.json(), x, y })
 			ws.send(r.jsonString())
 		}
 
@@ -123,22 +133,24 @@ class LaranaApp {
 			session.page.send = () => {
 				const queue = session.page.render(payload)
 				const image = this.renderer.render(queue, payload)
-				if (session.page.previousRender) {
+
+				if (image && session.page.previousRender) {
 					const diff = this.renderer.diff(session.page.previousRender, image)
 					const trimmed = this.renderer.trim(diff)
-					send(trimmed.canvas, trimmed.x, trimmed.y)
+					send({ image: trimmed.canvas, queue, x: trimmed.x, y: trimmed.y })
 					session.page.previousRender = image
 					return
 				}
+
 				session.page.previousRender = image
-				send(image, 0, 0)
+				send({ image: image ? image.toDataURL() : '', queue, x: 0, y: 0 })
 			}
 
 			const queue = session.page.render(payload)
 			const image = this.renderer.render(queue, payload)
 			session.page.previousRender = image
 
-			send(image, 0, 0)
+			send({ image, queue, x: 0, y: 0 })
 		}
 
 		ws.on('message', (message) => {
