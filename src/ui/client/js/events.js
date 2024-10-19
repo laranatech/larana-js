@@ -16,11 +16,11 @@ window.addEventListener('click', function (e) {
 
 window.addEventListener('mousemove', function (e) {
 	// delayMessage({
-	sendMessage({
-		event: 'mousemove',
-		y: e.clientY,
-		x: e.clientX,
-	});
+	// sendMessage({
+	// 	event: 'mousemove',
+	// 	y: e.clientY,
+	// 	x: e.clientX,
+	// });
 });
 
 window.addEventListener('keypress', function (e) {

@@ -1,3 +1,8 @@
+# 0.1.1
+
+- **feat:** click event
+- **demo:** `/counter` page
+
 # 0.1.0
 
 - **fix:** removed unnecessary `events` spread

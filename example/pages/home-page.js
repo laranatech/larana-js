@@ -21,6 +21,7 @@ class HomePage extends Page {
 	init() {
 		this.state = {
 			radius: 30,
+			d: 1,
 		}
 	}
 
@@ -40,8 +41,11 @@ class HomePage extends Page {
 						new CircleComponent({
 							style: new Style({ size: 1 }),
 							radius: this.state.radius,
-							onAnimate: (radius) => {
-								this.setState({ radius })
+							onAnimate: () => {
+								if (this.state.radius >= 100 || this.state.radius <= 3) {
+									this.state.d *= -1
+								}
+								this.setState({ radius: this.state.radius + 1 * this.state.d })
 							},
 						}),
 					],

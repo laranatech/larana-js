@@ -12,6 +12,7 @@ class BaseComponent {
 	children = []
 
 	style = null
+	defaultStyle = new Style({})
 
 	events = []
 	eventStyles = new Map()
@@ -35,9 +36,12 @@ class BaseComponent {
 		}
 
 		if (style !== undefined) {
-			this.style = style
+			this.style = new Style({
+				...this.defaultStyle.json(),
+				...style.json(),
+			})
 		} else {
-			this.style = new Style({})
+			this.style = this.defaultStyle
 		}
 
 		this.focusable = focusable
@@ -193,10 +197,15 @@ class BaseComponent {
 		}
 
 		this.activeEvents.forEach((e) => {
-			// console.log(e, this.eventStyles.get(e).json())
+			const s = this.eventStyles.get(e)
+
+			if (!s) {
+				return
+			}
+
 			styles = {
 				...styles,
-				...this.eventStyles.get(e).json(),
+				...s.json(),
 			}
 		})
 

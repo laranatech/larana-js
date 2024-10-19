@@ -13,18 +13,11 @@ class CircleComponent extends BaseComponent {
 		this.radius = radius
 		this.onAnimate = onAnimate
 
-		// setTimeout(() => {
-		// 	console.log(1)
-		// 	this.onAnimate(radius * 2)
-		// }, 1000)
-		// const animate = () => {
-		// 	this.onAnimate()
-		// }
+		this.onAnimate()
 	}
 
 	render(queue, state) {
 		const { x, y, w, h } = this.getDimensions(state)
-		// const { x, y, w, h } = state
 
 		queue.add('arc', {
 			x: x + w / 2,

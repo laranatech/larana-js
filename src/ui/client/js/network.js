@@ -14,8 +14,8 @@ function getMessage(e) {
 function sendMessage(data) {
 	ws.send(JSON.stringify({
 		data: data,
-		w: window.innerHeight,
-		h: window.innerWidth,
+		w: window.innerWidth,
+		h: window.innerHeight,
 		sessionId: SESSION_ID,
 	}));
 }

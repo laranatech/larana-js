@@ -3,4 +3,5 @@ module.exports = {
 	...require('./style'),
 	...require('./shapes'),
 	...require('./rendering'),
+	...require('./events'),
 }
