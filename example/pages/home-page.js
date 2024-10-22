@@ -1,12 +1,9 @@
 const {
 	Page,
-	Style,
 	LayoutComponent,
 	TextComponent,
-	LinkComponent,
 } = require('larana-js')
 
-const { styles } = require('../styles')
 const { HeaderComponent, CircleComponent } = require('../components')
 
 class HomePage extends Page {
@@ -27,25 +24,31 @@ class HomePage extends Page {
 
 	prepareRoot({ w, h }) {
 		return new LayoutComponent({
-			style: new Style({
-				...styles.get('body').json(),
-				gap: 8,
-				direction: 'column',
-			}),
+			style: [
+				'body',
+				{
+					gap: 8,
+					direction: 'column',
+				},
+			],
 			children: [
 				new HeaderComponent({}),
 				new LayoutComponent({
-					style: new Style({ size: 9 }),
+					style: { size: 9 },
 					children: [
 						new TextComponent({ text: 'Home' }),
 						new CircleComponent({
-							style: new Style({ size: 1 }),
+							style: { size: 1, bg: 'var:accent', borderColor: '#f00' },
 							radius: this.state.radius,
 							onAnimate: () => {
+								let d = this.state.d
 								if (this.state.radius >= 100 || this.state.radius <= 3) {
-									this.state.d *= -1
+									d *= -1
 								}
-								this.setState({ radius: this.state.radius + 1 * this.state.d })
+								this.setState({
+									radius: this.state.radius + 1 * d,
+									d,
+								})
 							},
 						}),
 					],

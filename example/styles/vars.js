@@ -7,11 +7,12 @@ const initStyleVars = () => {
 		accent: hex('#3caa3c'),
 		componentBg: hex('#fff'),
 		fontWeight: 'medium',
-		fontFamily: 'monospace',
+		fontFamily: 'Montserrat',
 		h1FontSize: 32,
 		h2FontSize: 28,
 		h3FontSize: 24,
 		fontSize: 16,
+		radius: 4,
 	}, 'main')
 
 	setStyleVars({

@@ -10,9 +10,8 @@ const config = require('./config.js')
 
 const { routes } = require('./routes.js')
 
-const { initStyleVars, initStyles } = require('./styles')
+const { initStyles } = require('./styles')
 
-initStyleVars()
 initStyles()
 
 const router = new DefaultRouter({

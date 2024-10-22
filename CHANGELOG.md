@@ -1,6 +1,35 @@
+# 0.2.0
+
+- **fix:** queryParams bug
+- **feat:** `TabsComponent`
+- **feat:** `onClick` arg for `ButtonComponent`
+- **feat:** `styleName`, themes, and a better way to work with styles
+- **feat:** roundedRect
+- **feat:** `TextInputComponent`
+- **feat:** `hover` event
+- **feat:** `keypress` event
+- **refactor:** changed some names:
+	- `getStyle()` -> `computeStyle()`
+	- `getDimensions()` -> `computeDimensions()`
+- **demo:** `/tabs` page
+- **demo:** `/todo` page
+
+## TODO
+
+- fix: animations freeze on event
+- fix: min/max dimensions break layout
+- feat: `scroll`
+- feat: `ImageComponent`
+- feat: circle shape
+- feat: rect shape
+- feat: polygon shape
+- feat: `FigureComponent`
+- feat: `LineChartComponent`
+
 # 0.1.1
 
-- **feat:** click event
+- **feat:** `click` event
+- **feat:** `defaultStyle`
 - **demo:** `/counter` page
 
 # 0.1.0

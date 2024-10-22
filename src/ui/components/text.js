@@ -17,19 +17,21 @@ class TextComponent extends BaseComponent {
 		}
 	}
 
-	render(queue, state) {
-		const text = this.model ? state.state[this.model] : this.text
+	render(queue, data) {
+		const text = this.model ? data.state[this.model] : this.text
 
-		const d = this.getDimensions(state)
+		const d = this.computeDimensions(data)
+
+		const cs = this.computeStyle(data)
 
 		queue.add('text', {
 			x: d.x + (d.w / 2),
 			y: d.y + (d.h / 2),
-			font: this.getStyle().font,
+			font: cs.font,
 			text,
-			align: this.getStyle().textAlign,
-			baseline: this.getStyle().textBaseline,
-			fg: this.getStyle().fg ?? '#000',
+			align: cs.textAlign,
+			baseline: cs.textBaseline,
+			fg: cs.fg ?? '#000',
 		})
 
 		return queue

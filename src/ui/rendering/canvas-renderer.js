@@ -30,13 +30,13 @@ class CanvasRenderer {
 
 		ctx.arc(x, y, radius, startAngle, endAngle)
 
-		if (strokeStyle) {
-			ctx.strokeStyle = strokeStyle
-			ctx.stroke()
-		}
 		if (fillStyle) {
 			ctx.fillStyle = fillStyle
 			ctx.fill()
+		}
+		if (strokeStyle) {
+			ctx.strokeStyle = strokeStyle
+			ctx.stroke()
 		}
 
 		return canvas
@@ -98,15 +98,33 @@ class CanvasRenderer {
 			h,
 			strokeStyle,
 			fillStyle,
+			radius,
 		} = options
 
-		if (fillStyle) {
-			ctx.fillStyle = fillStyle
-			ctx.fillRect(x, y, w, h)
-		}
-		if (strokeStyle) {
-			ctx.strokeStyle = strokeStyle
-			ctx.strokeRect(x, y, w, h)
+		if (radius) {
+			ctx.beginPath()
+
+			if (fillStyle) {
+				ctx.fillStyle = fillStyle
+				ctx.roundRect(x, y, w, h, radius)
+				ctx.fill()
+			}
+
+			if (strokeStyle) {
+				ctx.strokeStyle = strokeStyle
+				ctx.roundRect(x, y, w, h, radius)
+				ctx.stroke()
+			}
+			
+		} else {
+			if (fillStyle) {
+				ctx.fillStyle = fillStyle
+				ctx.fillRect(x, y, w, h)
+			}
+			if (strokeStyle) {
+				ctx.strokeStyle = strokeStyle
+				ctx.strokeRect(x, y, w, h)
+			}
 		}
 
 		return canvas

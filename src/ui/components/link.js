@@ -4,8 +4,6 @@ const { TextComponent } = require('./text.js')
 
 const { click, hover } = require('../events')
 
-const { Style } = require('../style')
-
 class LinkComponent extends BaseComponent {
 	text = ''
 	to = {}
@@ -20,24 +18,26 @@ class LinkComponent extends BaseComponent {
 
 		this.events = [
 			click({
-				style: new Style({ borderColor: '#f00' }),
+				style: { borderColor: '#f00' },
 			})(this),
 			hover({
-				style: new Style({ borderWidth: 3 }),
+				style: { borderWidth: 3 },
 			})(this),
 			...events.map((e) => e(this)),
 		]
 	}
 
-	getChildren(state) {
+	getChildren(data) {
+		const cs = this.computeStyle(data)
+
 		return [
 			new LayoutComponent({
 				parent: this,
-				style: this.getStyle(),
+				style: cs,
 				children: [
 					new TextComponent({
 						text: this.text,
-						style: this.getStyle(),
+						style: cs,
 					}),
 				],
 			}),

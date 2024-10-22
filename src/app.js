@@ -5,12 +5,13 @@ const { ServerRenderer } = require('./ui/rendering')
 const { defaultConfig } = require('./config.js')
 const { Response, Request } = require('./network')
 const { prepareTemplate } = require('./ui/client')
+const { DefaultRouter } = require('./routing')
 
 class LaranaApp {
 	config = { ...defaultConfig }
-	router = null
+	router = new DefaultRouter({})
 	renderer = new ServerRenderer({ debug: false })
-	stateManager = new MemoryStateManager()
+	stateManager = new MemoryStateManager({})
 	clients = new Set()
 
 	onConnect = (data) => {}
@@ -65,6 +66,8 @@ class LaranaApp {
 
 		const PageClass = route.page
 
+		res.setHeader('Content-type', 'text/html')
+
 		if (!PageClass) {
 			res.statusCode = 404
 			res.end()
@@ -77,24 +80,27 @@ class LaranaApp {
 				storePreviousRender: this.config.storePreviousRender,
 				rerenderDelay: 1000 / this.config.maxFPS,
 			},
-			route,
 		})
 
 		const session = new Session({
 			sessionId,
 			page,
-			state: { lang: 'en', url: req.url, theme: 'main' },
+			route,
+			state: { lang: this.config.defaultLang, theme: this.config.defaultTheme },
 		})
 		this.stateManager.addSession(sessionId, session)
+		page.setSession(session)
+		page.init()
 
-		const w = 512
-		const h = 512
+		const w = this.config.initialW
+		const h = this.config.initialH
 
-		const queue = page.renderInitialDraw({ w, h })
+		const request = new Request({ w, h, type: 'connect' })
+
+		const queue = page.renderInitialDraw({ w, h, request })
 		const image = this.renderer.render(queue, { w, h })
 
 		res.statusCode = 200
-		res.setHeader('Content-type', 'text/html')
 
 		const clientCode = prepareTemplate({
 			wsPath: this.config.wsPath,
@@ -129,10 +135,10 @@ class LaranaApp {
 			ws.send(r.jsonString())
 		}
 
-		const onOpen = (payload, session) => {
-			session.page.send = () => {
-				const queue = session.page.render(payload)
-				const image = this.renderer.render(queue, payload)
+		const onOpen = (request, session) => {
+			session.page.send = (request) => {
+				const queue = session.page.render(request)
+				const image = this.renderer.render(queue, request)
 
 				if (image && session.page.previousRender) {
 					const diff = this.renderer.diff(session.page.previousRender, image)
@@ -146,8 +152,8 @@ class LaranaApp {
 				send({ image: image ? image.toDataURL() : '', queue, x: 0, y: 0 })
 			}
 
-			const queue = session.page.render(payload)
-			const image = this.renderer.render(queue, payload)
+			const queue = session.page.render(request)
+			const image = this.renderer.render(queue, request)
 			session.page.previousRender = image
 
 			send({ image, queue, x: 0, y: 0 })
@@ -157,18 +163,27 @@ class LaranaApp {
 			const payload = JSON.parse(message.toString())
 			const session = this.stateManager.getSession(payload.sessionId)
 
+			const { w, h, data } = payload
+
+			const request = new Request({
+				w, h,
+				type: data.event,
+				value: data.value,
+				x: data.x,
+				y: data.y,
+			})
+
 			this.onMessage({ message })
 
-			if (payload.data.event === 'open') {
-				onOpen(payload, session)
+			if (request.event.type === 'open') {
+				onOpen(request, session)
 				return
 			}
 
-			const updated = session.page.update(payload)
+			const updated = session.page.update(request)
 
 			if (updated) {
-				console.log('updated!')
-				session.page.send()
+				session.page.send(request)
 			}
 		})
 

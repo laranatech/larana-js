@@ -1,12 +1,12 @@
 const { RenderQueue } = require('../ui/rendering')
 const { LayoutComponent } = require('../ui/components')
+const { Request } = require('../network')
 
 class Page {
-	sessionId = ''
-	route = null
+	session = null
 
 	state = {}
-	meta = {}
+	meta = ''
 	root = null
 	initialRoot = null
 
@@ -17,20 +17,17 @@ class Page {
 	lastRender = 0
 
 	rerenderDelay = 1
+	rerenderTimeout = null
 
 	previousRender = null
+	previousRequest = {}
 
 	title = ''
 	meta = ''
-	scripts = '123'
+	scripts = ''
 	styles = ''
 
-	rerenderTimeout = null
-
-	constructor({ state, meta, config, sessionId, route }) {
-		this.sessionId = sessionId
-		this.route = route
-
+	constructor({ state, meta, config }) {
 		if (state !== undefined) {
 			this.state = state
 		}
@@ -39,8 +36,16 @@ class Page {
 		}
 
 		this.rerenderDelay = config.rerenderDelay
+	}
 
-		this.init()
+	init() {
+		this.root = new LayoutComponent({})
+	}
+
+	// State
+
+	setSession(session) {
+		this.session = session
 	}
 
 	setState(newState, options = { needsRerender: true }) {
@@ -56,6 +61,20 @@ class Page {
 	get state() {
 		return Object.freeze(structuredClone(this.state))
 	}
+
+	rerender() {
+		if (!this.send) {
+			throw new Error('Page must have `send()` method')
+		}
+
+		clearTimeout(this.rerenderTimeout)
+
+		this.rerenderTimeout = setTimeout(() => {
+			this.send({ w: this.lastW, h: this.lastH })
+		}, this.rerenderDelay)
+	}
+
+	// Meta info
 
 	prepareTitle() {
 		return this.title
@@ -73,61 +92,78 @@ class Page {
 		return this.styles
 	}
 
+	//
+
 	send() {}
 
-	init() {
-		this.root = new LayoutComponent({})
-	}
+	// Markup
 
-	prepareRoot({ w, h }) {
+	prepareRoot({ w, h, request }) {
 		return this.root
 	}
 
-	prepareInitialRoot({ w, h }) {
+	prepareInitialRoot({ w, h, request }) {
 		if (this.initialRoot) {
 			return this.initialRoot
 		}
-		return this.prepareFirstRoot({ w, h })
+		return this.prepareFirstRoot({ w, h, request })
 	}
 
-	prepareFirstRoot({ w, h }) {
-		return this.prepareRoot({ w, h })
+	prepareFirstRoot({ w, h, request }) {
+		return this.prepareRoot({ w, h, request })
 	}
 
-	onUpdate(data) {}
+	// Rendering
 
-	update(data) {
-		const root = this.prepareRoot(data)
+	/**
+	 * 
+	 * @param {Request} request 
+	 * @returns {RenderQueue}
+	 */
+	renderInitialDraw(request) {
+		const { w, h } = request
 
-		const dimensions = new Map()
-		return root.update({
-			w: data.w,
-			h: data.h,
-			event: data.data,
-			state: {
-				...this.state,
-				dimensions,
-				x: 0,
-				y: 0,
-				w: data.w,
-				h: data.h,
-			},
+		return this.r({
+			w,
+			h,
+			request,
+			root: this.prepareInitialRoot({ w, h, request }),
 		})
 	}
 
-	renderInitialDraw({ w = 128, h = 128 }) {
-		return this.r({ w, h, root: this.prepareInitialRoot({ w, h }) })
+	/**
+	 * 
+	 * @param {Request} request 
+	 * @returns {RenderQueue}
+	 */
+	renderFirstDraw(request) {
+		const { w, h } = request
+
+		return this.r({
+			w,
+			h,
+			request,
+			root: this.prepareFirstRoot({ w, h, request }),
+		})
 	}
 
-	renderFirstDraw({ w, h }) {
-		return this.r({ w, h, root: this.prepareFirstRoot({ w, h })})
+	/**
+	 * 
+	 * @param {Request} request 
+	 * @returns {RenderQueue}
+	 */
+	render(request) {
+		const { w, h } = request
+
+		return this.r({
+			w,
+			h,
+			request,
+			root: this.prepareRoot({ w, h, request }),
+		})
 	}
 
-	render({ w, h }) {
-		return this.r({ w, h, root: this.prepareRoot({ w, h }) })
-	}
-
-	r({ w, h, root }) {
+	r({ w, h, request, root }) {
 		this.lastW = w
 		this.lastH = h
 		this.lastRender = Date.now()
@@ -137,30 +173,38 @@ class Page {
 		const dimensions = new Map()
 
 		root.render(queue, {
-			state: {
-				...this.state,
-				dimensions,
-			},
+			state: this.state,
 			x: 0,
 			y: 0,
 			w,
 			h,
+			dimensions,
+			request,
+			session: this.session,
 		})
 
 		return queue
 	}
 
-	rerender() {
-		if (!this.send) {
-			return
-		}
+	// Handling events
 
-		clearTimeout(this.rerenderTimeout)
+	update(request) {
+		const { w, h } = request
 
-		this.rerenderTimeout = setTimeout(() => {
-			this.send()
-		}, this.rerenderDelay)
+		const root = this.prepareRoot({ w, h, request })
 
+		const dimensions = new Map()
+
+		return root.update({
+			w,
+			h,
+			x: 0,
+			y: 0,
+			request,
+			dimensions,
+			state: this.state,
+			session: this.session,
+		})
 	}
 }
 

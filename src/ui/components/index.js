@@ -8,5 +8,6 @@ module.exports = {
 	...require('./image.js'),
 	...require('./text.js'),
 	...require('./text-input.js'),
+	...require('./tabs.js'),
 	...require('./charts'),
 }

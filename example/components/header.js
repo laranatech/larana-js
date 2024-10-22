@@ -1,6 +1,4 @@
-const { Style, BaseComponent, LayoutComponent, TextComponent, useStyleVar } = require('larana-js')
-
-const { styles } = require('../styles')
+const { BaseComponent, LayoutComponent, TextComponent } = require('larana-js')
 
 class HeaderComponent extends BaseComponent {
 	items = [
@@ -9,29 +7,27 @@ class HeaderComponent extends BaseComponent {
 		{ label: 'Todo list', name: 'todo-list' },
 	]
 
-	constructor(data) {
-		super(data)
-
-		this.style.minHeight = 80
-		this.style.maxHeight = 100
+	defaultStyle = {
+		minHeight: 80,
+		maxHeight: 100,
 	}
 
-	getChildren(state) {
+	getChildren(data) {
 		return [
 			new LayoutComponent({
 				parent: this,
-				style: new Style({
+				style: {
 					direction: 'row',
 					gap: 8,
-					bg: '#333',
-				}),
+					bg: 'var:accent',
+				},
 				children: [
 					new TextComponent({
 						text: 'LaranaJS',
-						style: new Style({
-							...styles.get('h1Text'),
-							fg: useStyleVar('accent'),
-						})
+						style: [
+							'h1Text',
+							{ fg: 'var:fg' },
+						],
 					}),
 				],
 			})

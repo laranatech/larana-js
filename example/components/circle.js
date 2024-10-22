@@ -16,14 +16,17 @@ class CircleComponent extends BaseComponent {
 		this.onAnimate()
 	}
 
-	render(queue, state) {
-		const { x, y, w, h } = this.getDimensions(state)
+	render(queue, data) {
+		const { x, y, w, h } = this.computeDimensions(data)
+
+		const cs = this.computeStyle(data)
 
 		queue.add('arc', {
 			x: x + w / 2,
 			y: y + h / 2,
-			radius: state.state.radius,
-			fillStyle: '#3caa3c',
+			radius: data.state.radius,
+			fillStyle: cs.bg,
+			strokeStyle: cs.borderColor,
 		})
 
 		return queue

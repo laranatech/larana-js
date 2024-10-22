@@ -30,6 +30,22 @@ const configSchemer = new Schemer({
 		type: 'bool',
 		required: false,
 	},
+	initialW: {
+		...common.positiveInt,
+		required: false,
+	},
+	initialH: {
+		...common.positiveInt,
+		required: false,
+	},
+	defaultTheme: {
+		type: 'string',
+		required: false,
+	},
+	defaultLang: {
+		type: 'string',
+		required: false,
+	},
 })
 
 const defaultConfig = {
@@ -40,6 +56,10 @@ const defaultConfig = {
 	maxBandwidth: 10 * 1024,
 	sessionLifetime: 5 * (60 * 1000),
 	storePreviousRender: true,
+	initialW: 512,
+	initialH: 512,
+	defaultTheme: 'dark',
+	defaultLang: 'en',
 }
 
 /**
@@ -52,6 +72,10 @@ const defaultConfig = {
  * maxBandwidth: number;
  * sessionLifetime: number;
  * storePreviousRender: boolean;
+ * initialW: number;
+ * initialH: number;
+ * defaultTheme: string;
+ * defaultLang: string;
  * }} config 
  * @returns validated config
  */

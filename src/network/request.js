@@ -1,23 +1,23 @@
+const { Event } = require('../ui/events')
+
 class Request {
-	id = ''
-	x = 0
-	y = 0
+	sessionId = ''
 	w = 0
 	h = 0
-	bot = false
-	screenReader = false
-	eventType = ''
-	value = null
 
-	constructor({ x, y, w, h, eventType, value, bot, screenReader }) {
-		this.x = x
-		this.y = y
+	event = null
+
+	constructor({ x, y, w, h, type, value }) {
+		this.sessionId = this.sessionId
 		this.w = w
 		this.h = h
-		this.bot = bot
-		this.screenReader = screenReader
-		this.eventType = eventType
-		this.value = value
+
+		this.event = new Event({
+			type,
+			x,
+			y,
+			value,
+		})
 	}
 }
 

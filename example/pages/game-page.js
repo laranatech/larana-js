@@ -2,8 +2,8 @@ const { Page, LayoutComponent, TextComponent } = require('larana-js')
 
 const { HeaderComponent } = require('../components')
 
-class NotFoundPage extends Page {
-	title = '404 | Page not found'
+class GamePage extends Page {
+	title = 'Game'
 
 	prepareRoot({ w, h }) {
 		return new LayoutComponent({
@@ -20,11 +20,11 @@ class NotFoundPage extends Page {
 					},
 					children: [
 						new TextComponent({
-							text: '404',
+							text: 'Game page',
 							style: 'h1Text',
 						}),
 						new TextComponent({
-							text: 'Go back to home',
+							text: 'Soon here will be demo',
 							style: 'text',
 						}),
 					],
@@ -34,4 +34,4 @@ class NotFoundPage extends Page {
 	}
 }
 
-module.exports = { NotFoundPage }
+module.exports = { GamePage }

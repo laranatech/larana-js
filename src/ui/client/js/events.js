@@ -15,15 +15,16 @@ window.addEventListener('click', function (e) {
 });
 
 window.addEventListener('mousemove', function (e) {
+	throttleMessage({
 	// delayMessage({
 	// sendMessage({
-	// 	event: 'mousemove',
-	// 	y: e.clientY,
-	// 	x: e.clientX,
-	// });
+		event: 'mousemove',
+		y: e.clientY,
+		x: e.clientX,
+	});
 });
 
-window.addEventListener('keypress', function (e) {
+window.addEventListener('keyup', function (e) {
 	// delayMessage({
 	sendMessage({
 		event: 'keypress',

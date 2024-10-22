@@ -2,11 +2,13 @@ class Session {
 	sessionId = ''
 	lastUpdate = 0
 	page = null
+	route = null
 	state = {}
 
-	constructor({ sessionId, page, state }) {
+	constructor({ sessionId, page, route, state }) {
 		this.sessionId = sessionId
 		this.page = page
+		this.route = route
 		this.state = state
 
 		this.lastUpdate = Date.now()

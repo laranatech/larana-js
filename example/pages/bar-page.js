@@ -1,13 +1,9 @@
 const {
 	Page,
-	Style,
-	useStyleVar,
 	LayoutComponent,
 	TextComponent,
 	BarChartComponent,
 } = require('larana-js')
-
-const { styles } = require('../styles')
 
 const { HeaderComponent } = require('../components')
 
@@ -26,7 +22,7 @@ class BarPage extends Page {
 
 		this.initialRoot = new LayoutComponent({
 			children: [
-				new TextComponent({ text: 'Loading...', style: styles.get('text') }),
+				new TextComponent({ text: 'Loading...', style: 'text' }),
 			],
 		})
 
@@ -35,36 +31,38 @@ class BarPage extends Page {
 
 	prepareRoot() {
 		return new LayoutComponent({
-			style: new Style({
-				...styles.get('body').json(),
-				gap: 8,
-				direction: 'column',
-			}),
+			style: [
+				'body',
+				{
+					gap: 8,
+					direction: 'column',
+				},
+			],
 			children: [
 				new HeaderComponent({}),
 				new LayoutComponent({
-					style: new Style({ size: 1, borderColor: '#f00' }),
+					style: { size: 1, borderColor: '#f00' },
 					children: [
 						new TextComponent({
 							text: 'Loading data for chart',
-							style: styles.get('h1Text'),
+							style: 'h1Text',
 						}),
 					],
 				}),
 				new LayoutComponent({
-					style: new Style({ size: 9 }),
+					style: { size: 9 },
 					children: [
 						this.state.loaded
 							? new BarChartComponent({
 								model: 'items',
-								style: new Style({
-									fg: useStyleVar('fg'),
+								style: {
+									fg: 'var:fg',
 									bg: '#3caa3c',
-								}),
+								},
 							})
 							: new TextComponent({
 								text: `Loading: ${this.state.loadingTick}`,
-								style: styles.get('text'),
+								style: 'text',
 							}),
 					],
 				}),

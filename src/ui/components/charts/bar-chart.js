@@ -1,7 +1,6 @@
 const { BaseComponent } = require('../base-component.js')
 const { LayoutComponent } = require('../layout.js')
 const { TextComponent } = require('../text.js')
-const { Style } = require('../../style')
 
 class BarChartComponent extends BaseComponent {
 	model = ''
@@ -25,13 +24,13 @@ class BarChartComponent extends BaseComponent {
 		}
 	}
 
-	render(queue, state) {
-		const data = this.model ? state.state[this.model] : this.items
+	render(queue, data) {
+		const items = this.model ? data.state[this.model] : this.items
 
 		let maxValue = 0
 		let totalValue = 0
 
-		data.forEach((item) => {
+		items.forEach((item) => {
 			totalValue += item.value
 
 			if (maxValue < item.value) {
@@ -43,45 +42,47 @@ class BarChartComponent extends BaseComponent {
 
 		const root = new LayoutComponent({
 			parent: this,
-			style: new Style({
+			style: {
 				gap: 4,
 				padding: 4,
 				direction: 'row',
-			}),
-			children: data.map((item) => {
+			},
+			children: items.map((item) => {
 				const s = item.value / maxValue * 10
 
+				const cs = this.computeStyle(data)
+
 				return new LayoutComponent({
-					style: new Style({
+					style: {
 						direction: 'column',
 						gap: 4,
-					}),
+					},
 					children: [
 						new LayoutComponent({
-							style: new Style({ size: 10 - s }),
+							style: { size: 10 - s },
 						}),
 						new LayoutComponent({
-							style: new Style({
+							style: {
 								size: s,
-								bg: item.color ?? this.getStyle().bg,
-							}),
+								bg: item.color ?? cs.bg,
+							},
 							children: [
 								new TextComponent({
 									text: item.value,
-									style: new Style({ fg: this.getStyle().fg }),
+									style: { fg: cs.fg },
 								}),
 							],
 						}),
 						new TextComponent({
 							text: item.label,
-							style: new Style({ fg: this.getStyle().fg }),
+							style: { fg: cs.fg },
 						}),
 					]
 				})
 			}),
 		})
 
-		root.render(queue, state)
+		root.render(queue, data)
 
 		return queue
 	}

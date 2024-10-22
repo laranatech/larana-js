@@ -29,11 +29,8 @@ class ImageComponent extends BaseComponent {
 	}
 
 	async loadImage() {
-		console.log(this.url)
 		const r = await fetch(this.url)
 		const b = Buffer.from(await r.arrayBuffer())
-
-		console.log(b)
 
 		setTimeout(() => {
 			this.img = b
@@ -46,7 +43,7 @@ class ImageComponent extends BaseComponent {
 		if (!this.loaded) {
 			const root = new LayoutComponent({
 				parent: this.parent,
-				style: new Style({ bg: '#ccc' }),
+				style: { bg: '#ccc' },
 			})
 
 			root.render(queue, state)
@@ -54,7 +51,7 @@ class ImageComponent extends BaseComponent {
 			return queue
 		}
 
-		const d = this.getDimensions(state)
+		const d = this.computeDimensions(state)
 
 		queue.add('image', {
 			x: d.x,

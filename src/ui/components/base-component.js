@@ -11,8 +11,11 @@ class BaseComponent {
 	parent = null
 	children = []
 
-	style = null
-	defaultStyle = new Style({})
+	style = {}
+	defaultStyle = {}
+	computedStyle = null
+
+	computedDimensions = null
 
 	events = []
 	eventStyles = new Map()
@@ -31,20 +34,19 @@ class BaseComponent {
 			this.id = id
 		}
 
+		this.focusable = focusable
+
+		if (this.focusable && !id) {
+			throw new Error('Focusable components must have an ID')
+		}
+
 		if (parent !== undefined) {
 			this.parent = parent
 		}
 
 		if (style !== undefined) {
-			this.style = new Style({
-				...this.defaultStyle.json(),
-				...style.json(),
-			})
-		} else {
-			this.style = this.defaultStyle
+			this.style = style
 		}
-
-		this.focusable = focusable
 
 		this.events = events.map((e) => e(this))
 
@@ -66,25 +68,31 @@ class BaseComponent {
 	 * @param {{ x: number; y: number; w: number; h: number; dimensions: Map }} data 
 	 * @returns {{ x: number; y: number; w: number; h: number }}
 	 */
-	getDimensions(data) {
-		const { x, y, w, h, state } = data
+	computeDimensions(data, withEvents) {
+		if (this.computedDimensions) {
+			return this.computedDimensions
+		}
+
+		const { x, y, w, h, state, dimensions, request, session } = data
 
 		if (!this.parent) {
 			const d = { x, y, w, h }
-			state.dimensions.set(this.id, d)
+			dimensions.set(this.id, d)
 			return d
 		}
 
-		const stateDimensions = state.dimensions.get(this.id)
+		const stateDimensions = dimensions.get(this.id)
 
 		if (stateDimensions) {
+			this.computedDimensions = stateDimensions
 			return stateDimensions
 		}
 
-		const parrentDimensions = this.parent.getDimensions({ x, y, w, h, state })
+		const parrentDimensions = this.parent.computeDimensions({...data, x, y, w, h })
 
-		const padding = this.parent.getStyle().padding
-		const gap = this.parent.getStyle().gap
+		const parentStyle = this.parent.computeStyle(data, withEvents)
+
+		const { padding, gap, direction } = parentStyle
 
 		const workingDimensions = {
 			x: parrentDimensions.x + padding,
@@ -96,15 +104,14 @@ class BaseComponent {
 		const siblings = this.parent.getChildren(data)
 
 		if (siblings.length <= 1) {
-			state.dimensions.set(this.id, workingDimensions)
+			dimensions.set(this.id, workingDimensions)
+			this.computedDimensions = workingDimensions
 			return workingDimensions
 		}
 
-		const totalSize = siblings.reduce((acc, sibling) => acc + sibling.getStyle().size, 0)
+		const totalSize = siblings.reduce((acc, sibling) => acc + sibling.computeStyle(data, withEvents).size, 0)
 
 		const d = { x: 0, y: 0, w: 0, h: 0 }
-
-		const direction = this.parent.getStyle().direction
 
 		let sizeOffset = 0
 		let currIndex = -1
@@ -118,25 +125,25 @@ class BaseComponent {
 				return
 			}
 
-			sizeOffset += sibling.getStyle().size
+			sizeOffset += sibling.computeStyle(data, withEvents).size
 		})
 
 		const totalGap = gap * (siblings.length - 1)
 		const currentGap = currIndex === 0 ? 0 : gap * currIndex
 
+		const { minWidth, maxWidth, minHeight, maxHeight, size } = this.computeStyle(data, withEvents)
+
 		if (direction === 'row') {
 			d.x = workingDimensions.x + (sizeOffset / totalSize) * (workingDimensions.w - totalGap) + currentGap
 			d.y = workingDimensions.y
-			d.w = (this.getStyle().size / totalSize) * (workingDimensions.w - totalGap)
+			d.w = (size / totalSize) * (workingDimensions.w - totalGap)
 			d.h = workingDimensions.h
 		} else {
 			d.x = workingDimensions.x
 			d.y = workingDimensions.y + (sizeOffset / totalSize) * (workingDimensions.h - totalGap) + currentGap
 			d.w = workingDimensions.w
-			d.h = (this.getStyle().size / totalSize) * (workingDimensions.h - totalGap)
+			d.h = (size / totalSize) * (workingDimensions.h - totalGap)
 		}
-
-		const { minWidth, maxWidth, minHeight, maxHeight } = this.getStyle()
 
 		if (minWidth && minWidth > d.w) {
 			d.w = minWidth
@@ -154,12 +161,14 @@ class BaseComponent {
 			d.h = maxHeight
 		}
 
-		state.dimensions.set(this.id, d)
+		dimensions.set(this.id, d)
+
+		this.computedDimensions = d
 
 		return d
 	}
 
-	getChildren(state) {
+	getChildren(data) {
 		return this.children
 	}
 
@@ -167,17 +176,15 @@ class BaseComponent {
 		this.parent = parent
 	}
 
-	update({ event, state }) {
-		this.activeEvents = [
-			...this.events
-			.map((e) => e(event, { ...state, state }))
+	update(data) {
+		this.activeEvents = this.events
+			.map((e) => e(data, true))
 			.filter((e) => e !== '')
-		]
 
 		let updated = false
 
-		this.getChildren(state).forEach((child) => {
-			const childUpdated = child.update({ event, state })
+		this.getChildren(data).forEach((child) => {
+			const childUpdated = child.update(data)
 
 			if (childUpdated) {
 				updated = true
@@ -188,45 +195,65 @@ class BaseComponent {
 			updated = true
 		}
 
+		// TODO
+		// return true
 		return updated
 	}
 
-	getStyle() {
-		let styles = {
-			...this.style.json(),
+	computeStyle(data, withEvents = true) {
+		if (this.computedStyle) {
+			return this.computedStyle
 		}
 
-		this.activeEvents.forEach((e) => {
-			const s = this.eventStyles.get(e)
+		const { request, session } = data
 
-			if (!s) {
-				return
-			}
+		const styles = [
+			this.defaultStyle,
+		]
 
-			styles = {
-				...styles,
-				...s.json(),
-			}
-		})
+		if (Array.isArray(this.style)) {
+			styles.push(...this.style)
+		} else {
+			styles.push(this.style)
+		}
 
-		return new Style({ ...styles })
+		if (request.event && withEvents) {
+			// TODO
+			this.activeEvents = this.events
+				.map((e) => e(data, false))
+				.filter((e) => e !== '')
+
+			this.activeEvents.forEach((e) => {
+				const s = this.eventStyles.get(e)
+				if (s) {
+					styles.push(s)
+				}
+			})
+		}
+
+		const result = Style.compute(styles, request, session)
+
+		this.computedStyle = new Style(result)
+
+		return this.computedStyle
 	}
 
-	render(queue, state) {
-		const d = this.getDimensions(state)
+	render(queue, data) {
+		const d = this.computeDimensions(data)
 
-		const style = this.getStyle()
+		const style = this.computeStyle(data)
 
 		queue.add('rect', {
 			fillStyle: style.bg,
 			strokeStyle: style.borderColor,
 			lineWidth: style.borderWidth,
 			lineCap: style.borderCap,
+			radius: style.radius,
 			...d,
 		})
 
-		this.getChildren(state).forEach((child) => {
-			child.render(queue, state)
+		this.getChildren(data).forEach((child) => {
+			child.render(queue, data)
 		})
 
 		return queue
