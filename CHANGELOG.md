@@ -2,6 +2,7 @@
 
 - **fix:** queryParams bug
 - **feat:** `TabsComponent`
+- **feat:** `ProgressBarComponent`
 - **feat:** `onClick` arg for `ButtonComponent`
 - **feat:** `styleName`, themes, and a better way to work with styles
 - **feat:** roundedRect
@@ -23,8 +24,12 @@
 - feat: circle shape
 - feat: rect shape
 - feat: polygon shape
+- feat: text decoration
 - feat: `FigureComponent`
 - feat: `LineChartComponent`
+- feat: `router.push()`
+- demo: `/slides` page
+- demo: `/game` page
 
 # 0.1.1
 

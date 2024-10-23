@@ -23,7 +23,6 @@ class CanvasRenderer {
 			fillStyle,
 		} = options
 
-
 		ctx.lineWidth = lineWidth
 
 		ctx.beginPath()

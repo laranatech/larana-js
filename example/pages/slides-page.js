@@ -1,4 +1,4 @@
-const { Page, LayoutComponent, TextComponent, keypress } = require('larana-js')
+const { Page, LayoutComponent, TextComponent, keypress, ProgressBarComponent } = require('larana-js')
 
 class SlidesPage extends Page {
 	title = 'LaranaJS | Slides'
@@ -9,7 +9,7 @@ class SlidesPage extends Page {
 		const currentSlide = Number(this.session.route.queryParams.slide ?? 1) - 1
 
 		this.state = {
-			slides: [],
+			slides: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 			currentSlide,
 		}
 	}
@@ -32,6 +32,9 @@ class SlidesPage extends Page {
 						if (currentSlide < 0) {
 							currentSlide = 0
 						}
+						if (currentSlide > this.state.slides.length) {
+							currentSlide = this.state.slides.length
+						}
 
 						this.setState({ currentSlide })
 					},
@@ -41,6 +44,8 @@ class SlidesPage extends Page {
 				new LayoutComponent({
 					style: {
 						size: 9,
+						direction: 'column',
+						padding: 8,
 					},
 					children: [
 						new TextComponent({
@@ -71,7 +76,13 @@ class SlidesPage extends Page {
 							],
 						})
 					],
-				})
+				}),
+				new LayoutComponent({
+					style: { padding: 8 },
+					children: [
+						new ProgressBarComponent({ model: 'currentSlide', total: this.state.slides.length }),
+					],
+				}),
 			],
 		})
 	}

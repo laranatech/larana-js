@@ -9,5 +9,6 @@ module.exports = {
 	...require('./text.js'),
 	...require('./text-input.js'),
 	...require('./tabs.js'),
+	...require('./progress-bar.js'),
 	...require('./charts'),
 }
