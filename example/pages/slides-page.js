@@ -1,4 +1,6 @@
-const { Page, LayoutComponent, TextComponent, keypress, ProgressBarComponent } = require('larana-js')
+const { Page, LayoutComponent, TextComponent, keypress, ProgressBarComponent, ButtonComponent } = require('larana-js')
+
+const { slides } = require('../components')
 
 class SlidesPage extends Page {
 	title = 'LaranaJS | Slides'
@@ -6,15 +8,50 @@ class SlidesPage extends Page {
 	focused = 'body'
 
 	init() {
-		const currentSlide = Number(this.session.route.queryParams.slide ?? 1) - 1
+		const currentStep = Number(this.session.route.queryParams.step ?? 1)
+
+		const s = Object.values(slides)
 
 		this.state = {
-			slides: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-			currentSlide,
+			slides: s,
+			currentStep,
+			totalSteps: s.reduce((acc, curr) => acc + curr.steps, 0),
+		}
+	}
+
+	getCurrentSlideInfo() {
+		let currentSlideIndex = -1
+		let passedSteps = 0
+
+		const { slides, currentStep, totalSteps } = this.state
+
+		slides.forEach((slide, i) => {
+			const steps = slide.steps
+			if (currentSlideIndex !== -1) {
+				return
+			}
+
+			if (passedSteps + steps >= currentStep && passedSteps <= currentStep) {
+				currentSlideIndex = i
+				return
+			}
+
+			passedSteps += steps
+		})
+
+		if (currentSlideIndex === -1) {
+			currentSlideIndex = 0
+		}
+
+		return {
+			slide: this.state.slides[currentSlideIndex],
+			passedSteps,
 		}
 	}
 
 	prepareRoot({ w, h }) {
+		const { slide, passedSteps } = this.getCurrentSlideInfo()
+
 		return new LayoutComponent({
 			id: 'body',
 			focusable: true,
@@ -24,20 +61,7 @@ class SlidesPage extends Page {
 			],
 			events: [
 				keypress({
-					handler: (data, value) => {
-						const d = value === 'ArrowLeft' ? -1 : value === 'ArrowRight' ? 1 : 0
-
-						let currentSlide = this.state.currentSlide + d
-
-						if (currentSlide < 0) {
-							currentSlide = 0
-						}
-						if (currentSlide > this.state.slides.length) {
-							currentSlide = this.state.slides.length
-						}
-
-						this.setState({ currentSlide })
-					},
+					handler: (data, value) => this.handleSlideChange(value),
 				}),
 			],
 			children: [
@@ -45,46 +69,66 @@ class SlidesPage extends Page {
 					style: {
 						size: 9,
 						direction: 'column',
-						padding: 8,
+						padding: 'var:u2',
 					},
 					children: [
-						new TextComponent({
-							text: '404',
-							style: 'h1Text',
-						}),
-						new TextComponent({
-							text: 'Go back to home',
-							style: 'text',
+						new slide({
+							step: this.state.currentStep - passedSteps,
 						}),
 					],
 				}),
 				new LayoutComponent({
-					style: { size: 1, padding: 8 },
+					style: { gap: 'var:u2', padding: 'var:u2' },
 					children: [
-						new LayoutComponent({
-							style: { size: 10 },
+						new ProgressBarComponent({
+							value: this.state.currentStep,
+							total: this.state.totalSteps,
+							style: { size: 12 },
 						}),
 						new LayoutComponent({
 							style: {
 								borderColor: '#ccc',
+								padding: 'var:u1',
+								radius: 'var:radius',
 							},
 							children: [
+								new ButtonComponent({
+									text: '←',
+									onClick: () => this.changeStep(-1),
+								}),
 								new TextComponent({
 									style: 'text',
-									text: this.state.currentSlide + 1,
+									text: this.state.currentStep,
+								}),
+								new ButtonComponent({
+									text: '→',
+									onClick: () => this.changeStep(1),
 								}),
 							],
 						})
 					],
 				}),
-				new LayoutComponent({
-					style: { padding: 8 },
-					children: [
-						new ProgressBarComponent({ model: 'currentSlide', total: this.state.slides.length }),
-					],
-				}),
 			],
 		})
+	}
+
+	handleSlideChange(value) {
+		const d = ['ArrowLeft', 'ArrowUp'].includes(value) ? -1 : ['ArrowRight', 'ArrowDown'].includes(value) ? 1 : 0
+
+		this.changeStep(d)
+	}
+
+	changeStep(d) {
+		let currentStep = this.state.currentStep + d
+
+		if (currentStep < 1) {
+			currentStep = 1
+		}
+		if (currentStep >= this.state.totalSteps) {
+			currentStep = this.state.totalSteps
+		}
+
+		this.setState({ currentStep })
 	}
 }
 

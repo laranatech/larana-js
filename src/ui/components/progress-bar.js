@@ -4,11 +4,10 @@ const { LayoutComponent } = require('./layout.js')
 class ProgressBarComponent extends BaseComponent {
 	total = 100
 	value = 0
-	model = ''
 
 	defaultStyle = {
-		radius: 4,
-		padding: 8,
+		radius: 'var:radius',
+		padding: 'var:u2',
 		bg: '#333',
 		fg: '#3caa3c',
 	}
@@ -16,17 +15,16 @@ class ProgressBarComponent extends BaseComponent {
 	constructor(data) {
 		super(data)
 
-		const { total = 100, value = 0, model = '' } = data
+		const { total = 100, value = 0 } = data
 
 		this.total = total
 		this.value = value
-		this.model = model
 	}
 
 	getChildren(data) {
 		const style = this.computeStyle(data)
 
-		const value = this.model ? data.state[this.model] : this.value
+		const value = this.getModelValue(data)
 
 		return [
 			new LayoutComponent({

@@ -34,7 +34,7 @@ class BarPage extends Page {
 			style: [
 				'body',
 				{
-					gap: 8,
+					gap: 'var:u2',
 					direction: 'column',
 				},
 			],

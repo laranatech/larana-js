@@ -33,8 +33,45 @@ const setStyleVars = (vars, theme = 'main') => {
 	})
 }
 
+const initDefaultStyleVars = () => {
+	setStyleVars({
+		fg: '#000',
+		disabledFg: '#111',
+		bg: '#eee',
+		disabledBg: '#ddd',
+		accent: '#3caa3c',
+		disabledAccent: '#3caa3caa',
+		componentBg: '#fff',
+		disabledComponentBg: '#efefef',
+		componentBorderColor: '#333',
+		fontWeight: 'medium',
+		fontFamily: 'monospace',
+		h1FontSize: 32,
+		h2FontSize: 28,
+		h3FontSize: 24,
+		fontSize: 16,
+		radius: 4,
+		u1: 4,
+		u2: 8,
+		u3: 16,
+		u4: 24,
+		u5: 32,
+	}, 'main')
+
+	setStyleVars({
+		fg: '#fff',
+		disabledFg: '#eee',
+		bg: '#444',
+		disabledBg: '#3f3f3f',
+		componentBg: '#333',
+		disabledComponentBg: '#4f4f4f',
+		componentBorderColor: '#777',
+	}, 'dark')
+}
+
 module.exports = {
 	useStyleVar,
 	setStyleVar,
 	setStyleVars,
+	initDefaultStyleVars,
 }

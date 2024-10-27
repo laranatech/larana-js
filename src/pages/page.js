@@ -62,6 +62,10 @@ class Page {
 		return Object.freeze(structuredClone(this.state))
 	}
 
+	focus(id) {
+		this.focused = id
+	}
+
 	rerender() {
 		if (!this.send) {
 			throw new Error('Page must have `send()` method')

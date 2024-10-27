@@ -1,4 +1,6 @@
 class CanvasRenderer {
+	images = new Map()
+
 	render(queue, { w, h }, initialCanvas) {
 		let canvas = initialCanvas
 
@@ -19,11 +21,10 @@ class CanvasRenderer {
 			startAngle = 0,
 			endAngle = Math.PI*2,
 			strokeStyle,
-			lineWidth = 1,
 			fillStyle,
 		} = options
 
-		ctx.lineWidth = lineWidth
+		this.applyLineParams(ctx, options)
 
 		ctx.beginPath()
 
@@ -44,9 +45,23 @@ class CanvasRenderer {
 	image(canvas, options) {
 		const ctx = canvas.getContext('2d')
 
-		const { x, y, w, h, data } = options
+		const { x, y, w, h, data, src } = options
 
-		ctx.drawImage(data, x, y, w, h)
+		const i = this.images.get(src)
+
+		if (i) {
+			ctx.drawImage(i, x, y, w, h)
+			return canvas
+		}
+
+		const img = new Image()
+
+		img.onload = () => {
+			ctx.drawImage(img, x, y, w, h)
+			this.images.set(src, img)
+		}
+
+		img.src = src ?? data
 
 		return canvas
 	}
@@ -87,6 +102,21 @@ class CanvasRenderer {
 		return canvas
 	}
 
+	applyLineParams(ctx, options) {
+		const {
+			lineWidth,
+			lineCap,
+		} = options
+
+		if (lineWidth) {
+			ctx.lineWidth = lineWidth
+		}
+
+		if (lineCap) {
+			ctx.lineCap = lineCap
+		}
+	}
+
 	rect(canvas, options) {
 		const ctx = canvas.getContext('2d')
 
@@ -99,6 +129,8 @@ class CanvasRenderer {
 			fillStyle,
 			radius,
 		} = options
+
+		this.applyLineParams(ctx, options)
 
 		if (radius) {
 			ctx.beginPath()
@@ -125,6 +157,34 @@ class CanvasRenderer {
 				ctx.strokeRect(x, y, w, h)
 			}
 		}
+
+		return canvas
+	}
+
+	line(canvas, options) {
+		const ctx = canvas.getContext('2d')
+
+		const {
+			points,
+			strokeStyle,
+		} = options
+
+		this.applyLineParams(ctx, options)
+
+		ctx.strokeStyle = strokeStyle
+
+		ctx.beginPath()
+
+		points.forEach(({ x, y }, i) => {
+			if (i === 0) {
+				ctx.moveTo(x, y)
+				return
+			}
+
+			ctx.lineTo(x, y)
+		})
+
+		ctx.stroke()
 
 		return canvas
 	}

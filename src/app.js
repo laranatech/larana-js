@@ -6,6 +6,7 @@ const { defaultConfig } = require('./config.js')
 const { Response, Request } = require('./network')
 const { prepareTemplate } = require('./ui/client')
 const { DefaultRouter } = require('./routing')
+const { initDefaultStyleVars, initDefaultStyleNames } = require('./ui/style')
 
 class LaranaApp {
 	config = { ...defaultConfig }
@@ -20,21 +21,33 @@ class LaranaApp {
 	onClose = (data) => {}
 
 	constructor(options) {
+		const config = options.config
 		const {
-			config,
 			router,
 			renderer,
 			stateManager,
 			onConnect = (data) => {
+				if (!config.debug) {
+					return
+				}
 				console.log('[onConnect]', Date.now())
 			},
 			onServe = (data) => {
+				if (!config.debug) {
+					return
+				}
 				console.log('[onServe]', Date.now())
 			},
 			onMessage = (data) => {
+				if (!config.debug) {
+					return
+				}
 				console.log('[onMessage]', Date.now())
 			},
 			onClose = (data) => {
+				if (!config.debug) {
+					return
+				}
 				console.log('[onClose]', Date.now())
 			},
 		} = options
@@ -54,6 +67,9 @@ class LaranaApp {
 		if (stateManager) {
 			this.stateManager = stateManager
 		}
+
+		initDefaultStyleVars()
+		initDefaultStyleNames()
 	}
 
 	/**

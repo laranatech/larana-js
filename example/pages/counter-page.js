@@ -22,7 +22,7 @@ class CounterPage extends Page {
 			style: [
 				'body',
 				{
-					gap: 8,
+					gap: 'var:u2',
 					direction: 'column',
 				},
 			],
@@ -45,13 +45,12 @@ class CounterPage extends Page {
 							style: {
 								direction: 'row',
 								size: 1,
-								gap: 8,
-								padding: 8,
+								gap: 'var:u2',
+								padding: 'var:u2',
 							},
 							children: [
 								new ButtonComponent({
 									text: '+',
-									style: 'button',
 									onClick: () => {
 										this.setState({ counter: this.state.counter + 1 })
 									},
@@ -63,7 +62,6 @@ class CounterPage extends Page {
 								}),
 								new ButtonComponent({
 									text: '-',
-									style: 'button',
 									onClick: () => {
 										this.setState({ counter: this.state.counter - 1 })
 									},

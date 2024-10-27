@@ -32,6 +32,7 @@
 	"dependencies": {
 		"@laranatech/schemer": "^1.0.6",
 		"canvas": "^2.11.2",
+		"qrcode": "^1.5.4",
 		"ws": "^8.18.0"
 	}
 }

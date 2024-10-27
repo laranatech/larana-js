@@ -18,7 +18,7 @@ class HeaderComponent extends BaseComponent {
 				parent: this,
 				style: {
 					direction: 'row',
-					gap: 8,
+					gap: 'var:u2',
 					bg: 'var:accent',
 				},
 				children: [

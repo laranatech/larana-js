@@ -2,8 +2,8 @@ const { BaseComponent, LayoutComponent, TextComponent, ButtonComponent } = requi
 
 class TodoItemComponent extends BaseComponent {
 	defaultStyle = {
-		gap: 8,
-		padding: 8,
+		gap: 'var:u2',
+		padding: 'var:u2',
 		radius: 'var:radius',
 		borderColor: 'var:fg',
 	}
@@ -31,7 +31,6 @@ class TodoItemComponent extends BaseComponent {
 					}),
 					new ButtonComponent({
 						text: 'X',
-						style: 'button',
 						onClick: () => {
 							this.onDelete(this.item.value)
 						},

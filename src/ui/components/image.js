@@ -1,67 +1,95 @@
 const { BaseComponent } = require('./base-component.js')
 const { LayoutComponent } = require('./layout.js')
-const { Style } = require('../style')
+const { resource, img, qrcode } = require('../../resources')
 
 class ImageComponent extends BaseComponent {
 	w = 0
 	h = 0
 	alt = ''
-	url = ''
-	img = null
+	src = null
+	qr = null
 	loaded = false
-	onload = () => {}
+	onLoad = () => {}
+
+	defaultStyle = {
+		borderWidth: 2,
+		fg: 'var:fg',
+		bg: 'var:componentBg',
+		radius: 'var:radius',
+	}
 
 	constructor(data) {
 		super(data)
 
-		const { url, alt, w, h, onload } = data
+		const { src, qr, alt, w, h, onLoad } = data
 
-		this.url = url
 		this.alt = alt
 		this.w = w
 		this.h = h
 
-		if (onload) {
-			this.onload = onload
+		if (onLoad) {
+			this.onLoad = onLoad
 		}
 
-		this.loadImage()
+		if (qr) {
+			this.qr = qr
+			qrcode(qr, this.onLoad)
+		} else {
+			this.src = src
+			img(src, this.onLoad)
+		}
 	}
 
-	async loadImage() {
-		const r = await fetch(this.url)
-		const b = Buffer.from(await r.arrayBuffer())
+	render(queue, data) {
+		const d = this.computeDimensions(data)
+		const style = this.computeStyle(data)
 
-		setTimeout(() => {
-			this.img = b
-			this.loaded = true
-			this.onload()
-		}, 3000)
-	}
+		const { x, y, w, h } = d
 
-	render(queue, state) {
-		if (!this.loaded) {
-			const root = new LayoutComponent({
-				parent: this.parent,
-				style: { bg: '#ccc' },
+		const r = resource(this.qr ?? this.src)
+
+		if (!r || r === 'pending') {
+			queue.add('rect', {
+				x, y, w, h,
+				strokeStyle: style.fg,
+				lineWidth: style.borderWidth,
+				lineCap: style.borderCap,
+				radius: style.radius,
+				fillStyle: style.bg,
 			})
 
-			root.render(queue, state)
-
+			queue.add('line', {
+				points: [
+					{ x: x + 1, y: y + 1 },
+					{ x: x + w - 1, y: y + h - 1 },
+				],
+				strokeStyle: style.fg,
+				lineCap: style.borderCap,
+				lineWidth: style.borderWidth,
+			})
+			queue.add('line', {
+				points: [
+					{ x: x + w - 1, y: y + 1 },
+					{ x: x + 1, y: y + h - 1 },
+				],
+				strokeStyle: style.fg,
+				lineCap: style.borderCap,
+				lineWidth: style.borderWidth,
+			})
+			
 			return queue
 		}
-
-		const d = this.computeDimensions(state)
 
 		queue.add('image', {
 			x: d.x,
 			y: d.y,
 			w: d.w,
 			h: d.h,
-			data: this.img,
+			data: r,
+			src: this.src,
 		})
 
-		return this.img
+		return queue
 	}
 }
 

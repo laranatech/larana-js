@@ -30,21 +30,21 @@ class TodoPage extends Page {
 			style: [
 				'body',
 				{
-					gap: 8,
+					gap: 'var:u2',
 					direction: 'column',
 				},
 			],
 			children: [
 				new HeaderComponent({}),
 				new LayoutComponent({
-					style: { size: 9, gap: 8, direction: 'column' },
+					style: { size: 9, gap: 'var:u2', direction: 'column' },
 					children: [
 						new TextComponent({
 							text: 'Todo',
 							style: 'h1Text',
 						}),
 						new LayoutComponent({
-							style: { size: 8, gap: 8, padding: 8, direction: 'column' },
+							style: { size: 8, gap: 'var:u2', padding: 'var:u2', direction: 'column' },
 							children: this.state.items.map((item) => {
 								return new TodoItemComponent({
 									item,
@@ -57,26 +57,16 @@ class TodoPage extends Page {
 							}),
 						}),
 						new LayoutComponent({
-							style: { padding: 8, gap: 8 },
+							style: { padding: 'var:u2', gap: 'var:u2' },
 							children: [
 								new TextInputComponent({
 									model: 'inputValue',
-									style: 'input',
 									onFocus: (id) => {
 										this.focused = id
 									},
-									onInput: (value, id) => {
-										if (this.focused !== id) {
-											return
-										}
-										this.setState({ inputValue: value })
-									},
 								}),
 								new ButtonComponent({
-									style: [
-										'button',
-										buttonDisabled ? { fg: '#888' } : {},
-									],
+									style: buttonDisabled ? { fg: '#888' } : {},
 									text: 'Add',
 									onClick: () => {
 										if (buttonDisabled) {

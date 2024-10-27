@@ -7,4 +7,6 @@ var ctx = canvas.getContext('2d');
 function resizeCanvas() {
 	canvas.setAttribute('width', window.innerWidth);
 	canvas.setAttribute('height', window.innerHeight);
+
+	onResize();
 }

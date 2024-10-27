@@ -6,6 +6,9 @@ const configSchemer = new Schemer({
 		type: 'bool',
 		required: false,
 	},
+	debugOptions: {
+		type: 'any',
+	},
 	port: {
 		...common.positiveInt,
 		required: false,
@@ -50,6 +53,9 @@ const configSchemer = new Schemer({
 
 const defaultConfig = {
 	debug: false,
+	debugOptions: {
+		renderOutline: true,
+	},
 	port: 1610,
 	wsPath: 'ws://localhost:1610/',
 	maxFPS: 30,
@@ -66,6 +72,7 @@ const defaultConfig = {
  * 
  * @param {{
  * debug: boolean;
+ * debugOptions: *;
  * port: number;
  * wsPath: string;
  * maxFPS: number;

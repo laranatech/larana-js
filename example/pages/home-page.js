@@ -2,6 +2,8 @@ const {
 	Page,
 	LayoutComponent,
 	TextComponent,
+	CheckboxComponent,
+	RadioComponent,
 } = require('larana-js')
 
 const { HeaderComponent, CircleComponent } = require('../components')
@@ -19,6 +21,10 @@ class HomePage extends Page {
 		this.state = {
 			radius: 30,
 			d: 1,
+			checkboxValue1: true,
+			checkboxValue2: true,
+			checkboxValue3: true,
+			radioValue: 'item_1',
 		}
 	}
 
@@ -27,15 +33,31 @@ class HomePage extends Page {
 			style: [
 				'body',
 				{
-					gap: 8,
+					gap: 'var:u2',
 					direction: 'column',
 				},
 			],
 			children: [
 				new HeaderComponent({}),
 				new LayoutComponent({
-					style: { size: 9 },
+					style: ['gap_2', { size: 9 }],
 					children: [
+						new LayoutComponent({
+							style: ['col', 'gap_2'],
+							children: [
+								new RadioComponent({ model: 'radioValue', name: 'item_1' }),
+								new RadioComponent({ model: 'radioValue', name: 'item_2' }),
+								new RadioComponent({ model: 'radioValue', name: 'item_3' }),
+							],
+						}),
+						new LayoutComponent({
+							style: ['col', 'gap_2'],
+							children: [
+								new CheckboxComponent({ model: 'checkboxValue1' }),
+								new CheckboxComponent({ model: 'checkboxValue2' }),
+								new CheckboxComponent({ model: 'checkboxValue3' }),
+							],
+						}),
 						new TextComponent({ text: 'Home' }),
 						new CircleComponent({
 							style: { size: 1, bg: 'var:accent', borderColor: '#f00' },

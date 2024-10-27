@@ -3,6 +3,10 @@ const { BaseComponent } = require('larana-js')
 class CircleComponent extends BaseComponent {
 	radius = 0
 
+	defaultStyle = {
+		borderWidth: 1,
+	}
+
 	onAnimate = () => {}
 
 	constructor(data) {
@@ -27,6 +31,7 @@ class CircleComponent extends BaseComponent {
 			radius: data.state.radius,
 			fillStyle: cs.bg,
 			strokeStyle: cs.borderColor,
+			lineWidth: cs.borderWidth,
 		})
 
 		return queue

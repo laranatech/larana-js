@@ -3,17 +3,12 @@ const { LayoutComponent } = require('../layout.js')
 const { TextComponent } = require('../text.js')
 
 class BarChartComponent extends BaseComponent {
-	model = ''
 	title = ''
 	items = []
 
 	constructor(data) {
 		super(data)
-		const { model, items, title } = data
-
-		if (model !== undefined) {
-			this.model = model
-		}
+		const { items, title } = data
 
 		if (items !== undefined) {
 			this.items = items
@@ -24,8 +19,12 @@ class BarChartComponent extends BaseComponent {
 		}
 	}
 
+	getModelValue(data) {
+		return this.model ? data.state[this.model] : this.items
+	}
+
 	render(queue, data) {
-		const items = this.model ? data.state[this.model] : this.items
+		const items = this.getModelValue(data)
 
 		let maxValue = 0
 		let totalValue = 0

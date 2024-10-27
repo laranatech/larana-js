@@ -21,7 +21,24 @@ const styleNames = (values) => {
 	})
 }
 
+const initDefaultStyleNames = () => {
+	const names = {
+		row: { direction: 'row' },
+		col: { direction: 'column' },
+	}
+
+	const items = [1, 2, 3, 4, 5]
+
+	items.forEach(((item) => {
+		names[`gap_${item}`] = { gap: `var:u${item}`}
+		names[`p_${item}`] = { padding: `var:u${item}`}
+	}))
+
+	styleNames(names)
+}
+
 module.exports = {
 	styleName,
 	styleNames,
+	initDefaultStyleNames,
 }

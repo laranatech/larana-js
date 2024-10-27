@@ -1,24 +1,21 @@
 const { BaseComponent } = require('./base-component.js')
 
 class TextComponent extends BaseComponent {
-	model = null
 	text = ''
 
 	constructor(data) {
 		super(data)
 
-		const { model, text } = data
-		if (model !== undefined) {
-			this.model = model
-		}
+		const { text = '' } = data
+		this.text = text
+	}
 
-		if (text !== undefined) {
-			this.text = text
-		}
+	getModelValue(data) {
+		return this.model ? data.state[this.model] : this.text
 	}
 
 	render(queue, data) {
-		const text = this.model ? data.state[this.model] : this.text
+		const text = this.getModelValue(data)
 
 		const d = this.computeDimensions(data)
 

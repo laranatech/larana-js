@@ -1,17 +1,15 @@
-const { BaseComponent } = require('./base-component.js')
-const { LayoutComponent } = require('./layout.js')
-const { ButtonComponent } = require('./button.js')
-const { click } = require('../events')
+const { BaseComponent } = require('../base-component.js')
+const { LayoutComponent } = require('../layout.js')
+const { ButtonComponent } = require('../button.js')
 
 class TabsComponent extends BaseComponent {
 	tabs = []
-	model = ''
 
 	defaultStyle = {
-		gap: 8,
-		padding: 8,
+		gap: 'var:u2',
+		padding: 'var:u2',
 		bg: 'var:componentBg',
-		radius: 4,
+		radius: 'var:radius',
 	}
 
 	onChange = null
@@ -19,17 +17,14 @@ class TabsComponent extends BaseComponent {
 	constructor(data) {
 		super(data)
 		
-		const { tabs, model, onChange } = data
+		const { tabs, onChange } = data
 
 		this.tabs = tabs
-		this.model = model
 		this.onChange = onChange
 	}
 
 	getChildren(data) {
-		const { state } = data
-
-		const activeTab = state[this.model]
+		const activeTab = this.getModelValue(data)
 
 		const c = new LayoutComponent({
 			parent: this,
@@ -38,13 +33,19 @@ class TabsComponent extends BaseComponent {
 					style: {
 						bg: tab.value === activeTab ? 'var:accent' : null,
 						fg: tab.disabled ? '#888' : 'var:fg',
-						radius: 4,
+						radius: 'var:radius',
 					},
 					text: tab.label,
 					onClick: () => {
-						if (this.onChange && !tab.disabled) {
+						if(tab.disabled) {
+							return
+						}
+
+						if (this.onChange) {
 							this.onChange(tab.value)
 						}
+
+						this.updateModelValue(data, tab.value)
 					},
 				})
 			}),

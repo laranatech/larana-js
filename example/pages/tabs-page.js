@@ -27,22 +27,19 @@ class TabsPage extends Page {
 			style: [
 				'body',
 				{
-					gap: 8,
+					gap: 'var:u2',
 					direction: 'column',
 				},
 			],
 			children: [
 				new HeaderComponent({}),
 				new LayoutComponent({
-					style: { size: 9, direction: 'column', padding: 8 },
+					style: { size: 9, direction: 'column', padding: 'var:u2' },
 					children: [
 						new TabsComponent({
 							style: { size: 1 },
 							tabs: this.state.tabs,
 							model: 'activeTab',
-							onChange: (value) => {
-								this.setState({ activeTab: value })
-							},
 						}),
 						new TextComponent({ style: ['h1Text', { size: 9 }], model: 'activeTab' }),
 					],

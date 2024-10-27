@@ -1,26 +1,49 @@
 # 0.2.0
 
+- **fix:** reduced animation freezing
 - **fix:** queryParams bug
+- **feat:** two way reactivity
+- **feat:** `CheckboxComponent`
+- **feat:** `RadioComponent`
+- **feat:** client-side resize
 - **feat:** `TabsComponent`
 - **feat:** `ProgressBarComponent`
 - **feat:** `onClick` arg for `ButtonComponent`
 - **feat:** `styleName`, themes, and a better way to work with styles
-- **feat:** roundedRect
+- **feat:** `defaultStyleVars`
+- **feat:** default stylenames
+- **feat:** `roundedRect`
 - **feat:** `TextInputComponent`
 - **feat:** `hover` event
 - **feat:** `keypress` event
-- **refactor:** changed some names:
-	- `getStyle()` -> `computeStyle()`
-	- `getDimensions()` -> `computeDimensions()`
+- **feat:** `ImageComponent`
+- **feat:** qrcodes
+- **feat:** rendering line on `CanvasRenderer`
+- **refactor:** `getStyle()` -> `computeStyle()`
+- **refactor:** `getDimensions()` -> `computeDimensions()`
+- **refactor:** put form components to `form` folder
+- **refactor:** put navigational components to `navigation` folder
 - **demo:** `/tabs` page
 - **demo:** `/todo` page
 
 ## TODO
 
-- fix: animations freeze on event
+- fix: `hover` doesn't work right
 - fix: min/max dimensions break layout
+- fix: client fonts
+- feat: `renderOutline` debug option
+- feat: `renderPadding` debug option
+- feat: `renderGaps` debug option
+- feat: `FormConstructor`
+- feat: filters
+- feat: opacity
+- feat: width, height
+- feat: aspect ratio
+- feat: `alignment`
+- feat: style validation
+- feat: `hoveredStyle`
+- feat: `focusedStyle`
 - feat: `scroll`
-- feat: `ImageComponent`
 - feat: circle shape
 - feat: rect shape
 - feat: polygon shape
@@ -28,6 +51,10 @@
 - feat: `FigureComponent`
 - feat: `LineChartComponent`
 - feat: `router.push()`
+- refactor: eslint
+- docs: styleguide
+- docs: howto
+- demo: `/test` page
 - demo: `/slides` page
 - demo: `/game` page
 

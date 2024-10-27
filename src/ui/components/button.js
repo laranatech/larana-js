@@ -6,7 +6,12 @@ const { TextComponent } = require('./text.js')
 class ButtonComponent extends BaseComponent {
 	text = ''
 
-	defaultStyle = {}
+	defaultStyle = {
+		fg: 'var:fg',
+		bg: 'var:componentBg',
+		radius: 'var:radius',
+		gap: 'var:u2',
+	}
 
 	onClick = null
 

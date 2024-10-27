@@ -6,4 +6,5 @@ module.exports = {
 	...require('./src/ui'),
 	...require('./src/pages'),
 	...require('./src/shared'),
+	...require('./src/resources'),
 }

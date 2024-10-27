@@ -1,8 +1,8 @@
-const { LayoutComponent } = require('./layout.js')
-const { BaseComponent } = require('./base-component.js')
-const { TextComponent } = require('./text.js')
+const { LayoutComponent } = require('../layout.js')
+const { BaseComponent } = require('../base-component.js')
+const { TextComponent } = require('../text.js')
 
-const { click, hover } = require('../events')
+const { click, hover } = require('../../events')
 
 class LinkComponent extends BaseComponent {
 	text = ''

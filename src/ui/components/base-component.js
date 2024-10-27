@@ -6,6 +6,10 @@ class BaseComponent {
 	id = crypto.randomUUID()
 
 	focusable = false
+	disabled = false
+
+	model = ''
+	value = ''
 
 	page = null
 	parent = null
@@ -27,14 +31,17 @@ class BaseComponent {
 		page,
 		children,
 		style,
+		model = '',
 		events = [],
 		focusable = false,
+		disabled = false,
 	}) {
 		if (id) {
 			this.id = id
 		}
 
 		this.focusable = focusable
+		this.disabled = disabled
 
 		if (this.focusable && !id) {
 			throw new Error('Focusable components must have an ID')
@@ -61,6 +68,37 @@ class BaseComponent {
 				child.setParent(this)
 			})
 		}
+
+		this.model = model
+	}
+
+	focus(data) {
+		if (!this.focusable) {
+			return
+		}
+
+		data.session.page.focus(this.id)
+	}
+
+	getModelValue(data) {
+		return this.model ? data.state[this.model] : this.value
+	}
+
+	computeMaxRadius({ w, h }) {
+		const side = w > h ? h : w
+		let r = side / 2
+
+		return r
+	}
+
+	updateModelValue(data, value) {
+		if (this.disabled || !this.model) {
+			return
+		}
+
+		data.session.page.setState({
+			[this.model]: value,
+		})
 	}
 
 	/**
@@ -176,6 +214,10 @@ class BaseComponent {
 		this.parent = parent
 	}
 
+	setPage(page) {
+		this.page = page
+	}
+
 	update(data) {
 		this.activeEvents = this.events
 			.map((e) => e(data, true))
@@ -236,6 +278,23 @@ class BaseComponent {
 		this.computedStyle = new Style(result)
 
 		return this.computedStyle
+	}
+
+	renderOutline(queue, data) {
+		const d = this.computeDimensions(data)
+
+		queue.add('rect', {
+			strokeStyle: '#f00',
+			lineWidth: 1,
+			...d,
+		})
+
+		this.getChildren(data).forEach((child) => {
+			child.renderOutline
+			(queue, data)
+		})
+
+		return queue
 	}
 
 	render(queue, data) {
