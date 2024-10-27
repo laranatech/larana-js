@@ -4,6 +4,7 @@ const { Request } = require('../network')
 
 class Page {
 	session = null
+	config = {}
 
 	state = {}
 	meta = ''
@@ -27,7 +28,7 @@ class Page {
 	scripts = ''
 	styles = ''
 
-	constructor({ state, meta, config }) {
+	constructor({ state, meta, config, appConfig }) {
 		if (state !== undefined) {
 			this.state = state
 		}
@@ -35,6 +36,7 @@ class Page {
 			this.meta = meta
 		}
 
+		this.config = appConfig
 		this.rerenderDelay = config.rerenderDelay
 	}
 

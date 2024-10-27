@@ -1,4 +1,5 @@
 const { Schemer, common } = require('@laranatech/schemer')
+const { mergeDeep } = require('./shared')
 
 
 const configSchemer = new Schemer({
@@ -55,13 +56,15 @@ const defaultConfig = {
 	debug: false,
 	debugOptions: {
 		renderOutline: true,
+		renderPadding: true, // TODO
+		renderGap: true, // TODO
 	},
 	port: 1610,
 	wsPath: 'ws://localhost:1610/',
 	maxFPS: 30,
-	maxBandwidth: 10 * 1024,
-	sessionLifetime: 5 * (60 * 1000),
-	storePreviousRender: true,
+	maxBandwidth: 10 * 1024, // TODO
+	sessionLifetime: 5 * (60 * 1000), // TODO
+	storePreviousRender: true, // TODO
 	initialW: 512,
 	initialH: 512,
 	defaultTheme: 'dark',
@@ -89,7 +92,7 @@ const defaultConfig = {
 const createConfig = (config) => {
 	configSchemer.validate(config)
 
-	return { ...defaultConfig, ...config }
+	return mergeDeep(defaultConfig, config)
 }
 
 module.exports = {

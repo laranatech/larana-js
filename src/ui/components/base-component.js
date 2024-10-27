@@ -281,18 +281,45 @@ class BaseComponent {
 	}
 
 	renderOutline(queue, data) {
-		const d = this.computeDimensions(data)
+		const config = data.session.page.config
+		if (!config.debug || !config.debugOptions.renderOutline) {
+			return
+		}
+
+		const { x, y, w, h } = this.computeDimensions(data)
+
+		const outlineColor = '#f00'
+		const outlineWidth = 1
 
 		queue.add('rect', {
-			strokeStyle: '#f00',
-			lineWidth: 1,
-			...d,
+			strokeStyle: outlineColor,
+			lineWidth: outlineWidth,
+			x, y, w, h,
 		})
 
-		this.getChildren(data).forEach((child) => {
-			child.renderOutline
-			(queue, data)
-		})
+		if (this.getChildren(data).length === 0) {
+			queue.add('line', {
+				points: [
+					{ x: x + 1, y: y + 1 },
+					{ x: x + w - 1, y: y + h - 1 },
+				],
+				strokeStyle: outlineColor,
+				lineWidth: outlineWidth,
+			})
+			queue.add('line', {
+				points: [
+					{ x: x + w - 1, y: y + 1 },
+					{ x: x + 1, y: y + h - 1 },
+				],
+				strokeStyle: outlineColor,
+				lineWidth: outlineWidth,
+			})
+		}
+
+		// this.getChildren(data).forEach((child) => {
+		// 	child.renderOutline
+		// 	(queue, data)
+		// })
 
 		return queue
 	}
@@ -314,6 +341,8 @@ class BaseComponent {
 		this.getChildren(data).forEach((child) => {
 			child.render(queue, data)
 		})
+
+		this.renderOutline(queue, data)
 
 		return queue
 	}

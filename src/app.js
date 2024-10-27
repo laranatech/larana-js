@@ -92,6 +92,7 @@ class LaranaApp {
 		}
 
 		const page = new PageClass({
+			appConfig: this.config,
 			config: {
 				storePreviousRender: this.config.storePreviousRender,
 				rerenderDelay: 1000 / this.config.maxFPS,

@@ -58,7 +58,7 @@ class HomePage extends Page {
 								new CheckboxComponent({ model: 'checkboxValue3' }),
 							],
 						}),
-						new TextComponent({ text: 'Home' }),
+						new TextComponent({ text: 'Home', style: 'h1Text' }),
 						new CircleComponent({
 							style: { size: 1, bg: 'var:accent', borderColor: '#f00' },
 							radius: this.state.radius,

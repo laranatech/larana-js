@@ -2,6 +2,7 @@
 
 - **fix:** reduced animation freezing
 - **fix:** queryParams bug
+- **feat:** `renderOutline` debug option
 - **feat:** two way reactivity
 - **feat:** `CheckboxComponent`
 - **feat:** `RadioComponent`
@@ -31,7 +32,6 @@
 - fix: `hover` doesn't work right
 - fix: min/max dimensions break layout
 - fix: client fonts
-- feat: `renderOutline` debug option
 - feat: `renderPadding` debug option
 - feat: `renderGaps` debug option
 - feat: `FormConstructor`

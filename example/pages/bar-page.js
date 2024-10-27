@@ -41,7 +41,6 @@ class BarPage extends Page {
 			children: [
 				new HeaderComponent({}),
 				new LayoutComponent({
-					style: { size: 1, borderColor: '#f00' },
 					children: [
 						new TextComponent({
 							text: 'Loading data for chart',
