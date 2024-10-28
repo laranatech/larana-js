@@ -1,6 +1,6 @@
 const { BaseComponent, TextComponent, ImageComponent, LayoutComponent } = require('larana-js')
 
-class SlideContactsComponent extends BaseComponent {
+class ContactsSlideComponent extends BaseComponent {
 	static steps = 1
 
 	getChildren(data) {
@@ -51,4 +51,4 @@ class SlideContactsComponent extends BaseComponent {
 	}
 }
 
-module.exports = { SlideContactsComponent }
+module.exports = { ContactsSlideComponent }

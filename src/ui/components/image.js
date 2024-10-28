@@ -1,5 +1,4 @@
 const { BaseComponent } = require('./base-component.js')
-const { LayoutComponent } = require('./layout.js')
 const { resource, img, qrcode } = require('../../resources')
 
 class ImageComponent extends BaseComponent {
@@ -76,15 +75,12 @@ class ImageComponent extends BaseComponent {
 				lineCap: style.borderCap,
 				lineWidth: style.borderWidth,
 			})
-			
+
 			return queue
 		}
 
 		queue.add('image', {
-			x: d.x,
-			y: d.y,
-			w: d.w,
-			h: d.h,
+			...d,
 			data: r,
 			src: this.src,
 		})

@@ -18,13 +18,20 @@ const resource = (name, value = null) => {
 	return r
 }
 
-const loadImage = async (src, onFirstLoad) => {
-	const r = await fetch(src)
-	const b = Buffer.from(await r.arrayBuffer())
-	const value = `data:image/png;base64,${b.toString('base64')}`
+const loadImage = async (src, onFirstLoad, retries = 3) => {
+	if (retries <= 0) {
+		return
+	}
+	try {
+		const r = await fetch(src)
+		const b = Buffer.from(await r.arrayBuffer())
+		const value = `data:image/png;base64,${b.toString('base64')}`
 
-	resource(src, value)
-	onFirstLoad(value)
+		resource(src, value)
+		onFirstLoad(value)
+	} catch(_) {
+		return loadImage(src, onFirstLoad, retries - 1)
+	}
 }
 
 const img = (src, onFirstLoad = (value) => {}) => {

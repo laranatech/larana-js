@@ -1,4 +1,4 @@
-const { Page, LayoutComponent, TextComponent, keypress, ProgressBarComponent, ButtonComponent } = require('larana-js')
+const { Page, LayoutComponent, TextComponent, keypress, ProgressBarComponent, ButtonComponent, qrcode } = require('larana-js')
 
 const { slides } = require('../components')
 
@@ -16,7 +16,40 @@ class SlidesPage extends Page {
 			slides: s,
 			currentStep,
 			totalSteps: s.reduce((acc, curr) => acc + curr.steps, 0),
+			checkboxValue1: true,
+			checkboxValue2: false,
+			checkboxValue3: false,
+			radioValue: 'item_1',
+			throbber: 0,
+			chartItems: this.prepareChartItems(),
+			todoItems: [
+				{ ts: Date.now() + 2, label: 'Buy milk', done: true },
+				{ ts: Date.now() + 3, label: 'Buy eggs', done: true },
+				{ ts: Date.now() + 4, label: 'Buy cookies', done: false },
+			],
+			todoInputValue: '',
 		}
+	}
+
+	loadResources() {
+		qrcode('Hello, world!')
+	}
+
+	prepareChartItems() {
+		return [
+			{ value: 100, label: '01' },
+			{ value: 90, label: '02' },
+			{ value: 60, label: '03' },
+			{ value: 190, label: '04' },
+			{ value: 60, label: '05' },
+			{ value: 100, label: '06' },
+			{ value: 120, label: '07' },
+			{ value: 300, label: '08' },
+			{ value: 500, label: '09' },
+			{ value: 150, label: '10' },
+			{ value: 100, label: '11' },
+			{ value: 70, label: '12' },
+		]
 	}
 
 	getCurrentSlideInfo() {
@@ -129,6 +162,7 @@ class SlidesPage extends Page {
 		}
 
 		this.setState({ currentStep })
+		this.pushQueryParams({ step: currentStep })
 	}
 }
 

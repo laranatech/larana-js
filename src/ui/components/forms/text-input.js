@@ -6,6 +6,7 @@ class TextInputComponent extends BaseComponent {
 	focusable = true
 	onFocus = () => {}
 	onInput = (value) => {}
+	onEnter = () => {}
 
 	defaultStyle = {
 		bg: 'var:componentBg',
@@ -22,6 +23,7 @@ class TextInputComponent extends BaseComponent {
 			id,
 			onFocus = () => {},
 			onInput = (value) => {},
+			onEnter = (value) => {},
 		} = data
 
 		if (!id) {
@@ -30,6 +32,7 @@ class TextInputComponent extends BaseComponent {
 
 		this.onInput = onInput
 		this.onFocus = onFocus
+		this.onEnter = onEnter
 
 		this.events = [
 			...this.events,
@@ -50,7 +53,23 @@ class TextInputComponent extends BaseComponent {
 		let inputValue = this.getModelValue(data)
 		if (value === 'Backspace') {
 			inputValue = inputValue.slice(0, -1)
+		} if (value === 'Enter') {
+			this.onEnter(inputValue)
+			return
+		} if (value === 'Delete') {
+
 		} else {
+			if ([
+				'Shift',
+				'Control',
+				'Tab',
+				'Alt',
+				'AltGraph',
+				'Compose',
+				'Escape',
+			].includes(value)) {
+				return
+			}
 			inputValue += `${value}`
 		}
 		this.onInput(inputValue)

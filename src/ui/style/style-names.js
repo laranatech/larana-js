@@ -32,6 +32,7 @@ const initDefaultStyleNames = () => {
 	items.forEach(((item) => {
 		names[`gap_${item}`] = { gap: `var:u${item}`}
 		names[`p_${item}`] = { padding: `var:u${item}`}
+		names[`size_${item}`] = { size: item }
 	}))
 
 	styleNames(names)

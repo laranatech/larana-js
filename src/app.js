@@ -1,3 +1,5 @@
+const fs = require('node:fs')
+const path = require('path')
 const { WebSocketServer } = require('ws')
 const { createServer } = require('http')
 const { MemoryStateManager, Session } = require('./state')
@@ -7,6 +9,15 @@ const { Response, Request } = require('./network')
 const { prepareTemplate } = require('./ui/client')
 const { DefaultRouter } = require('./routing')
 const { initDefaultStyleVars, initDefaultStyleNames } = require('./ui/style')
+
+
+const readFavicon = () => {
+	const clientPath = path.join(__dirname, 'static', 'favicon.ico')
+	return fs.readFileSync(clientPath, 'utf-8')
+}
+
+const favicon = readFavicon()
+
 
 class LaranaApp {
 	config = { ...defaultConfig }
@@ -72,10 +83,20 @@ class LaranaApp {
 		initDefaultStyleNames()
 	}
 
+	serveFavicon(req, res) {
+		res.setHeader('Content-type', 'image/x-icon')
+		res.statusCode = 200
+		res.end(favicon)
+	}
+
 	/**
 	 * 
 	 */
 	server(req, res) {
+		if (req.url === '/favicon.ico') {
+			this.serveFavicon(req, res)
+			return
+		}
 		const route = this.router.resolve(req.url)
 		const sessionId = this.stateManager.generateSessionId()
 		console.log(route)

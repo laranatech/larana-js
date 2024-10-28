@@ -6,6 +6,11 @@ class BarChartComponent extends BaseComponent {
 	title = ''
 	items = []
 
+	defaultStyle = {
+		fg: 'var:fg',
+		bg: 'var:accent',
+	}
+
 	constructor(data) {
 		super(data)
 		const { items, title } = data

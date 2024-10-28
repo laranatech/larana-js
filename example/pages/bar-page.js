@@ -52,13 +52,7 @@ class BarPage extends Page {
 					style: { size: 9 },
 					children: [
 						this.state.loaded
-							? new BarChartComponent({
-								model: 'items',
-								style: {
-									fg: 'var:fg',
-									bg: '#3caa3c',
-								},
-							})
+							? new BarChartComponent({ model: 'items' })
 							: new TextComponent({
 								text: `Loading: ${this.state.loadingTick}`,
 								style: 'text',

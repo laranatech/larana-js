@@ -1,6 +1,6 @@
 const { BaseComponent, TextComponent, ImageComponent, LayoutComponent } = require('larana-js')
 
-class SlideCommunityComponent extends BaseComponent {
+class CommunitySlideComponent extends BaseComponent {
 	static steps = 1
 	step = 1
 
@@ -17,9 +17,23 @@ class SlideCommunityComponent extends BaseComponent {
 				children: [
 					new TextComponent({ text: 'Большое сообщество', style: 'h1Text' }),
 					new LayoutComponent({
-						style: { size: 5 },
+						style: ['size_5', 'gap_2'],
 						children: [
-							new LayoutComponent({ style: { size: 6 } }),
+							new ImageComponent({
+								style: { size: 2 },
+								src: 'https://kucheriavyi.ru/images/slides/larana-suit.jpg',
+								onLoad: () => {
+									data.session.page.rerender()
+								},
+							}),
+							new ImageComponent({
+								style: { size: 2 },
+								src: 'https://kucheriavyi.ru/images/slides/larana-suit.jpg',
+							}),
+							new ImageComponent({
+								style: { size: 2 },
+								src: 'https://kucheriavyi.ru/images/slides/larana-suit.jpg',
+							}),
 							new ImageComponent({
 								style: { size: 2 },
 								src: 'https://kucheriavyi.ru/images/slides/larana-suit.jpg',
@@ -35,4 +49,4 @@ class SlideCommunityComponent extends BaseComponent {
 	}
 }
 
-module.exports = { SlideCommunityComponent }
+module.exports = { CommunitySlideComponent }

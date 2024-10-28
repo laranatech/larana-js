@@ -44,6 +44,8 @@ class Page {
 		this.root = new LayoutComponent({})
 	}
 
+	pushQueryParams(params) {}
+
 	// State
 
 	setSession(session) {
@@ -62,6 +64,15 @@ class Page {
 
 	get state() {
 		return Object.freeze(structuredClone(this.state))
+	}
+
+	getState() {
+		return {
+			state: this.state,
+			setState: (newState, options = { needsRerender: true }) => {
+				this.setState(newState, options)
+			}
+		}
 	}
 
 	focus(id) {

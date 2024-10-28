@@ -2,6 +2,8 @@
 
 - **fix:** reduced animation freezing
 - **fix:** queryParams bug
+- **feat:** `ListComponent`
+- **feat:** `ThrobberComponent`
 - **feat:** `renderOutline` debug option
 - **feat:** two way reactivity
 - **feat:** `CheckboxComponent`
@@ -15,6 +17,7 @@
 - **feat:** default stylenames
 - **feat:** `roundedRect`
 - **feat:** `TextInputComponent`
+- **feat:** `onEnter` event for `TextInputComponent`
 - **feat:** `hover` event
 - **feat:** `keypress` event
 - **feat:** `ImageComponent`
@@ -26,12 +29,19 @@
 - **refactor:** put navigational components to `navigation` folder
 - **demo:** `/tabs` page
 - **demo:** `/todo` page
+- **demo:** `/slides` page
 
 ## TODO
 
 - fix: `hover` doesn't work right
 - fix: min/max dimensions break layout
 - fix: client fonts
+- fix: errors when using quotes in text
+- feat: `TableComponent`
+- feat: seo features
+- feat: a11y features
+- feat: remember sessionId
+- feat: border radius for images
 - feat: `renderPadding` debug option
 - feat: `renderGaps` debug option
 - feat: `FormConstructor`
@@ -40,6 +50,7 @@
 - feat: width, height
 - feat: aspect ratio
 - feat: `alignment`
+- feat: `textAlign`
 - feat: style validation
 - feat: `hoveredStyle`
 - feat: `focusedStyle`
@@ -55,7 +66,6 @@
 - docs: styleguide
 - docs: howto
 - demo: `/test` page
-- demo: `/slides` page
 - demo: `/game` page
 
 # 0.1.1

@@ -84,13 +84,6 @@ class BaseComponent {
 		return this.model ? data.state[this.model] : this.value
 	}
 
-	computeMaxRadius({ w, h }) {
-		const side = w > h ? h : w
-		let r = side / 2
-
-		return r
-	}
-
 	updateModelValue(data, value) {
 		if (this.disabled || !this.model) {
 			return
@@ -99,6 +92,13 @@ class BaseComponent {
 		data.session.page.setState({
 			[this.model]: value,
 		})
+	}
+
+	computeMaxRadius({ w, h }) {
+		const side = w > h ? h : w
+		let r = side / 2
+
+		return r
 	}
 
 	/**
@@ -324,7 +324,10 @@ class BaseComponent {
 		return queue
 	}
 
+	onRender(queue, data) {}
+
 	render(queue, data) {
+		this.onRender(queue, data)
 		const d = this.computeDimensions(data)
 
 		const style = this.computeStyle(data)
