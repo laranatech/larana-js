@@ -1,5 +1,6 @@
 const { BaseComponent } = require('./base-component.js')
 const { resource, img, qrcode } = require('../../resources')
+const { line, rect, point } = require('../shapes')
 
 class ImageComponent extends BaseComponent {
 	w = 0
@@ -17,10 +18,10 @@ class ImageComponent extends BaseComponent {
 		radius: 'var:radius',
 	}
 
-	constructor(data) {
-		super(data)
+	constructor(options) {
+		super(options)
 
-		const { src, qr, alt, w, h, onLoad } = data
+		const { src, qr, alt, w, h, onLoad } = options
 
 		this.alt = alt
 		this.w = w
@@ -39,54 +40,51 @@ class ImageComponent extends BaseComponent {
 		}
 	}
 
-	render(queue, data) {
-		const d = this.computeDimensions(data)
-		const style = this.computeStyle(data)
+	render(queue) {
+		const d = this.computeDimensions()
+		const style = this.computeStyle()
 
 		const { x, y, w, h } = d
 
 		const r = resource(this.qr ?? this.src)
 
-		if (!r || r === 'pending') {
-			queue.add('rect', {
-				x, y, w, h,
-				strokeStyle: style.fg,
-				lineWidth: style.borderWidth,
-				lineCap: style.borderCap,
-				radius: style.radius,
-				fillStyle: style.bg,
+		if (r && r !== 'pending') {
+			queue.add('image', {
+				...d,
+				data: r,
+				src: this.src,
 			})
-
-			queue.add('line', {
-				points: [
-					{ x: x + 1, y: y + 1 },
-					{ x: x + w - 1, y: y + h - 1 },
-				],
-				strokeStyle: style.fg,
-				lineCap: style.borderCap,
-				lineWidth: style.borderWidth,
-			})
-			queue.add('line', {
-				points: [
-					{ x: x + w - 1, y: y + 1 },
-					{ x: x + 1, y: y + h - 1 },
-				],
-				strokeStyle: style.fg,
-				lineCap: style.borderCap,
-				lineWidth: style.borderWidth,
-			})
-
 			return queue
 		}
 
-		queue.add('image', {
-			...d,
-			data: r,
-			src: this.src,
-		})
+		rect({
+			x, y, w, h,
+			...style,
+			borderColor: style.fg,
+		}).to(queue)
+
+		line({
+			points: [
+				point({ x: x + 1, y: y + 1 }),
+				point({ x: x + w - 1, y: y + h - 1 }),
+			],
+			...style,
+		}).to(queue)
+
+		line({
+			points: [
+				point({ x: x + w - 1, y: y + 1 }),
+					point({ x: x + 1, y: y + h - 1 }),
+			],
+			...style,
+		}).to(queue)
 
 		return queue
 	}
 }
 
-module.exports = { ImageComponent }
+const image = (options) => {
+	return new ImageComponent(options)
+}
+
+module.exports = { ImageComponent, image }

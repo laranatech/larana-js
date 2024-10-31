@@ -56,6 +56,7 @@ const initDefaultStyleVars = () => {
 		u3: 16,
 		u4: 24,
 		u5: 32,
+		componentHeight: 42,
 	}, 'main')
 
 	setStyleVars({

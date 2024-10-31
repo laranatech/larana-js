@@ -1,7 +1,7 @@
 const { click } = require('../events/click.js')
 const { BaseComponent } = require('./base-component.js')
-const { LayoutComponent } = require('./layout.js')
-const { TextComponent } = require('./text.js')
+const { layout } = require('./layout.js')
+const { text } = require('./text.js')
 
 class ButtonComponent extends BaseComponent {
 	text = ''
@@ -11,13 +11,18 @@ class ButtonComponent extends BaseComponent {
 		bg: 'var:componentBg',
 		radius: 'var:radius',
 		gap: 'var:u2',
+		height: 'var:componentHeight',
+	}
+
+	defaultHoveredStyle = {
+		borderColor: 'var:componentBorderColor',
 	}
 
 	onClick = null
 
-	constructor(data) {
-		super(data)
-		const { text, onClick } = data
+	constructor(options) {
+		super(options)
+		const { text, onClick } = options
 
 		this.text = text
 		this.onClick = onClick
@@ -30,29 +35,21 @@ class ButtonComponent extends BaseComponent {
 		]
 	}
 
-	render(queue, data) {
-		const style = this.computeStyle(data)
-
-		const c = new LayoutComponent({
-			parent: this,
-			style,
+	root() {
+		const style = this.computeStyle()
+		return layout({
 			children: [
-				new TextComponent({
+				text({
 					text: this.text,
-					style: {
-						fg: style.fg,
-						fontFamily: style.fontFamily,
-						fontWeight: style.fontWeight,
-						fontSize: style.fontSize,
-					},
+					style,
 				}),
 			],
 		})
-
-		c.render(queue, data)
-
-		return queue
 	}
 }
 
-module.exports = { ButtonComponent }
+const button = (options) => {
+	return new ButtonComponent(options)
+}
+
+module.exports = { ButtonComponent, button }

@@ -1,7 +1,25 @@
 const { BaseComponent } = require('./base-component.js')
 
 class FigureComponent extends BaseComponent {
-	
+	template = (fig, queue) => {}
+
+	constructor(options) {
+		super(options)
+
+		if (options.template) {
+			this.template = options.template
+		}
+	}
+
+	render(queue) {
+		this.template(this, queue)
+
+		return queue
+	}
 }
 
-module.exports = { FigureComponent }
+const figure = (options) => {
+	return new FigureComponent(options)
+}
+
+module.exports = { FigureComponent, figure }

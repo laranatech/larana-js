@@ -1,6 +1,6 @@
 const { BaseComponent, text, layout } = require('larana-js')
 
-class GameSlideComponent extends BaseComponent {
+class SeoSlideComponent extends BaseComponent {
 	static steps = 1
 
 	defaultStyle = {
@@ -12,14 +12,14 @@ class GameSlideComponent extends BaseComponent {
 			children: [
 				text({
 					style: 'h1Text',
-					text: 'Demo: game',
+					text: 'SEO',
 				}),
 				layout({
 					style: ['col', 'gap_1', 'size_5'],
 					children: [
 						text({
 							style: 'h2Text',
-							text: 'Тут будет демо игры',
+							text: 'Как ларана работает с SEO?',
 						}),
 						// text({
 						// 	style: 'h2Text',
@@ -32,4 +32,4 @@ class GameSlideComponent extends BaseComponent {
 	}
 }
 
-module.exports = { GameSlideComponent }
+module.exports = { SeoSlideComponent }

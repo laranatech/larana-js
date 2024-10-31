@@ -1,31 +1,31 @@
-const { BaseComponent, TextComponent, ImageComponent, LayoutComponent } = require('larana-js')
+const { BaseComponent, text, layout } = require('larana-js')
 
 class ConsSlideComponent extends BaseComponent {
 	static steps = 2
 	step = 1
 
-	constructor(data) {
-		super(data)
-		this.step = data.step ?? 1
+	defaultStyle = {
+		direction: 'column',
 	}
 
-	getChildren(data) {
-		return [
-			new LayoutComponent({
-				parent: this,
-				style: { direction: 'column' },
-				children: [
-					new TextComponent({ text: 'Недостатки', style: 'h1Text' }),
-					new LayoutComponent({
-						style: { direction: 'column', size: 9 },
-						children: [
-							new TextComponent({ text: this.step === 2 ? '1. Game changer' : '', style: 'h3Text' }),
-							new LayoutComponent({ style: { size: 9 } }),
-						],
-					}),
-				],
-			}),
-		]
+	constructor(options) {
+		super(options)
+		this.step = options.step
+	}
+
+	root() {
+		return layout({
+			children: [
+				text({ text: 'Недостатки', style: 'h1Text' }),
+				layout({
+					style: { direction: 'column', size: 9 },
+					children: [
+						text({ text: this.step === 2 ? '1. Game changer' : '', style: 'h3Text' }),
+						layout({ style: { size: 9 } }),
+					],
+				}),
+			],
+		})
 	}
 }
 

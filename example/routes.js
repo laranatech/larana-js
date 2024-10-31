@@ -6,6 +6,7 @@ const {
 	GamePage,
 	CounterPage,
 	SlidesPage,
+	ShapesPage,
 	NotFoundPage,
 } = require('./pages')
 
@@ -17,6 +18,7 @@ module.exports = {
 		{ path: '/tabs', name: 'tabs-example', page: TabsPage },
 		{ path: '/game', name: 'game-example', page: GamePage },
 		{ path: '/slides', name: 'holy-slides', page: SlidesPage },
+		{ path: '/shapes', name: 'shapes', page: ShapesPage },
 		{ path: '/counter', name: 'counter', page: CounterPage },
 
 		{ path: '404', name: 'not-found', page: NotFoundPage },

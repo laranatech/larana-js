@@ -1,108 +1,89 @@
 const {
 	BaseComponent,
-	TextComponent,
-	LayoutComponent,
-	ImageComponent,
-	ButtonComponent,
-	RadioComponent,
-	CheckboxComponent,
-	qrcode,
+	text,
+	layout,
+	image,
+	button,
+	radio,
+	checkbox,
+	list,
 } = require('larana-js')
 
 class UIKitSlideComponent extends BaseComponent {
 	static steps = 1
 
-	getChildren(data) {
-		return [
-			new LayoutComponent({
-				parent: this,
-				style: 'col',
-				children: [
-					new TextComponent({
-						style: 'h1Text',
-						text: 'Встроенный UIKit',
-					}),
-					new LayoutComponent({
-						style: ['row', 'gap_1', 'size_5'],
-						children: [
-							new LayoutComponent({
-								style: ['col', 'gap_2'],
+	defaultStyle = {
+		direction: 'column',
+	}
+
+	root() {
+		return layout({
+			children: [
+				text({
+					style: 'h1Text',
+					text: 'Встроенный UIKit',
+				}),
+				layout({
+					style: ['row', 'gap_2', 'size_5'],
+					children: [
+						layout({
+							style: ['col', 'gap_2'],
+							children: [
+								button({ text: 'Button' }),
+								button({ text: 'Select' }),
+								button({ text: 'TextInput' }),
+								button({ text: 'DatePicker' }),
+							],
+						}),
+						list({
+							style: ['col', 'gap_2'],
+							value: [
+								{ name: 'item_1', text: 'item_1', fg: '#ff0' },
+								{ name: 'item_2', text: 'item_2', fg: '#f0f' },
+								{ name: 'item_3', text: 'item_3', fg: '#00f' },
+							],
+							template: (item, i) => layout({
+								style: 'gap_1',
 								children: [
-									new ButtonComponent({ text: 'Button' }),
-									new ButtonComponent({ text: 'Select' }),
-									new ButtonComponent({ text: 'TextInput' }),
-									new ButtonComponent({ text: 'DatePicker' }),
+									radio({
+										model: 'radioValue',
+										name: item.name,
+										style: { fg: item.fg },
+									}),
+									text({ text: item.text, style: 'h2Text' }),
 								],
 							}),
-							new LayoutComponent({
-								style: ['col', 'gap_2'],
-								children: [
-									new LayoutComponent({
-										style: 'gap_1',
-										children: [
-											new RadioComponent({
-												model: 'radioValue',
-												name: 'item_1',
-												style: { fg: '#ff0' },
-											}),
-											new TextComponent({ text: 'item_1', style: 'h2Text' }),
-										],
-									}),
-									new LayoutComponent({
-										style: 'gap_1',
-										children: [
-											new RadioComponent({
-												model: 'radioValue',
-												name: 'item_2',
-												style: { fg: '#f0f' },
-											}),
-											new TextComponent({ text: 'item_2', style: 'h2Text' }),
-										],
-									}),
-									new LayoutComponent({
-										style: 'gap_1',
-										children: [
-											new RadioComponent({
-												model: 'radioValue',
-												name: 'item_3',
-												style: { fg: '#00f' },
-											}),
-											new TextComponent({ text: 'item_3', style: 'h2Text' }),
-										],
-									}),
-								],
-							}),
-							new LayoutComponent({
-								style: ['col', 'gap_2'],
-								children: [
-									new CheckboxComponent({ model: 'checkboxValue1' }),
-									new CheckboxComponent({ model: 'checkboxValue2' }),
-									new CheckboxComponent({ model: 'checkboxValue3' }),
-								],
-							}),
-							new ImageComponent({ qr: 'Hello, world!' }),
-							new LayoutComponent({
-								style: 'col',
-								children: [
-									new TextComponent({
-										style: 'h2Text',
-										text: 'Link',
-									}),
-									new TextComponent({
-										style: 'h2Text',
-										text: 'List',
-									}),
-									new TextComponent({
-										style: 'h2Text',
-										text: 'Table',
-									}),
-								],
-							}),
-						],
-					}),
-				],
-			}),
-		]
+						}),
+						list({
+							style: ['col', 'gap_2'],
+							value: ['checkboxValue1', 'checkboxValue2', 'checkboxValue3'],
+							template: (item, i) => checkbox({ model: item }),
+						}),
+						image({ qr: 'Hello, world!' }),
+						layout({
+							style: 'col',
+							children: [
+								text({
+									style: 'h2Text',
+									text: 'Link',
+								}),
+								text({
+									style: 'h2Text',
+									text: 'List',
+								}),
+								list({
+									value: ['ListItem1', 'ListItem2', 'ListItem3'],
+								}),
+								text({
+									style: 'h2Text',
+									text: 'Table',
+								}),
+							],
+						}),
+					],
+				}),
+			],
+		})
 	}
 }
 

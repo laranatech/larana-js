@@ -4,14 +4,16 @@ module.exports = {
 	...require('./trigger.js'),
 	...require('./what-is-larana.js'),
 	...require('./philisophy.js'),
-	...require('./implementation.js'),
 	...require('./real-ssr.js'),
-	// state managment
-	// state is on server
+	// architecture
+	// 
+	...require('./implementation.js'),
+	// pylarana javarana gorana laranavel
 	...require('./routing.js'),
-	// html breaks on runtime, larana tells
-	...require('./ui-kit.js'),
+	...require('./pages.js'),
+	...require('./components.js'),
 	...require('./two-way-reactivity.js'),
+	...require('./ui-kit.js'),
 	...require('./animations.js'),
 	...require('./charts.js'),
 	...require('./config.js'),
@@ -22,12 +24,23 @@ module.exports = {
 	...require('./community.js'),
 	...require('./vuerana.js'),
 	...require('./hype.js'),
-	// demos
 	...require('./todo-list.js'),
 	...require('./game.js'),
-	// cons:
 	...require('./cons.js'),
-	// for who
-	// end
+	...require('./seo.js'),
+	...require('./a11y.js'), // А кто сам проверял на ридере?
+	// internet required - you won't have calculator
 	...require('./contacts.js'),
 }
+
+
+/**
+ * слишком продаю
+ * слишком серьёзно -> сделать смешно
+ * рассказать про жипеги
+ * рассказать про реакцию на пруф оф концепт
+ * больше философии, визионерства
+ * больше угара
+ * светлое будущее лараны
+ * пилорама
+ */

@@ -1,5 +1,6 @@
 const { BaseComponent } = require('./base-component.js')
-const { LayoutComponent } = require('./layout.js')
+const { layout } = require('./layout.js')
+const { text } = require('./text.js')
 
 class ListComponent extends BaseComponent {
 	defaultStyle = {
@@ -7,29 +8,31 @@ class ListComponent extends BaseComponent {
 		gap: 'var:u2',
 	}
 
-	template = (data, item) => {}
-
-	constructor(data) {
-		super(data)
-
-		this.template = data.template
+	template = (item, i) => {
+		return text({ text: item })
 	}
 
-	getChildren(data) {
-		const items = this.getModelValue(data)
+	constructor(options) {
+		super(options)
 
-		return [
-			new LayoutComponent({
-				style: this.computeStyle(data),
-				parent: this,
-				children: [
-					...items.map((item, i) => {
-						return this.template(data, item, i)
-					}),
-				],
-			})
-		]
+		if (options.template) {
+			this.template = options.template
+		}
+	}
+
+	root() {
+		const items = this.getModelValue()
+
+		return layout({
+			children: items.map((item, i) => {
+				return this.template(item, i)
+			}),
+		})
 	}
 }
 
-module.exports = { ListComponent }
+const list = (options) => {
+	return new ListComponent(options)
+}
+
+module.exports = { ListComponent, list }

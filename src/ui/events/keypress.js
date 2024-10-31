@@ -4,15 +4,15 @@ const keypress = ({ handler, style }) => {
 			component.eventStyles.set('keypress', style)
 		}
 
-		return (data, handle = false) => {
-			const { value, type } = data.request.event
+		return (event, handle = false) => {
+			const { value, type } = event
 
 			if (type !== 'keypress') {
 				return ''
 			}
 
 			if (handler && handle) {
-				handler(data, value)
+				handler(value)
 			}
 
 			return 'keypress'

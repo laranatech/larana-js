@@ -1,13 +1,14 @@
 const {
 	Page,
-	LayoutComponent,
-	TextComponent,
-	TextInputComponent,
-	ButtonComponent,
+	layout,
+	text,
+	textInput,
+	button,
 	hover,
+	list,
 } = require('larana-js')
 
-const { HeaderComponent, TodoItemComponent } = require('../components')
+const { header, TodoItemComponent } = require('../components')
 
 class TodoPage extends Page {
 	title = 'Todo'
@@ -26,7 +27,7 @@ class TodoPage extends Page {
 	prepareRoot({ w, h }) {
 		const buttonDisabled = this.state.inputValue === ''
 
-		return new LayoutComponent({
+		return layout({
 			style: [
 				'body',
 				{
@@ -35,38 +36,37 @@ class TodoPage extends Page {
 				},
 			],
 			children: [
-				new HeaderComponent({}),
-				new LayoutComponent({
+				header({}),
+				layout({
 					style: { size: 9, gap: 'var:u2', direction: 'column' },
 					children: [
-						new TextComponent({
+						text({
 							text: 'Todo',
 							style: 'h1Text',
 						}),
-						new LayoutComponent({
-							style: { size: 8, gap: 'var:u2', padding: 'var:u2', direction: 'column' },
-							children: this.state.items.map((item) => {
-								return new TodoItemComponent({
-									item,
-									onDelete: (value) => {
-										this.setState({
-											items: this.state.items.filter((it) => it.value !== value)
-										})
-									}
-								})
+						list({
+							style: { size: 9, padding: 'var:u2' },
+							model: 'items',
+							template: (item, i) => new TodoItemComponent({
+								item,
+								onDelete: (value) => {
+									this.setState({
+										items: this.state.items.filter((it) => it.value !== value)
+									})
+								}
 							}),
 						}),
-						new LayoutComponent({
+						layout({
 							style: { padding: 'var:u2', gap: 'var:u2' },
 							children: [
-								new TextInputComponent({
+								textInput({
 									model: 'inputValue',
 									onFocus: (id) => {
 										this.focused = id
 									},
 								}),
-								new ButtonComponent({
-									style: buttonDisabled ? { fg: '#888' } : {},
+								button({
+									style: buttonDisabled ? { fg: 'var:disabledFg' } : {},
 									text: 'Add',
 									onClick: () => {
 										if (buttonDisabled) {
@@ -80,11 +80,6 @@ class TodoPage extends Page {
 											inputValue: '',
 										})
 									},
-									events: [
-										hover({
-											style: { borderColor: !buttonDisabled ? 'var:accent' : '#f00' },
-										}),
-									],
 								}),
 							],
 						}),

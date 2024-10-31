@@ -1,35 +1,26 @@
 const { BaseComponent } = require('../base-component.js')
-const { LayoutComponent } = require('../layout.js')
-const { TextComponent } = require('../text.js')
+const { layout } = require('../layout.js')
+const { text } = require('../text.js')
 
 class BarChartComponent extends BaseComponent {
 	title = ''
-	items = []
 
 	defaultStyle = {
 		fg: 'var:fg',
 		bg: 'var:accent',
 	}
 
-	constructor(data) {
-		super(data)
-		const { items, title } = data
-
-		if (items !== undefined) {
-			this.items = items
-		}
+	constructor(options) {
+		super(options)
+		const { title } = options
 
 		if (title !== undefined) {
 			this.title = title
 		}
 	}
 
-	getModelValue(data) {
-		return this.model ? data.state[this.model] : this.items
-	}
-
-	render(queue, data) {
-		const items = this.getModelValue(data)
+	root() {
+		const items = this.getModelValue()
 
 		let maxValue = 0
 		let totalValue = 0
@@ -44,40 +35,35 @@ class BarChartComponent extends BaseComponent {
 
 		maxValue *= 1.05
 
-		const root = new LayoutComponent({
-			parent: this,
-			style: {
-				gap: 4,
-				padding: 4,
-				direction: 'row',
-			},
+		const root = layout({
+			style: ['row', 'p_1', 'gap_1'],
 			children: items.map((item) => {
 				const s = item.value / maxValue * 10
 
-				const cs = this.computeStyle(data)
+				const cs = this.computeStyle()
 
-				return new LayoutComponent({
+				return layout({
 					style: {
 						direction: 'column',
 						gap: 4,
 					},
 					children: [
-						new LayoutComponent({
+						layout({
 							style: { size: 10 - s },
 						}),
-						new LayoutComponent({
+						layout({
 							style: {
 								size: s,
 								bg: item.color ?? cs.bg,
 							},
 							children: [
-								new TextComponent({
+								text({
 									text: item.value,
 									style: { fg: cs.fg },
 								}),
 							],
 						}),
-						new TextComponent({
+						text({
 							text: item.label,
 							style: { fg: cs.fg },
 						}),
@@ -86,10 +72,12 @@ class BarChartComponent extends BaseComponent {
 			}),
 		})
 
-		root.render(queue, data)
-
-		return queue
+		return root
 	}
 }
 
-module.exports = { BarChartComponent }
+const barChart = (options) => {
+	return new BarChartComponent(options)
+}
+
+module.exports = { BarChartComponent, barChart }

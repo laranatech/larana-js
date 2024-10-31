@@ -1,4 +1,4 @@
-const { BaseComponent } = require('larana-js')
+const { BaseComponent, arc } = require('larana-js')
 
 class CircleComponent extends BaseComponent {
 	radius = 0
@@ -9,10 +9,10 @@ class CircleComponent extends BaseComponent {
 
 	onAnimate = () => {}
 
-	constructor(data) {
-		super(data)
+	constructor(options) {
+		super(options)
 
-		const { onAnimate = () => {}, radius } = data
+		const { onAnimate = () => {}, radius } = options
 
 		this.radius = radius
 		this.onAnimate = onAnimate
@@ -20,19 +20,21 @@ class CircleComponent extends BaseComponent {
 		this.onAnimate()
 	}
 
-	render(queue, data) {
-		const { x, y, w, h } = this.computeDimensions(data)
+	render(queue) {
+		const { x, y, w, h } = this.computeDimensions()
 
-		const cs = this.computeStyle(data)
+		const { bg, borderColor, borderWidth } = this.computeStyle()
 
-		queue.add('arc', {
+		const { state } = this.useState()
+
+		arc({
 			x: x + w / 2,
 			y: y + h / 2,
-			radius: data.state.radius,
-			fillStyle: cs.bg,
-			strokeStyle: cs.borderColor,
-			lineWidth: cs.borderWidth,
-		})
+			radius: state.radius,
+			bg,
+			borderColor,
+			borderWidth,
+		}).to(queue)
 
 		return queue
 	}

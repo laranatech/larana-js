@@ -1,48 +1,47 @@
-const { LayoutComponent } = require('../layout.js')
 const { BaseComponent } = require('../base-component.js')
-const { TextComponent } = require('../text.js')
+const { layout } = require('../layout.js')
+const { text } = require('../text.js')
 
-const { click, hover } = require('../../events')
+const { click } = require('../../events')
 
 class LinkComponent extends BaseComponent {
 	text = ''
 	to = {}
 
-	constructor(data) {
-		super(data)
+	defaultHoveredStyle = {
+		borderWidth: 3,
+	}
 
-		const { text, to, events = [] } = data
+	constructor(options) {
+		super(options)
+
+		const { text, to, events = [] } = options
 
 		this.text = text
 		this.to = to
 
 		this.events = [
-			click({
-				style: { borderColor: '#f00' },
-			})(this),
-			hover({
-				style: { borderWidth: 3 },
-			})(this),
+			click({})(this),
 			...events.map((e) => e(this)),
 		]
 	}
 
-	getChildren(data) {
-		const cs = this.computeStyle(data)
+	root() {
+		const style = this.computeStyle()
 
-		return [
-			new LayoutComponent({
-				parent: this,
-				style: cs,
-				children: [
-					new TextComponent({
-						text: this.text,
-						style: cs,
-					}),
-				],
-			}),
-		]
+		return layout({
+			children: [
+				text({
+					text: this.text,
+					style,
+				}),
+			],
+		})
 	}
 }
 
-module.exports = { LinkComponent }
+const link = (options) => {
+	return new LinkComponent(options)
+}
+
+module.exports = { LinkComponent, link }

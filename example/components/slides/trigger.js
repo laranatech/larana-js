@@ -1,16 +1,20 @@
-const { BaseComponent, TextComponent, LayoutComponent, ImageComponent } = require('larana-js')
+const { BaseComponent, text, layout } = require('larana-js')
 
 
 class TriggerSlideComponent extends BaseComponent {
 	static steps = 9
 	step = 1
 
-	constructor(data) {
-		super(data)
-		this.step = data.step
+	defaultStyle = {
+		direction: 'column',
 	}
 
-	getChildren(data) {
+	constructor(options) {
+		super(options)
+		this.step = options.step
+	}
+
+	root() {
 		const lines = [
 			'',
 			'Много проблем с современным фронтендом:',
@@ -23,34 +27,30 @@ class TriggerSlideComponent extends BaseComponent {
 			'- Много типовых проблем',
 		]
 
-		return [
-			new LayoutComponent({
-				parent: this,
-				style: 'col',
-				children: [
-					new TextComponent({
-						style: 'h1Text',
-						text: 'Зачем нужен ещё один фреймворк?',
-					}),
-					new LayoutComponent({
-						style: ['col', 'gap_1', 'size_5'],
-						children: [
-							...lines.splice(0, this.step).map((line) => {
-								return new TextComponent({
-									style: 'h2Text',
-									text: line,
-								})
-							}),
-							new LayoutComponent({
-								style: {
-									size: TriggerSlideComponent.steps - this.step,
-								},
-							}),
-						],
-					}),
-				],
-			}),
-		]
+		return layout({
+			children: [
+				text({
+					style: 'h1Text',
+					text: 'Зачем нужен ещё один фреймворк?',
+				}),
+				layout({
+					style: ['col', 'gap_1', 'size_5'],
+					children: [
+						...lines.splice(0, this.step).map((line) => {
+							return text({
+								style: 'h2Text',
+								text: line,
+							})
+						}),
+						layout({
+							style: {
+								size: TriggerSlideComponent.steps - this.step,
+							},
+						}),
+					],
+				}),
+			],
+		})
 	}
 }
 

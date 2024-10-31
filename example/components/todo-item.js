@@ -1,4 +1,4 @@
-const { BaseComponent, LayoutComponent, TextComponent, ButtonComponent } = require('larana-js')
+const { BaseComponent, text, layout, button } = require('larana-js')
 
 class TodoItemComponent extends BaseComponent {
 	defaultStyle = {
@@ -6,38 +6,36 @@ class TodoItemComponent extends BaseComponent {
 		padding: 'var:u2',
 		radius: 'var:radius',
 		borderColor: 'var:fg',
+		height: 'var:componentHeight',
 	}
 
 	item = null
 	onDelete = null
 
-	constructor(data) {
-		super(data)
+	constructor(options) {
+		super(options)
 
-		const { item, onDelete } = data
+		const { item, onDelete } = options
 
 		this.item = item
 		this.onDelete = onDelete
 	}
 
-	getChildren(data) {
-		return [
-			new LayoutComponent({
-				parent: this,
-				children: [
-					new TextComponent({
-						text: this.item.label,
-						style: ['text', { size: 9 }],
-					}),
-					new ButtonComponent({
-						text: 'X',
-						onClick: () => {
-							this.onDelete(this.item.value)
-						},
-					})
-				],
-			})
-		]
+	root() {
+		return layout({
+			children: [
+				text({
+					text: this.item.label,
+					style: ['text', { size: 9 }],
+				}),
+				button({
+					text: 'X',
+					onClick: () => {
+						this.onDelete(this.item.value)
+					},
+				})
+			],
+		})
 	}
 }
 

@@ -135,8 +135,8 @@ class LaranaApp {
 
 		const request = new Request({ w, h, type: 'connect' })
 
-		const queue = page.renderInitialDraw({ w, h, request })
-		const image = this.renderer.render(queue, { w, h })
+		// const queue = page.renderInitialDraw({ w, h, request })
+		// const image = this.renderer.render(queue, { w, h })
 
 		res.statusCode = 200
 
@@ -151,10 +151,11 @@ class LaranaApp {
 			clientCode: this.renderer.clientCode,
 			w,
 			h,
-			initialResponse: JSON.stringify({
-				image: image ? image.toDataURL() : '',
-				queue: queue.json(),
-			}),
+			initialResponse: JSON.stringify({ 'queue': [], image: '' }),
+			// initialResponse: JSON.stringify({
+			// 	image: image ? image.toDataURL() : '',
+			// 	queue: queue.json(),
+			// }),
 		})
 
 		res.end(clientCode)
@@ -200,6 +201,7 @@ class LaranaApp {
 		ws.on('message', (message) => {
 			const payload = JSON.parse(message.toString())
 			const session = this.stateManager.getSession(payload.sessionId)
+			session.update()
 
 			const { w, h, data } = payload
 

@@ -7,15 +7,17 @@ class TextComponent extends BaseComponent {
 		fg: 'var:fg',
 	}
 
-	constructor(data) {
-		super(data)
+	constructor(options) {
+		super(options)
 
-		const { text = '' } = data
+		const { text = '' } = options
 		this.text = text
 	}
 
-	getModelValue(data) {
-		return this.model ? data.state[this.model] : this.text
+	getModelValue() {
+		const { state } = this.useState()
+
+		return this.model ? state[this.model] : this.text
 	}
 
 	clearText(text) {
@@ -24,25 +26,29 @@ class TextComponent extends BaseComponent {
 			.replaceAll("'", "\\'")
 	}
 
-	render(queue, data) {
-		const text = this.getModelValue(data)
-
-		const d = this.computeDimensions(data)
-
-		const cs = this.computeStyle(data)
+	render(queue) {
+		const text = this.getModelValue()
+		const d = this.computeDimensions()
+		const style = this.computeStyle()
 
 		queue.add('text', {
+			// x: d.x,
+			// y: d.y,
 			x: d.x + (d.w / 2),
 			y: d.y + (d.h / 2),
-			font: cs.font,
+			font: style.font,
 			text: this.clearText(text),
-			align: cs.textAlign,
-			baseline: cs.textBaseline,
-			fg: cs.fg ?? '#000',
+			align: style.textAlign,
+			baseline: style.textBaseline,
+			fg: style.fg ?? '#000',
 		})
 
 		return queue
 	}
 }
 
-module.exports = { TextComponent }
+const text = (options) => {
+	return new TextComponent(options)
+}
+
+module.exports = { TextComponent, text }

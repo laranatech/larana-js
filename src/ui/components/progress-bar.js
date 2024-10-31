@@ -1,5 +1,5 @@
 const { BaseComponent } = require('./base-component.js')
-const { LayoutComponent } = require('./layout.js')
+const { layout } = require('./layout.js')
 
 class ProgressBarComponent extends BaseComponent {
 	total = 100
@@ -10,36 +10,36 @@ class ProgressBarComponent extends BaseComponent {
 		padding: 'var:u2',
 		bg: '#333',
 		fg: '#3caa3c',
+		height: 'var:componentHeight',
 	}
 
-	constructor(data) {
-		super(data)
+	constructor(options) {
+		super(options)
 
-		const { total = 100, value = 0 } = data
+		const { total = 100 } = options
 
 		this.total = total
-		this.value = value
 	}
 
-	getChildren(data) {
-		const style = this.computeStyle(data)
+	root() {
+		const style = this.computeStyle()
+		const value = this.getModelValue()
 
-		const value = this.getModelValue(data)
-
-		return [
-			new LayoutComponent({
-				parent: this,
-				children: [
-					new LayoutComponent({
-						style: { bg: style.fg, size: value, radius: style.radius },
-					}),
-					new LayoutComponent({
-						style: { size: this.total - value },
-					}),
-				],
-			}),
-		]
+		return layout({
+			children: [
+				layout({
+					style: { bg: style.fg, size: value, radius: style.radius },
+				}),
+				layout({
+					style: { size: this.total - value },
+				}),
+			],
+		})
 	}
 }
 
-module.exports = { ProgressBarComponent }
+const progressBar = (options) => {
+	return new ProgressBarComponent(options)
+}
+
+module.exports = { ProgressBarComponent, progressBar }

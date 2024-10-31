@@ -1,12 +1,15 @@
 const { RenderQueue } = require('../ui/rendering')
-const { LayoutComponent } = require('../ui/components')
+const { layout } = require('../ui/components')
 const { Request } = require('../network')
+const { point } = require('../ui/shapes')
 
 class Page {
 	session = null
 	config = {}
 
 	state = {}
+	componentsState = new Map()
+
 	meta = ''
 	root = null
 	initialRoot = null
@@ -16,6 +19,9 @@ class Page {
 	lastW = 0
 	lastH = 0
 	lastRender = 0
+
+	currMouse = point({ x: 0, y: 0 })
+	lastMouse = point({ x: 0, y: 0 })
 
 	rerenderDelay = 1
 	rerenderTimeout = null
@@ -41,7 +47,7 @@ class Page {
 	}
 
 	init() {
-		this.root = new LayoutComponent({})
+		this.root = layout({})
 	}
 
 	pushQueryParams(params) {}
@@ -72,6 +78,13 @@ class Page {
 			setState: (newState, options = { needsRerender: true }) => {
 				this.setState(newState, options)
 			}
+		}
+	}
+
+	getMouse() {
+		return {
+			currMouse: this.currMouse,
+			lastMouse: this.lastMouse,
 		}
 	}
 
@@ -128,6 +141,10 @@ class Page {
 
 	prepareFirstRoot({ w, h, request }) {
 		return this.prepareRoot({ w, h, request })
+	}
+
+	_patchRoot(root, payload) {
+		root.setPayload(payload)
 	}
 
 	// Rendering
@@ -189,7 +206,7 @@ class Page {
 
 		const dimensions = new Map()
 
-		root.render(queue, {
+		const payload = {
 			state: this.state,
 			x: 0,
 			y: 0,
@@ -198,21 +215,38 @@ class Page {
 			dimensions,
 			request,
 			session: this.session,
-		})
+		}
+
+		this._patchRoot(root, payload)
+
+		root._render(queue)
 
 		return queue
 	}
 
 	// Handling events
 
+	/**
+	 * 
+	 * @param {Request} request 
+	 * @returns 
+	 */
 	update(request) {
 		const { w, h } = request
+
+		if (request.event.type === 'mousemove') {
+			this.lastMouse = this.currMouse
+			this.currMouse = point({
+				x: request.event.x,
+				y: request.event.y,
+			})
+		}
 
 		const root = this.prepareRoot({ w, h, request })
 
 		const dimensions = new Map()
 
-		return root.update({
+		const payload = {
 			w,
 			h,
 			x: 0,
@@ -221,7 +255,11 @@ class Page {
 			dimensions,
 			state: this.state,
 			session: this.session,
-		})
+		}
+
+		this._patchRoot(root, payload)
+
+		return root.update(payload)
 	}
 }
 

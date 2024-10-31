@@ -1,25 +1,28 @@
 const {
 	BaseComponent,
-	TextComponent,
-	LayoutComponent,
-	ImageComponent,
-	ListComponent,
-	ButtonComponent,
-	CheckboxComponent,
-	TextInputComponent,
+	text,
+	layout,
+	button,
+	textInput,
+	list,
+	checkbox,
 } = require('larana-js')
 
 class TODOListSlideComponent extends BaseComponent {
 	static steps = 2
 	step = 1
 
-	constructor(data) {
-		super(data)
-		this.step = data.step
+	defaultStyle = {
+		direction: 'column',
 	}
 
-	toggleItem(data, item, index) {
-		const { state, setState } = data.session.page.getState()
+	constructor(options) {
+		super(options)
+		this.step = options.step
+	}
+
+	toggleItem(item, index) {
+		const { state, setState} = this.useState()
 		const items = state.todoItems
 
 		items[index].done = !item.done
@@ -29,16 +32,16 @@ class TODOListSlideComponent extends BaseComponent {
 		})
 	}
 
-	deleteItem(data, item, index) {
-		const { state, setState } = data.session.page.getState()
+	deleteItem(item, index) {
+		const { state, setState } = this.useState()
 
 		setState({
 			todoItems: state.todoItems.filter((_, i) => i !== index),
 		})
 	}
 
-	createItem(data) {
-		const { state, setState } = data.session.page.getState()
+	createItem() {
+		const { state, setState } = this.useState()
 
 		const inputValue = state.todoInputValue
 
@@ -55,30 +58,29 @@ class TODOListSlideComponent extends BaseComponent {
 		})
 	}
 
-	templateItem = (data, item, i) => {
-		return new LayoutComponent({
+	templateItem = (item, i) => {
+		return layout({
 			children: [
-				new TextComponent({
+				text({
 					text: i,
 				}),
-				new TextComponent({
+				text({
 					style: ['text', { size: 9 }],
 					text: item.label,
 				}),
-				new LayoutComponent({
+				layout({
 					style: 'gap_2',
 					children: [
-						new CheckboxComponent({
+						checkbox({
 							value: item.done,
 							onChange: () => {
-								console.log(this)
-								this.toggleItem(data, item, i)
+								this.toggleItem(item, i)
 							},
 						}),
-						new ButtonComponent({
+						button({
 							text: 'X',
 							onClick: () => {
-								this.deleteItem(data, item, i)
+								this.deleteItem(item, i)
 							},
 						}),
 					],
@@ -88,51 +90,48 @@ class TODOListSlideComponent extends BaseComponent {
 		})
 	}
 
-	getChildren(data) {
-		return [
-			new LayoutComponent({
-				parent: this,
-				style: 'col',
-				children: [
-					new TextComponent({
-						style: 'h1Text',
-						text: 'TODO-List на LaranaJS',
-					}),
-					new LayoutComponent({
-						style: ['col', 'gap_1', 'size_5'],
-						children: [
-							new LayoutComponent({
-								style: ['col', 'gap_1'],
-								children: [
-									new ListComponent({
-										style: 'size_5',
-										model: 'todoItems',
-										template: this.templateItem,
-									}),
-									new LayoutComponent({
-										style: 'gap_2',
-										children: [
-											new TextInputComponent({
-												model: 'todoInputValue',
-												onEnter: () => {
-													this.createItem(data)
-												},
-											}),
-											new ButtonComponent({
-												text: 'Add',
-												onClick: () => {
-													this.createItem(data)
-												},
-											}),
-										],
-									}),
-								],
-							}),
-						],
-					}),
-				],
-			}),
-		]
+	root() {
+		return layout({
+			children: [
+				text({
+					style: 'h1Text',
+					text: 'TODO-List на LaranaJS',
+				}),
+				layout({
+					style: ['col', 'gap_1', 'size_5'],
+					children: [
+						this.step === 1 ? text({ text: 'Пример кода TODO list' })
+						: layout({
+							style: ['col', 'gap_1'],
+							children: [
+								list({
+									style: 'size_5',
+									model: 'todoItems',
+									template: this.templateItem,
+								}),
+								layout({
+									style: 'gap_2',
+									children: [
+										textInput({
+											model: 'todoInputValue',
+											onEnter: () => {
+												this.createItem()
+											},
+										}),
+										button({
+											text: 'Add',
+											onClick: () => {
+												this.createItem()
+											},
+										}),
+									],
+								}),
+							],
+						}),
+					],
+				}),
+			],
+		})
 	}
 }
 

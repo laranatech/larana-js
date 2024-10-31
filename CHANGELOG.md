@@ -2,6 +2,15 @@
 
 - **fix:** reduced animation freezing
 - **fix:** queryParams bug
+- **feat:** `focusedStyle`
+- **feat:** `disabledStyle`
+- **feat:** more importing options
+- **feat:** `arc` shape
+- **feat:** `rect` shape
+- **feat:** `line` shape
+- **feat:** `FigureComponent`
+- **feat:** `LineChartComponent`
+- **feat:** component shorthands
 - **feat:** `ListComponent`
 - **feat:** `ThrobberComponent`
 - **feat:** `renderOutline` debug option
@@ -37,6 +46,7 @@
 - fix: min/max dimensions break layout
 - fix: client fonts
 - fix: errors when using quotes in text
+- feat: TextInput carret
 - feat: `TableComponent`
 - feat: seo features
 - feat: a11y features
@@ -53,14 +63,8 @@
 - feat: `textAlign`
 - feat: style validation
 - feat: `hoveredStyle`
-- feat: `focusedStyle`
 - feat: `scroll`
-- feat: circle shape
-- feat: rect shape
-- feat: polygon shape
 - feat: text decoration
-- feat: `FigureComponent`
-- feat: `LineChartComponent`
 - feat: `router.push()`
 - refactor: eslint
 - docs: styleguide

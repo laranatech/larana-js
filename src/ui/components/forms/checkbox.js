@@ -1,5 +1,6 @@
 const { BaseComponent } = require('../base-component.js')
 const { click } = require('../../events/click.js')
+const { rect, line, point } = require('../../shapes')
 
 class CheckboxComponent extends BaseComponent {
 	value = false
@@ -13,66 +14,70 @@ class CheckboxComponent extends BaseComponent {
 		borderWidth: 2,
 		borderCap: 'round',
 		borderColor: 'var:componentBorderColor',
+		width: 'var:componentHeight',
+		height: 'var:componentHeight',
 	}
 
-	constructor(data) {
-		super(data)
+	constructor(options) {
+		super(options)
 
 		const {
 			value = false,
 			onChange = (value) => {},
-		} = data
+		} = options
 
 		this.value = value
 		this.onChange = onChange
 
 		this.events = [
 			...this.events,
-			click({ handler: (data) => {
-				this.onClick(data)
+			click({ handler: () => {
+				this.onClick()
 			}})(this),
 		]
 	}
 
-	onClick(data) {
+	onClick() {
 		if (this.disabled) {
 			return
 		}
-		const value = this.getModelValue(data)
+		const value = this.getModelValue()
 
 		this.onChange(!value)
-		this.updateModelValue(data, !value)
+		this.updateModelValue(!value)
 	}
 
-	render(queue, data) {
-		const { x, y, w, h } = this.computeDimensions(data)
-		const style = this.computeStyle(data)
+	render(queue) {
+		const { x, y, w, h } = this.computeDimensions()
+		const style = this.computeStyle()
 
-		const value = this.getModelValue(data)
+		const value = this.getModelValue()
 
-		queue.add('rect', {
+		rect({
 			x, y, w, h,
-			radius: style.radius,
-			fillStyle: value ? style.fg : style.bg,
-			strokeStyle: style.borderColor,
-			lineWidth: style.borderWidth,
-		})
+			...style,
+			bg: value ? style.fg : style.bg,
+		}).to(queue)
 
 		if (value) {
-			queue.add('line', {
+			line({
 				points: [
-					{ x: x + w * 0.15, y: y + h * 0.4 },
-					{ x: x + w * 0.5, y: y + h * 0.7 },
-					{ x: x + w * 0.9, y: y + h * 0.15 },
+					point({ x: x + w * 0.15, y: y + h * 0.4 }),
+					point({ x: x + w * 0.5, y: y + h * 0.7 }),
+					point({ x: x + w * 0.9, y: y + h * 0.15 }),
 				],
-				strokeStyle: style.bg,
-				lineWidth: w * 0.1,
-				lineCap: style.borderCap,
-			})
+				...style,
+				borderWidth: w * 0.1,
+				borderColor: style.bg,
+			}).to(queue)
 		}
 
 		return queue
 	}
 }
 
-module.exports = { CheckboxComponent }
+const checkbox = (options) => {
+	return new CheckboxComponent(options)
+}
+
+module.exports = { CheckboxComponent, checkbox }

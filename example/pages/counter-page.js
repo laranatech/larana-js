@@ -1,12 +1,11 @@
 const {
 	Page,
-	LayoutComponent,
-	TextComponent,
-	ButtonComponent,
-	hover,
+	text,
+	layout,
+	button,
 } = require('larana-js')
 
-const { HeaderComponent } = require('../components')
+const { header } = require('../components')
 
 class CounterPage extends Page {
 	title = 'Counter'
@@ -18,7 +17,7 @@ class CounterPage extends Page {
 	}
 
 	prepareRoot({ w, h }) {
-		return new LayoutComponent({
+		return layout({
 			style: [
 				'body',
 				{
@@ -27,11 +26,11 @@ class CounterPage extends Page {
 				},
 			],
 			children: [
-				new HeaderComponent({}),
-				new LayoutComponent({
+				header({}),
+				layout({
 					style: { size: 9, direction: 'column' },
 					children: [
-						new TextComponent({
+						text({
 							style: [
 								'h2Text',
 								{
@@ -41,7 +40,7 @@ class CounterPage extends Page {
 							],
 							text: `Counter: ${this.state.counter}`,
 						}),
-						new LayoutComponent({
+						layout({
 							style: {
 								direction: 'row',
 								size: 1,
@@ -49,27 +48,17 @@ class CounterPage extends Page {
 								padding: 'var:u2',
 							},
 							children: [
-								new ButtonComponent({
+								button({
 									text: '+',
 									onClick: () => {
 										this.setState({ counter: this.state.counter + 1 })
 									},
-									events: [
-										hover({
-											style: { borderColor: 'var:accent' },
-										}),
-									],
 								}),
-								new ButtonComponent({
+								button({
 									text: '-',
 									onClick: () => {
 										this.setState({ counter: this.state.counter - 1 })
 									},
-									events: [
-										hover({
-											style: { borderColor: '#f00' },
-										}),
-									],
 								}),
 							],
 						}),

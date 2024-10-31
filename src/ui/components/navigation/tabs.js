@@ -1,6 +1,6 @@
 const { BaseComponent } = require('../base-component.js')
-const { LayoutComponent } = require('../layout.js')
-const { ButtonComponent } = require('../button.js')
+const { layout } = require('../layout.js')
+const { button } = require('../button.js')
 
 class TabsComponent extends BaseComponent {
 	tabs = []
@@ -10,26 +10,26 @@ class TabsComponent extends BaseComponent {
 		padding: 'var:u2',
 		bg: 'var:componentBg',
 		radius: 'var:radius',
+		height: 'var:componentHeight',
 	}
 
 	onChange = null
 
-	constructor(data) {
-		super(data)
+	constructor(options) {
+		super(options)
 		
-		const { tabs, onChange } = data
+		const { tabs, onChange } = options
 
 		this.tabs = tabs
 		this.onChange = onChange
 	}
 
-	getChildren(data) {
-		const activeTab = this.getModelValue(data)
+	root() {
+		const activeTab = this.getModelValue()
 
-		const c = new LayoutComponent({
-			parent: this,
+		return layout({
 			children: this.tabs.map((tab) => {
-				return new ButtonComponent({
+				return button({
 					style: {
 						bg: tab.value === activeTab ? 'var:accent' : null,
 						fg: tab.disabled ? '#888' : 'var:fg',
@@ -45,14 +45,16 @@ class TabsComponent extends BaseComponent {
 							this.onChange(tab.value)
 						}
 
-						this.updateModelValue(data, tab.value)
+						this.updateModelValue(tab.value)
 					},
 				})
 			}),
 		})
-
-		return [c]
 	}
 }
 
-module.exports = { TabsComponent }
+const tabs = (options) => {
+	return new TabsComponent(options)
+}
+
+module.exports = { TabsComponent, tabs }

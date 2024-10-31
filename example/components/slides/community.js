@@ -1,51 +1,53 @@
-const { BaseComponent, TextComponent, ImageComponent, LayoutComponent } = require('larana-js')
+const { BaseComponent, text, image, layout } = require('larana-js')
 
 class CommunitySlideComponent extends BaseComponent {
 	static steps = 1
 	step = 1
 
-	constructor(data) {
-		super(data)
-		this.step = data.step ?? 1
+	defaultStyle = {
+		direction: 'column',
 	}
 
-	getChildren(data) {
-		return [
-			new LayoutComponent({
-				parent: this,
-				style: { direction: 'column' },
-				children: [
-					new TextComponent({ text: 'Большое сообщество', style: 'h1Text' }),
-					new LayoutComponent({
-						style: ['size_5', 'gap_2'],
-						children: [
-							new ImageComponent({
-								style: { size: 2 },
-								src: 'https://kucheriavyi.ru/images/slides/larana-suit.jpg',
-								onLoad: () => {
-									data.session.page.rerender()
-								},
-							}),
-							new ImageComponent({
-								style: { size: 2 },
-								src: 'https://kucheriavyi.ru/images/slides/larana-suit.jpg',
-							}),
-							new ImageComponent({
-								style: { size: 2 },
-								src: 'https://kucheriavyi.ru/images/slides/larana-suit.jpg',
-							}),
-							new ImageComponent({
-								style: { size: 2 },
-								src: 'https://kucheriavyi.ru/images/slides/larana-suit.jpg',
-								onLoad: () => {
-									data.session.page.rerender()
-								},
-							}),
-						],
-					}),
-				],
-			}),
-		]
+	constructor(options) {
+		super(options)
+		this.step = options.step
+	}
+
+	root() {
+		const page = this.usePage()
+
+		return layout({
+			children: [
+				text({ text: 'Большое сообщество', style: 'h1Text' }),
+				layout({
+					style: ['size_5', 'gap_2'],
+					children: [
+						image({
+							style: { size: 2 },
+							src: 'https://kucheriavyi.ru/images/slides/larana-suit.jpg',
+							onLoad: () => {
+								page.rerender()
+							},
+						}),
+						image({
+							style: { size: 2 },
+							src: 'https://kucheriavyi.ru/images/slides/larana-suit.jpg',
+						}),
+						image({
+							style: { size: 2 },
+							src: 'https://kucheriavyi.ru/images/slides/larana-suit.jpg',
+						}),
+						image({
+							style: { size: 2 },
+							src: 'https://kucheriavyi.ru/images/slides/larana-suit.jpg',
+							onLoad: () => {
+								page.rerender()
+							},
+						}),
+					],
+				}),
+			],
+		})
 	}
 }
 

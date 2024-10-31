@@ -1,5 +1,6 @@
 const { BaseComponent } = require('../base-component.js')
 const { click } = require('../../events/click.js')
+const { arc } = require('../../shapes/arc.js')
 
 class RadioComponent extends BaseComponent {
 	name = ''
@@ -12,71 +13,76 @@ class RadioComponent extends BaseComponent {
 		borderWidth: 2,
 		borderCap: 'round',
 		borderColor: 'var:componentBorderColor',
+		height: 'var:componentHeight',
 	}
 
-	constructor(data) {
-		super(data)
+	constructor(options) {
+		super(options)
 
 		const {
 			name = '',
 			onSelect = (name) => {},
-		} = data
+		} = options
 
 		this.name = name
 		this.onSelect = onSelect
 
 		this.events = [
 			...this.events,
-			click({ handler: (data) => {
-				this.onClick(data)
+			click({ handler: () => {
+				this.onClick()
 			}})(this),
 		]
 	}
 
-	getIsSelected(data) {
-		const value = this.getModelValue(data)
+	getIsSelected() {
+		const value = this.getModelValue()
 		return value === this.name
 	}
 
-	onClick(data) {
-		const selected = this.getIsSelected(data)
+	onClick() {
+		const selected = this.getIsSelected()
 
 		if (this.disabled || selected) {
 			return
 		}
 
 		this.onSelect(this.name)
-		this.updateModelValue(data, this.name)
+		this.updateModelValue(this.name)
 	}
 
-	render(queue, data) {
-		const { x, y, w, h } = this.computeDimensions(data)
-		const style = this.computeStyle(data)
+	render(queue) {
+		const { x, y, w, h } = this.computeDimensions()
+		const { bg, fg, borderColor, borderWidth }= this.computeStyle()
 
-		const selected = this.getIsSelected(data)
+		const selected = this.getIsSelected()
 
 		const r = this.computeMaxRadius({ w, h })
 
-		queue.add('arc', {
+		arc({
 			x: x + w / 2,
 			y: y + h / 2,
 			radius: r,
-			fillStyle: style.bg,
-			strokeStyle: style.borderColor,
-			lineWidth: style.borderWidth,
-		})
+			bg,
+			borderColor,
+			borderWidth,
+		}).to(queue)
 
 		if (selected) {
-			queue.add('arc', {
+			arc({
 				x: x + w / 2,
 				y: y + h / 2,
 				radius: r * 0.8,
-				fillStyle: style.fg,
-			})
+				fg,
+			}).to(queue)
 		}
 
 		return queue
 	}
 }
 
-module.exports = { RadioComponent }
+const radio = (options) => {
+	return new RadioComponent(options)
+}
+
+module.exports = { RadioComponent, radio }

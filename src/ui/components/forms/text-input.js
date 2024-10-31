@@ -1,6 +1,7 @@
 const { click, keypress } = require('../../events/index.js')
 const { BaseComponent } = require('../base-component.js')
-const { TextComponent } = require('../text.js')
+const { layout } = require('../layout.js')
+const { text } = require('../text.js')
 
 class TextInputComponent extends BaseComponent {
 	focusable = true
@@ -8,15 +9,22 @@ class TextInputComponent extends BaseComponent {
 	onInput = (value) => {}
 	onEnter = () => {}
 
+	carretPosition = 0
+
 	defaultStyle = {
 		bg: 'var:componentBg',
 		fg: 'var:fg',
 		borderColor: 'var:componentBorderColor',
 		radius: 'var:radius',
+		height: 'var:componentHeight',
 	}
 
-	constructor(data) {
-		super(data)
+	defaultFocusedStyle = {
+		borderColor: 'var:accent',
+	}
+
+	constructor(options) {
+		super(options)
 
 		const {
 			model,
@@ -24,7 +32,7 @@ class TextInputComponent extends BaseComponent {
 			onFocus = () => {},
 			onInput = (value) => {},
 			onEnter = (value) => {},
-		} = data
+		} = options
 
 		if (!id) {
 			this.id = model
@@ -37,27 +45,33 @@ class TextInputComponent extends BaseComponent {
 		this.events = [
 			...this.events,
 			click({
-				handler: (data) => {
-					this.focus(data)
+				handler: () => {
+					this.focus()
 				},
 			})(this),
 			keypress({
-				handler: (data, value) => {
-					this.handleInput(data, value)
+				handler: (value) => {
+					this.handleInput(value)
 				},
 			})(this),
 		]
 	}
 
-	handleInput(data, value) {
-		let inputValue = this.getModelValue(data)
+	handleInput(value) {
+		if (!this.isFocused()) {
+			return
+		}
+
+		let inputValue = this.getModelValue()
 		if (value === 'Backspace') {
 			inputValue = inputValue.slice(0, -1)
-		} if (value === 'Enter') {
+		} else if (value === 'Enter') {
 			this.onEnter(inputValue)
 			return
-		} if (value === 'Delete') {
+		} else if (value === 'Delete') {
 
+		} else if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown',].includes(value)) {
+			this.moveCarret(value)
 		} else {
 			if ([
 				'Shift',
@@ -71,20 +85,63 @@ class TextInputComponent extends BaseComponent {
 				return
 			}
 			inputValue += `${value}`
+			this.moveCarret(value)
 		}
 		this.onInput(inputValue)
-		this.updateModelValue(data, inputValue)
+		this.updateModelValue(inputValue)
 	}
 
-	getChildren(data) {
-		return [
-			new TextComponent({
-				parent: this,
-				model: this.model,
-				style: this.computeStyle(data),
-			}),
-		]
+	moveCarret(key) {
+		const value = this.getModelValue()
+
+		let carret = this.carretPosition
+
+		if (key === 'ArrowLeft') {
+			carret -= 1
+		} else if (key === 'ArrowRight') {
+			carret += 1
+		} else if (key === 'ArrowUp') {
+			carret = 0
+		} else if (key === 'ArrowDown') {
+			carret = value.length
+		}
+
+		if (carret < 0) {
+			carret = 0
+		}
+
+		if (carret > value.length) {
+			carret = value.length
+		}
+
+		this.carretPosition = carret
+	}
+
+	getCarret() {
+		return this.carretPosition
+	}
+
+	root() {
+		let inputValue = this.getModelValue()
+
+		const carret = this.getCarret()
+
+		const a = inputValue.split('')
+		// a.splice(carret, 0, '|')
+
+		return layout({
+			children: [
+				text({
+					text: a.join(''),
+					style: this.computeStyle(),
+				}),
+			],
+		})
 	}
 }
 
-module.exports = { TextInputComponent }
+const textInput = (options) => {
+	return new TextInputComponent(options)
+}
+
+module.exports = { TextInputComponent, textInput }

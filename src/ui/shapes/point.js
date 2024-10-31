@@ -4,6 +4,8 @@ const { readonlyProperty } = require('../../shared/readonly-property.js')
 const pointSchemer = new Schemer({ x: 'number', y: 'number' })
 
 class Point {
+	static name = 'point'
+
 	x = 0
 	y = 0
 
@@ -38,4 +40,8 @@ class Point {
 	}
 }
 
-module.exports = { Point }
+const point = (options) => {
+	return new Point(options)
+}
+
+module.exports = { Point, point }

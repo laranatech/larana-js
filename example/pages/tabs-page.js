@@ -1,11 +1,11 @@
 const {
 	Page,
-	LayoutComponent,
-	TextComponent,
-	TabsComponent,
+	layout,
+	text,
+	tabs,
 } = require('larana-js')
 
-const { HeaderComponent } = require('../components')
+const { header } = require('../components')
 
 class TabsPage extends Page {
 	title = 'Tabs'
@@ -23,7 +23,7 @@ class TabsPage extends Page {
 	}
 
 	prepareRoot({ w, h }) {
-		return new LayoutComponent({
+		return layout({
 			style: [
 				'body',
 				{
@@ -32,16 +32,15 @@ class TabsPage extends Page {
 				},
 			],
 			children: [
-				new HeaderComponent({}),
-				new LayoutComponent({
+				header({}),
+				layout({
 					style: { size: 9, direction: 'column', padding: 'var:u2' },
 					children: [
-						new TabsComponent({
-							style: { size: 1 },
+						tabs({
 							tabs: this.state.tabs,
 							model: 'activeTab',
 						}),
-						new TextComponent({ style: ['h1Text', { size: 9 }], model: 'activeTab' }),
+						text({ style: ['h1Text', { size: 9 }], model: 'activeTab' }),
 					],
 				}),
 			],

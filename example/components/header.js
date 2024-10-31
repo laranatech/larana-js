@@ -1,4 +1,4 @@
-const { BaseComponent, LayoutComponent, TextComponent } = require('larana-js')
+const { BaseComponent, layout, text } = require('larana-js')
 
 class HeaderComponent extends BaseComponent {
 	items = [
@@ -10,29 +10,37 @@ class HeaderComponent extends BaseComponent {
 	defaultStyle = {
 		minHeight: 80,
 		maxHeight: 100,
+		direction: 'row',
+		gap: 'var:u2',
+		bg: 'var:accent',
 	}
 
-	getChildren(data) {
-		return [
-			new LayoutComponent({
-				parent: this,
-				style: {
-					direction: 'row',
-					gap: 'var:u2',
-					bg: 'var:accent',
-				},
-				children: [
-					new TextComponent({
-						text: 'LaranaJS',
-						style: [
-							'h1Text',
-							{ fg: 'var:fg' },
-						],
-					}),
-				],
-			})
-		]
+	root() {
+		const route = this.useRoute()
+
+		return layout({
+			outlineColor: '#f00',
+			id: 'header',
+			children: [
+				text({
+					outlineColor: '#f0f',
+					id: 'headerText1',
+					text: 'LaranaJS',
+					style: 'h1Text',
+				}),
+				text({
+					outlineColor: '#f0f',
+					id: 'headerText2',
+					text: route.name,
+					style: 'h3Text',
+				}),
+			],
+		})
 	}
 }
 
-module.exports = { HeaderComponent }
+const header = (options) => {
+	return new HeaderComponent(options)
+}
+
+module.exports = { HeaderComponent, header }

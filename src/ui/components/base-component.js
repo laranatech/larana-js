@@ -1,9 +1,12 @@
 const crypto = require('crypto')
 
 const { Style } = require('../style')
+const { rect, line, point } = require('../shapes')
 
 class BaseComponent {
 	id = crypto.randomUUID()
+
+	payload = null
 
 	focusable = false
 	disabled = false
@@ -13,10 +16,34 @@ class BaseComponent {
 
 	page = null
 	parent = null
+
+	_root = null
+
 	children = []
+	computedChildren = []
 
 	style = {}
 	defaultStyle = {}
+	focusedStyle = {}
+	defaultFocusedStyle = {}
+	hoveredStyle = {}
+	defaultHoveredStyle = {}
+	disabledStyle = {}
+	defaultDisabledStyle = {}
+
+	defaultStyle = {
+		_disabled: {},
+		_focused: {},
+		_hovered: {},
+	}
+
+	style = {
+		_disabled: {},
+		_focused: {},
+		_hovered: {},
+	}
+
+	preComputedStyle = null
 	computedStyle = null
 
 	computedDimensions = null
@@ -25,12 +52,19 @@ class BaseComponent {
 	eventStyles = new Map()
 	activeEvents = []
 
+	outlineColor = '#f00'
+
 	constructor({
 		id,
 		parent,
 		page,
 		children,
-		style,
+		value,
+		style = {},
+		focusedStyle = {},
+		hoveredStyle = {},
+		disabledStyle = {},
+		outlineColor = '#f00',
 		model = '',
 		events = [],
 		focusable = false,
@@ -39,6 +73,12 @@ class BaseComponent {
 		if (id) {
 			this.id = id
 		}
+
+		if (value) {
+			this.value = value
+		}
+
+		this.outlineColor = outlineColor
 
 		this.focusable = focusable
 		this.disabled = disabled
@@ -51,9 +91,10 @@ class BaseComponent {
 			this.parent = parent
 		}
 
-		if (style !== undefined) {
-			this.style = style
-		}
+		this.style = style
+		this.focusedStyle = focusedStyle
+		this.hoveredStyle = hoveredStyle
+		this.disabledStyle = disabledStyle
 
 		this.events = events.map((e) => e(this))
 
@@ -72,24 +113,29 @@ class BaseComponent {
 		this.model = model
 	}
 
-	focus(data) {
+	focus() {
 		if (!this.focusable) {
 			return
 		}
 
-		data.session.page.focus(this.id)
+		const page = this.usePage()
+
+		page.focus(this.id)
 	}
 
-	getModelValue(data) {
-		return this.model ? data.state[this.model] : this.value
+	getModelValue() {
+		const { state } = this.useState()
+		return this.model ? state[this.model] : this.value
 	}
 
-	updateModelValue(data, value) {
+	updateModelValue(value) {
 		if (this.disabled || !this.model) {
 			return
 		}
 
-		data.session.page.setState({
+		const { setState } = this.useState()
+
+		setState({
 			[this.model]: value,
 		})
 	}
@@ -101,17 +147,62 @@ class BaseComponent {
 		return r
 	}
 
+	preComputeStyle() {
+		if (this.preComputedStyle) {
+			return this.preComputedStyle
+		}
+
+		const styles = [
+			this.defaultStyle,
+		]
+
+		if (Array.isArray(this.style)) {
+			styles.push(...this.style)
+		} else {
+			styles.push(this.style)
+		}
+
+		if (this.focusable && this.isFocused()) {
+			styles.push(this.defaultFocusedStyle)
+			styles.push(this.focusedStyle)
+		}
+
+		if (this.disabled) {
+			styles.push(this.defaultDisabledStyle)
+			styles.push(this.disabledStyle)
+		}
+
+		const { request, session } = this.usePayload()
+
+		const result = Style.compute(styles, request, session)
+
+		this.preComputedStyle = new Style(result)
+
+		return this.preComputedStyle
+	}
+
+	computeSize() {
+		return {
+			size: 0,
+			width: null,
+			minWidth: null,
+			maxWidth: null,
+			height: null,
+			minHeight: null,
+			maxHeight: null,
+		}
+	}
+
 	/**
 	 * 
-	 * @param {{ x: number; y: number; w: number; h: number; dimensions: Map }} data 
 	 * @returns {{ x: number; y: number; w: number; h: number }}
 	 */
-	computeDimensions(data, withEvents) {
+	computeDimensions() {
 		if (this.computedDimensions) {
 			return this.computedDimensions
 		}
 
-		const { x, y, w, h, state, dimensions, request, session } = data
+		const { x, y, w, h, state, dimensions, request, session } = this.usePayload()
 
 		if (!this.parent) {
 			const d = { x, y, w, h }
@@ -126,9 +217,9 @@ class BaseComponent {
 			return stateDimensions
 		}
 
-		const parrentDimensions = this.parent.computeDimensions({...data, x, y, w, h })
+		const parrentDimensions = this.parent.computeDimensions()
 
-		const parentStyle = this.parent.computeStyle(data, withEvents)
+		const parentStyle = this.parent.preComputeStyle()
 
 		const { padding, gap, direction } = parentStyle
 
@@ -139,7 +230,7 @@ class BaseComponent {
 			h: parrentDimensions.h - padding * 2,
 		}
 
-		const siblings = this.parent.getChildren(data)
+		const siblings = this.parent.children
 
 		if (siblings.length <= 1) {
 			dimensions.set(this.id, workingDimensions)
@@ -147,7 +238,7 @@ class BaseComponent {
 			return workingDimensions
 		}
 
-		const totalSize = siblings.reduce((acc, sibling) => acc + sibling.computeStyle(data, withEvents).size, 0)
+		const totalSize = siblings.reduce((acc, sibling) => acc + sibling.preComputeStyle().size, 0)
 
 		const d = { x: 0, y: 0, w: 0, h: 0 }
 
@@ -163,13 +254,13 @@ class BaseComponent {
 				return
 			}
 
-			sizeOffset += sibling.computeStyle(data, withEvents).size
+			sizeOffset += sibling.preComputeStyle().size
 		})
 
 		const totalGap = gap * (siblings.length - 1)
 		const currentGap = currIndex === 0 ? 0 : gap * currIndex
 
-		const { minWidth, maxWidth, minHeight, maxHeight, size } = this.computeStyle(data, withEvents)
+		const { minWidth, maxWidth, minHeight, maxHeight, size } = this.preComputeStyle()
 
 		if (direction === 'row') {
 			d.x = workingDimensions.x + (sizeOffset / totalSize) * (workingDimensions.w - totalGap) + currentGap
@@ -206,27 +297,136 @@ class BaseComponent {
 		return d
 	}
 
-	getChildren(data) {
-		return this.children
+	computeStyle() {
+		const styles = [this.preComputeStyle()]
+
+		// if (request.event) {
+		// 	// TODO
+		// 	this.activeEvents = this.events
+		// 		.map((e) => e(false))
+		// 		.filter((e) => e !== '')
+
+		// 	this.activeEvents.forEach((e) => {
+		// 		const s = this.eventStyles.get(e)
+		// 		if (s) {
+		// 			styles.push(s)
+		// 		}
+		// 	})
+		// }
+
+		const { request, session } = this.usePayload()
+
+		const d = this.computeDimensions()
+		const { currMouse } = this.useMouse()
+
+		const hovered = currMouse.collide(d)
+
+		if (hovered) {
+			styles.push(this.defaultHoveredStyle)
+			styles.push(this.hoveredStyle)
+		}
+
+		const result = Style.compute(styles, request, session)
+
+		this.computedStyle = new Style(result)
+
+		return this.computedStyle
+	}
+
+	getChildren() {
+		const root = this.getRoot()
+		return root.children
 	}
 
 	setParent(parent) {
 		this.parent = parent
 	}
 
-	setPage(page) {
-		this.page = page
+	setPayload(payload) {
+		this.payload = payload
 	}
 
-	update(data) {
+	_patchRoot() {
+
+	}
+
+	_patchChildren() {
+
+	}
+
+	_patch(root, payload) {
+		// if (this.parent) {
+			// root.setParent(this)
+		// }
+		root.setPayload(payload)
+
+		root.children.forEach((child) => {
+			root._patch(child, payload)
+			// if (root) {
+				// child.setParent(root)
+			// }
+		})
+	}
+
+	usePayload() {
+		return this.payload
+	}
+
+	useSession() {
+		const session = this.usePayload().session
+
+		return session
+	}
+
+	useRequest() {
+		return this.usePayload().request
+	}
+
+	useEvent() {
+		return this.useRequest().event
+	}
+
+	useMouse() {
+		return this.usePage().getMouse()
+	}
+
+	useRoute() {
+		const session = this.useSession()
+
+		return session.route
+	}
+
+	usePage() {
+		const session = this.useSession()
+
+		return session.page
+	}
+
+	useState() {
+		const page = this.usePage()
+
+		return page.getState()
+	}
+
+	useConfig() {
+		return this.usePage().config
+	}
+
+	isFocused() {
+		return this.usePage().focused === this.id
+	}
+
+	update() {
+		const event = this.useEvent()
+
 		this.activeEvents = this.events
-			.map((e) => e(data, true))
+			.map((e) => e(event, true))
 			.filter((e) => e !== '')
 
 		let updated = false
 
-		this.getChildren(data).forEach((child) => {
-			const childUpdated = child.update(data)
+		this.getChildren().forEach((child) => {
+			const childUpdated = child.update()
 
 			if (childUpdated) {
 				updated = true
@@ -238,116 +438,102 @@ class BaseComponent {
 		}
 
 		// TODO
-		// return true
-		return updated
+		return true
+		// return updated
 	}
 
-	computeStyle(data, withEvents = true) {
-		if (this.computedStyle) {
-			return this.computedStyle
-		}
-
-		const { request, session } = data
-
-		const styles = [
-			this.defaultStyle,
-		]
-
-		if (Array.isArray(this.style)) {
-			styles.push(...this.style)
-		} else {
-			styles.push(this.style)
-		}
-
-		if (request.event && withEvents) {
-			// TODO
-			this.activeEvents = this.events
-				.map((e) => e(data, false))
-				.filter((e) => e !== '')
-
-			this.activeEvents.forEach((e) => {
-				const s = this.eventStyles.get(e)
-				if (s) {
-					styles.push(s)
-				}
-			})
-		}
-
-		const result = Style.compute(styles, request, session)
-
-		this.computedStyle = new Style(result)
-
-		return this.computedStyle
-	}
-
-	renderOutline(queue, data) {
-		const config = data.session.page.config
+	_renderOutline(queue) {
+		const config = this.useConfig()
 		if (!config.debug || !config.debugOptions.renderOutline) {
 			return
 		}
 
-		const { x, y, w, h } = this.computeDimensions(data)
+		const { x, y, w, h } = this.computeDimensions()
 
-		const outlineColor = '#f00'
-		const outlineWidth = 1
+		const borderColor = this.outlineColor
+		const borderWidth = 1
 
-		queue.add('rect', {
-			strokeStyle: outlineColor,
-			lineWidth: outlineWidth,
+		rect({
+			borderColor,
+			borderWidth,
 			x, y, w, h,
-		})
+		}).to(queue)
 
-		if (this.getChildren(data).length === 0) {
-			queue.add('line', {
+		if (this.children.length === 0) {
+			line({
 				points: [
-					{ x: x + 1, y: y + 1 },
-					{ x: x + w - 1, y: y + h - 1 },
+					point({ x: x + 1, y: y + 1 }),
+					point({ x: x + w - 1, y: y + h - 1 }),
 				],
-				strokeStyle: outlineColor,
-				lineWidth: outlineWidth,
-			})
-			queue.add('line', {
+				borderColor,
+				borderWidth,
+			}).to(queue)
+			line({
 				points: [
-					{ x: x + w - 1, y: y + 1 },
-					{ x: x + 1, y: y + h - 1 },
+					point({ x: x + w - 1, y: y + 1 }),
+						point({ x: x + 1, y: y + h - 1 }),
 				],
-				strokeStyle: outlineColor,
-				lineWidth: outlineWidth,
-			})
+				borderColor,
+				borderWidth,
+			}).to(queue)
 		}
-
-		// this.getChildren(data).forEach((child) => {
-		// 	child.renderOutline
-		// 	(queue, data)
-		// })
 
 		return queue
 	}
 
-	onRender(queue, data) {}
+	onRender(queue) {}
 
-	render(queue, data) {
-		this.onRender(queue, data)
-		const d = this.computeDimensions(data)
-
-		const style = this.computeStyle(data)
-
-		queue.add('rect', {
-			fillStyle: style.bg,
-			strokeStyle: style.borderColor,
-			lineWidth: style.borderWidth,
-			lineCap: style.borderCap,
-			radius: style.radius,
-			...d,
-		})
-
-		this.getChildren(data).forEach((child) => {
-			child.render(queue, data)
-		})
-
-		this.renderOutline(queue, data)
-
+	render(queue) {
 		return queue
+	}
+
+	_render(queue) {
+		this.onRender(queue)
+
+		const root = this.getRoot()
+
+		root.render(queue)
+
+		root.children.forEach((child) => {
+			// child.setParent(root)
+			child._render(queue)
+		})
+
+		root._renderOutline(queue)
+		return queue
+	}
+
+	getRoot() {
+		if (this._root) {
+			return this._root
+		}
+		const payload = this.usePayload()
+		const root = this.root()
+
+		if (root !== this) {
+			root.setParent(this)
+		}
+
+		root.style = this.computeStyle()
+
+		// root.setParent(this.parent ?? this)
+		// if (this.parent) {
+		// 	root.setParent(this.parent)
+		// }
+
+		// root.children.forEach(() => {
+
+		// })
+
+		this._patch(root, payload)
+
+		this._root = root
+
+		return root
+	}
+
+	root() {
+		return this
 	}
 }
 

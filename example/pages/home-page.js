@@ -1,12 +1,13 @@
 const {
 	Page,
-	LayoutComponent,
-	TextComponent,
-	CheckboxComponent,
-	RadioComponent,
+	layout,
+	text,
+	radio,
+	checkbox,
+	list,
 } = require('larana-js')
 
-const { HeaderComponent, CircleComponent } = require('../components')
+const { header, CircleComponent } = require('../components')
 
 class HomePage extends Page {
 	title = 'Home'
@@ -29,7 +30,7 @@ class HomePage extends Page {
 	}
 
 	prepareRoot({ w, h }) {
-		return new LayoutComponent({
+		return layout({
 			style: [
 				'body',
 				{
@@ -38,27 +39,35 @@ class HomePage extends Page {
 				},
 			],
 			children: [
-				new HeaderComponent({}),
-				new LayoutComponent({
+				header({}),
+				layout({
 					style: ['gap_2', { size: 9 }],
 					children: [
-						new LayoutComponent({
+						list({
 							style: ['col', 'gap_2'],
-							children: [
-								new RadioComponent({ model: 'radioValue', name: 'item_1' }),
-								new RadioComponent({ model: 'radioValue', name: 'item_2' }),
-								new RadioComponent({ model: 'radioValue', name: 'item_3' }),
+							value: [
+								{ name: 'item_1', text: 'item_1', fg: '#ff0' },
+								{ name: 'item_2', text: 'item_2', fg: '#f0f' },
+								{ name: 'item_3', text: 'item_3', fg: '#00f' },
 							],
+							template: (item, i) => layout({
+								style: 'gap_1',
+								children: [
+									radio({
+										model: 'radioValue',
+										name: item.name,
+										style: { fg: item.fg },
+									}),
+									text({ text: item.text, style: 'h2Text' }),
+								],
+							}),
 						}),
-						new LayoutComponent({
+						list({
 							style: ['col', 'gap_2'],
-							children: [
-								new CheckboxComponent({ model: 'checkboxValue1' }),
-								new CheckboxComponent({ model: 'checkboxValue2' }),
-								new CheckboxComponent({ model: 'checkboxValue3' }),
-							],
+							value: ['checkboxValue1', 'checkboxValue2', 'checkboxValue3'],
+							template: (item, i) => checkbox({ model: item }),
 						}),
-						new TextComponent({ text: 'Home', style: 'h1Text' }),
+						text({ text: 'Home', style: 'h1Text' }),
 						new CircleComponent({
 							style: { size: 1, bg: 'var:accent', borderColor: '#f00' },
 							radius: this.state.radius,

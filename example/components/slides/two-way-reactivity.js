@@ -1,21 +1,28 @@
 const {
 	BaseComponent,
-	TextComponent,
-	CheckboxComponent,
-	RadioComponent,
-	LayoutComponent,
+	text,
+	layout,
+	list,
+	radio,
+	checkbox,
 } = require('larana-js')
 
 class ReactivitySlideComponent extends BaseComponent {
 	static steps = 1
 
-	getChildren(data) {
+	defaultStyle = {
+		direction: 'column',
+	}
+
+	root() {
+		const { state } = this.useState()
+
 		const textLines = [
 			'state: {',
-			`    radioValue: "${data.session.page.state.radioValue}",`,
-			`    checkboxValue1: ${data.session.page.state.checkboxValue1},`,
-			`    checkboxValue2: ${data.session.page.state.checkboxValue2},`,
-			`    checkboxValue3: ${data.session.page.state.checkboxValue3},`,
+			`    radioValue: "${state.radioValue}",`,
+			`    checkboxValue1: ${state.checkboxValue1},`,
+			`    checkboxValue2: ${state.checkboxValue2},`,
+			`    checkboxValue3: ${state.checkboxValue3},`,
 			'}',
 		]
 
@@ -42,82 +49,56 @@ class ReactivitySlideComponent extends BaseComponent {
 			return 'var:fg'
 		}
 
-		return [
-			new LayoutComponent({
-				parent: this,
-				style: { direction: 'column' },
-				children: [
-					new TextComponent({ text: 'Реактивность', style: 'h1Text' }),
-					new LayoutComponent({
-						style: { size: 9 },
-						children: [
-							new LayoutComponent({
-								style: ['col', 'gap_2'],
+		return layout({
+			children: [
+				text({ text: 'Реактивность', style: 'h1Text' }),
+				layout({
+					style: { size: 9 },
+					children: [
+						list({
+							style: ['col', 'gap_2'],
+							value: [
+								{ name: 'item_1', text: 'item_1', fg: '#ff0' },
+								{ name: 'item_2', text: 'item_2', fg: '#f0f' },
+								{ name: 'item_3', text: 'item_3', fg: '#00f' },
+							],
+							template: (item, i) => layout({
+								style: 'gap_1',
 								children: [
-									new LayoutComponent({
-										style: 'gap_1',
-										children: [
-											new RadioComponent({
-												model: 'radioValue',
-												name: 'item_1',
-												style: { fg: '#ff0' },
-											}),
-											new TextComponent({ text: 'item_1', style: 'h2Text' }),
-										],
+									radio({
+										model: 'radioValue',
+										name: item.name,
+										style: { fg: item.fg },
 									}),
-									new LayoutComponent({
-										style: 'gap_1',
-										children: [
-											new RadioComponent({
-												model: 'radioValue',
-												name: 'item_2',
-												style: { fg: '#f0f' },
-											}),
-											new TextComponent({ text: 'item_2', style: 'h2Text' }),
-										],
-									}),
-									new LayoutComponent({
-										style: 'gap_1',
-										children: [
-											new RadioComponent({
-												model: 'radioValue',
-												name: 'item_3',
-												style: { fg: '#00f' },
-											}),
-											new TextComponent({ text: 'item_3', style: 'h2Text' }),
-										],
-									}),
+									text({ text: item.text, style: 'h2Text' }),
 								],
 							}),
-							new LayoutComponent({
-								style: ['col', 'gap_2'],
-								children: [
-									new CheckboxComponent({ model: 'checkboxValue1' }),
-									new CheckboxComponent({ model: 'checkboxValue2' }),
-									new CheckboxComponent({ model: 'checkboxValue3' }),
-								],
-							}),
-							new LayoutComponent({
-								style: ['size_5', 'col'],
-								children: [
-									...textLines.map((line) => {
-										return new TextComponent({
-											style: [
-												'h1Text',
-												{ textAlign: 'left',
-													fg: getLineColor(line),
-												},
-											],
-											text: line,
-										})
-									}),
-								],
-							}),
-						],
-					}),
-				],
-			}),
-		]
+						}),
+						list({
+							style: ['col', 'gap_2'],
+							value: ['checkboxValue1', 'checkboxValue2', 'checkboxValue3'],
+							template: (item, i) => checkbox({ model: item }),
+						}),
+						layout({
+							style: ['size_5', 'col'],
+							children: [
+								...textLines.map((line) => {
+									return text({
+										style: [
+											'h1Text',
+											{ textAlign: 'left',
+												fg: getLineColor(line),
+											},
+										],
+										text: line,
+									})
+								}),
+							],
+						}),
+					],
+				}),
+			],
+		})
 	}
 }
 

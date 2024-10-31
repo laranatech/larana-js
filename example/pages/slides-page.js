@@ -1,4 +1,4 @@
-const { Page, LayoutComponent, TextComponent, keypress, ProgressBarComponent, ButtonComponent, qrcode } = require('larana-js')
+const { Page, text, layout, keypress, progressBar, button, qrcode } = require('larana-js')
 
 const { slides } = require('../components')
 
@@ -21,6 +21,7 @@ class SlidesPage extends Page {
 			checkboxValue3: false,
 			radioValue: 'item_1',
 			throbber: 0,
+			progress: 0,
 			chartItems: this.prepareChartItems(),
 			todoItems: [
 				{ ts: Date.now() + 2, label: 'Buy milk', done: true },
@@ -85,7 +86,7 @@ class SlidesPage extends Page {
 	prepareRoot({ w, h }) {
 		const { slide, passedSteps } = this.getCurrentSlideInfo()
 
-		return new LayoutComponent({
+		return layout({
 			id: 'body',
 			focusable: true,
 			style: [
@@ -94,11 +95,11 @@ class SlidesPage extends Page {
 			],
 			events: [
 				keypress({
-					handler: (data, value) => this.handleSlideChange(value),
+					handler: (value) => this.handleSlideChange(value),
 				}),
 			],
 			children: [
-				new LayoutComponent({
+				layout({
 					style: {
 						size: 9,
 						direction: 'column',
@@ -110,30 +111,30 @@ class SlidesPage extends Page {
 						}),
 					],
 				}),
-				new LayoutComponent({
+				layout({
 					style: { gap: 'var:u2', padding: 'var:u2' },
 					children: [
-						new ProgressBarComponent({
-							value: this.state.currentStep,
+						progressBar({
+							model: 'currentStep',
 							total: this.state.totalSteps,
 							style: { size: 12 },
 						}),
-						new LayoutComponent({
+						layout({
 							style: {
 								borderColor: '#ccc',
 								padding: 'var:u1',
 								radius: 'var:radius',
 							},
 							children: [
-								new ButtonComponent({
+								button({
 									text: '←',
 									onClick: () => this.changeStep(-1),
 								}),
-								new TextComponent({
+								text({
 									style: 'text',
 									text: this.state.currentStep,
 								}),
-								new ButtonComponent({
+								button({
 									text: '→',
 									onClick: () => this.changeStep(1),
 								}),

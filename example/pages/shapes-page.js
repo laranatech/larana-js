@@ -1,9 +1,9 @@
-const { Page, text, layout } = require('larana-js')
+const { Page, layout, text } = require('larana-js')
 
 const { header } = require('../components')
 
-class GamePage extends Page {
-	title = 'Game'
+class ShapesPage extends Page {
+	title = 'Shapes page'
 
 	prepareRoot({ w, h }) {
 		return layout({
@@ -20,11 +20,11 @@ class GamePage extends Page {
 					},
 					children: [
 						text({
-							text: 'Game page',
+							text: 'shapes',
 							style: 'h1Text',
 						}),
 						text({
-							text: 'Soon here will be demo',
+							text: 'Go back to home',
 							style: 'text',
 						}),
 					],
@@ -34,4 +34,4 @@ class GamePage extends Page {
 	}
 }
 
-module.exports = { GamePage }
+module.exports = { ShapesPage }
