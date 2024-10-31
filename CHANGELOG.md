@@ -1,7 +1,9 @@
 # 0.2.0
 
 - **fix:** reduced animation freezing
-- **fix:** queryParams bug
+- **fix:** `queryParams` bug
+- **feat:** hooks: `useState()`, `useRoute()`, `usePage()`, `useSession()`, `useMouse()` etc.
+- **feat:** `hoveredStyle`
 - **feat:** `focusedStyle`
 - **feat:** `disabledStyle`
 - **feat:** more importing options
@@ -32,6 +34,7 @@
 - **feat:** `ImageComponent`
 - **feat:** qrcodes
 - **feat:** rendering line on `CanvasRenderer`
+- **refactor:** `getChildren()` -> `root()`. A lot of stuff was optimized
 - **refactor:** `getStyle()` -> `computeStyle()`
 - **refactor:** `getDimensions()` -> `computeDimensions()`
 - **refactor:** put form components to `form` folder
@@ -62,7 +65,6 @@
 - feat: `alignment`
 - feat: `textAlign`
 - feat: style validation
-- feat: `hoveredStyle`
 - feat: `scroll`
 - feat: text decoration
 - feat: `router.push()`
