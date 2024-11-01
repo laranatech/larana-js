@@ -56,8 +56,8 @@ const defaultConfig = {
 	debug: false,
 	debugOptions: {
 		renderOutline: true,
-		renderPadding: true, // TODO
-		renderGap: true, // TODO
+		renderPaddings: true, // TODO
+		renderGaps: true, // TODO
 	},
 	port: 1610,
 	wsPath: 'ws://localhost:1610/',

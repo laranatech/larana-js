@@ -1,6 +1,7 @@
 const { BaseComponent } = require('../base')
 const { click } = require('../../events/click.js')
 const { rect, line, point } = require('../../shapes')
+const { figure } = require('../figure.js')
 
 class CheckboxComponent extends BaseComponent {
 	value = false
@@ -47,32 +48,33 @@ class CheckboxComponent extends BaseComponent {
 		setModel(!modelValue)
 	}
 
-	render(queue) {
-		const { x, y, w, h } = this.computeDimensions()
+	root() {
 		const style = this.computeStyle()
-
 		const { modelValue } = this.useModel()
 
-		rect({
-			x, y, w, h,
-			...style,
-			bg: modelValue ? style.fg : style.bg,
-		}).to(queue)
+		return figure({
+			template: (fig, queue) => {
+				const { x, y, w, h } = fig.computeDimensions()
+				rect({
+					x, y, w, h,
+					...style,
+					bg: modelValue ? style.fg : style.bg,
+				}).to(queue)
 
-		if (modelValue) {
-			line({
-				points: [
-					point({ x: x + w * 0.15, y: y + h * 0.4 }),
-					point({ x: x + w * 0.5, y: y + h * 0.7 }),
-					point({ x: x + w * 0.9, y: y + h * 0.15 }),
-				],
-				...style,
-				borderWidth: w * 0.1,
-				borderColor: style.bg,
-			}).to(queue)
-		}
-
-		return queue
+				if (modelValue) {
+					line({
+						points: [
+							point({ x: x + w * 0.15, y: y + h * 0.4 }),
+							point({ x: x + w * 0.5, y: y + h * 0.7 }),
+							point({ x: x + w * 0.9, y: y + h * 0.15 }),
+						],
+						...style,
+						borderWidth: w * 0.1,
+						borderColor: style.bg,
+					}).to(queue)
+				}
+			}
+		})
 	}
 }
 

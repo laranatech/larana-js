@@ -1,5 +1,6 @@
-const { arc } = require('../shapes/arc.js')
 const { BaseComponent } = require('./base')
+const { arc } = require('../shapes/arc.js')
+const { figure } = require('./figure.js')
 
 class ThrobberComponent extends BaseComponent {
 	delay = 50
@@ -26,7 +27,7 @@ class ThrobberComponent extends BaseComponent {
 		this.length = length
 	}
 
-	onRender(queue) {
+	tick() {
 		const { getModel, setModel } = this.useModel()
 
 		setTimeout(() => {
@@ -35,26 +36,27 @@ class ThrobberComponent extends BaseComponent {
 		}, this.delay)
 	}
 
-	render(queue) {
-		this.onRender(queue)
-
-		const { x, y, w, h } = this.computeDimensions()
+	root() {
 		const { borderColor, borderCap, borderWidth } = this.computeStyle()
-
 		const { modelValue } = this.useModel()
 
-		arc({
-			x: x + w * 0.5,
-			y: y + h * 0.5,
-			radius: this.computeMaxRadius({ w, h }),
-			start: modelValue,
-			end: modelValue + this.length,
-			borderColor,
-			borderCap,
-			borderWidth,
-		}).to(queue)
+		this.tick()
 
-		return queue
+		return figure({
+			template: (fig, queue) => {
+				const { x, y, w, h } = fig.computeDimensions()
+				arc({
+					x: x + w * 0.5,
+					y: y + h * 0.5,
+					radius: this.computeMaxRadius({ w, h }),
+					start: modelValue,
+					end: modelValue + this.length,
+					borderColor,
+					borderCap,
+					borderWidth,
+				}).to(queue)
+			},
+		})
 	}
 }
 

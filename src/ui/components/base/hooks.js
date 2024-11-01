@@ -1,7 +1,8 @@
-class Hooks {
+class HookedComponent {
 	_page = null
 	_route = null
 	_session = null
+	_storage = null
 	_payload = null
 	_request = null
 	_event = null
@@ -15,6 +16,7 @@ class Hooks {
 	constructor(options) {
 		const fields = [
 			'session',
+			'storage',
 			'page',
 			'route',
 			'payload',
@@ -151,6 +153,16 @@ class Hooks {
 		}
 	}
 
+	useStorage() {
+		if (this._storage) {
+			return this._storage
+		}
+
+		this._storage = this.useSession().getStorage()
+
+		return this._storage
+	}
+
 	_patch(root, payload) {
 		root.setPayload(payload)
 
@@ -161,5 +173,5 @@ class Hooks {
 }
 
 module.exports = {
-	Hooks,
+	HookedComponent,
 }

@@ -1,6 +1,7 @@
 const { BaseComponent } = require('../base')
 const { click } = require('../../events/click.js')
 const { arc } = require('../../shapes/arc.js')
+const { figure } = require('../figure.js')
 
 class RadioComponent extends BaseComponent {
 	name = ''
@@ -53,33 +54,34 @@ class RadioComponent extends BaseComponent {
 		setModel(this.name)
 	}
 
-	render(queue) {
-		const { x, y, w, h } = this.computeDimensions()
-		const { bg, fg, borderColor, borderWidth }= this.computeStyle()
-
+	root() {
 		const selected = this.getIsSelected()
+		const { bg, fg, borderColor, borderWidth } = this.computeStyle()
 
-		const r = this.computeMaxRadius({ w, h })
+		return figure({
+			template: (fig, queue) => {
+				const { x, y, w, h } = fig.computeDimensions()
+				const r = fig.computeMaxRadius({ w, h })
 
-		arc({
-			x: x + w / 2,
-			y: y + h / 2,
-			radius: r,
-			bg,
-			borderColor,
-			borderWidth,
-		}).to(queue)
-
-		if (selected) {
-			arc({
-				x: x + w / 2,
-				y: y + h / 2,
-				radius: r * 0.8,
-				fg,
-			}).to(queue)
-		}
-
-		return queue
+				arc({
+					x: x + w / 2,
+					y: y + h / 2,
+					radius: r,
+					bg,
+					borderColor,
+					borderWidth,
+				}).to(queue)
+		
+				if (selected) {
+					arc({
+						x: x + w / 2,
+						y: y + h / 2,
+						radius: r * 0.8,
+						fg,
+					}).to(queue)
+				}
+			},
+		})
 	}
 }
 

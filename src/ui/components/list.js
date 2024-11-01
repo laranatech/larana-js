@@ -5,6 +5,8 @@ const { text } = require('./text.js')
 class ListComponent extends BaseComponent {
 	defaultStyle = {
 		direction: 'column',
+		// alignment: 'start',
+		// padding: 'var:u2',
 		gap: 'var:u2',
 	}
 
@@ -22,7 +24,6 @@ class ListComponent extends BaseComponent {
 
 	root() {
 		const { modelValue } = this.useModel()
-		console.log(this.useModel())
 
 		return layout({
 			children: modelValue.map((item, i) => {

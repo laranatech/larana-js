@@ -124,7 +124,7 @@ class LaranaApp {
 			sessionId,
 			page,
 			route,
-			state: { lang: this.config.defaultLang, theme: this.config.defaultTheme },
+			storage: { lang: this.config.defaultLang, theme: this.config.defaultTheme },
 		})
 		this.stateManager.addSession(sessionId, session)
 		page.setSession(session)
@@ -143,7 +143,7 @@ class LaranaApp {
 		const clientCode = prepareTemplate({
 			wsPath: this.config.wsPath,
 			sessionId,
-			lang: session.state.lang,
+			lang: session.storage.lang,
 			title: page.prepareTitle(),
 			meta: page.prepareMeta(),
 			styles: page.prepareStyles(),

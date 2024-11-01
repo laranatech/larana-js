@@ -2,6 +2,8 @@
 
 - **fix:** reduced animation freezing
 - **fix:** `queryParams` bug
+- **feat:** `renderPadding` debug option
+- **feat:** `renderGaps` debug option
 - **feat:** hooks: `useState()`, `useRoute()`, `usePage()`, `useSession()`, `useMouse()`, `useModel()` etc.
 - **feat:** `hoveredStyle`
 - **feat:** `focusedStyle`
@@ -34,8 +36,9 @@
 - **feat:** `ImageComponent`
 - **feat:** qrcodes
 - **feat:** rendering line on `CanvasRenderer`
+- **refactor:** `Session.state` -> `Session.storage`
 - **refactor:** hooks moved to another class
-- **refactor:** `text.text` -> `text.value`
+- **refactor:** `TextComponent.text` -> `TextComponent.value`
 - **refactor:** `getChildren()` -> `root()`. A lot of stuff was optimized
 - **refactor:** `getStyle()` -> `computeStyle()`
 - **refactor:** `getDimensions()` -> `computeDimensions()`
@@ -47,21 +50,19 @@
 
 ## TODO
 
-
 - fix: min/max dimensions break layout
 - fix: client fonts
 - fix: errors when using quotes in text
+- feat: `blur` event
+- feat: save session id to localStorage
 - feat: TextInput carret
 - feat: `TableComponent`
 - feat: seo features
 - feat: a11y features
 - feat: remember sessionId
 - feat: border radius for images
-- feat: `renderPadding` debug option
-- feat: `renderGaps` debug option
 - feat: `FormConstructor`
 - feat: filters
-- feat: opacity
 - feat: width, height
 - feat: aspect ratio
 - feat: `alignment`

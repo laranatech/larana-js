@@ -116,7 +116,7 @@ const styleScheme = {
 		type: 'string',
 		required: false,
 		rules: [
-			rules.allowlist(['start', 'end', 'center']),
+			rules.allowlist(['start', 'end', 'center', 'stretch']),
 		],
 	},
 	direction: {
@@ -134,7 +134,7 @@ const styleScheme = {
 const styleSchemer = new Schemer(styleScheme)
 
 class Style {
-	alignment = 'start'
+	alignment = 'stretch'
 	direction = 'row'
 	size = 1
 	minWidth = null
@@ -197,7 +197,7 @@ class Style {
 			if (typeof v !== 'string' || !v.startsWith('var:')) {
 				return
 			}
-			value[key] = useStyleVar(v.replace('var:', ''))(session.state.theme)
+			value[key] = useStyleVar(v.replace('var:', ''))(session.storage.theme)
 		})
 
 		return value
