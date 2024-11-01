@@ -21,7 +21,7 @@ class UIKitSlideComponent extends BaseComponent {
 			children: [
 				text({
 					style: 'h1Text',
-					text: 'Встроенный UIKit',
+					value: 'Встроенный UIKit',
 				}),
 				layout({
 					style: ['row', 'gap_2', 'size_5'],
@@ -50,7 +50,7 @@ class UIKitSlideComponent extends BaseComponent {
 										name: item.name,
 										style: { fg: item.fg },
 									}),
-									text({ text: item.text, style: 'h2Text' }),
+									text({ value: item.text, style: 'h2Text' }),
 								],
 							}),
 						}),
@@ -65,18 +65,18 @@ class UIKitSlideComponent extends BaseComponent {
 							children: [
 								text({
 									style: 'h2Text',
-									text: 'Link',
+									value: 'Link',
 								}),
 								text({
 									style: 'h2Text',
-									text: 'List',
+									value: 'List',
 								}),
 								list({
 									value: ['ListItem1', 'ListItem2', 'ListItem3'],
 								}),
 								text({
 									style: 'h2Text',
-									text: 'Table',
+									value: 'Table',
 								}),
 							],
 						}),

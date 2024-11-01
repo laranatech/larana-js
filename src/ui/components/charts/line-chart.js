@@ -1,4 +1,4 @@
-const { BaseComponent } = require('../base-component.js')
+const { BaseComponent } = require('../base')
 const { figure } = require('../figure.js')
 const { layout } = require('../layout.js')
 const { list } = require('../list.js')
@@ -24,7 +24,8 @@ class LineChartComponent extends BaseComponent {
 	}
 
 	root() {
-		const items = this.getModelValue()
+		const { modelValue } = this.useModel()
+		const items = modelValue
 
 		const style = this.computeStyle()
 

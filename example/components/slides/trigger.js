@@ -31,7 +31,7 @@ class TriggerSlideComponent extends BaseComponent {
 			children: [
 				text({
 					style: 'h1Text',
-					text: 'Зачем нужен ещё один фреймворк?',
+					value: 'Зачем нужен ещё один фреймворк?',
 				}),
 				layout({
 					style: ['col', 'gap_1', 'size_5'],
@@ -39,7 +39,7 @@ class TriggerSlideComponent extends BaseComponent {
 						...lines.splice(0, this.step).map((line) => {
 							return text({
 								style: 'h2Text',
-								text: line,
+								value: line,
 							})
 						}),
 						layout({

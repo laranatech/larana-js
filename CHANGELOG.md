@@ -2,7 +2,7 @@
 
 - **fix:** reduced animation freezing
 - **fix:** `queryParams` bug
-- **feat:** hooks: `useState()`, `useRoute()`, `usePage()`, `useSession()`, `useMouse()` etc.
+- **feat:** hooks: `useState()`, `useRoute()`, `usePage()`, `useSession()`, `useMouse()`, `useModel()` etc.
 - **feat:** `hoveredStyle`
 - **feat:** `focusedStyle`
 - **feat:** `disabledStyle`
@@ -34,6 +34,8 @@
 - **feat:** `ImageComponent`
 - **feat:** qrcodes
 - **feat:** rendering line on `CanvasRenderer`
+- **refactor:** hooks moved to another class
+- **refactor:** `text.text` -> `text.value`
 - **refactor:** `getChildren()` -> `root()`. A lot of stuff was optimized
 - **refactor:** `getStyle()` -> `computeStyle()`
 - **refactor:** `getDimensions()` -> `computeDimensions()`
@@ -45,7 +47,7 @@
 
 ## TODO
 
-- fix: `hover` doesn't work right
+
 - fix: min/max dimensions break layout
 - fix: client fonts
 - fix: errors when using quotes in text

@@ -58,7 +58,7 @@ class HomePage extends Page {
 										name: item.name,
 										style: { fg: item.fg },
 									}),
-									text({ text: item.text, style: 'h2Text' }),
+									text({ value: item.text, style: 'h2Text' }),
 								],
 							}),
 						}),
@@ -67,7 +67,7 @@ class HomePage extends Page {
 							value: ['checkboxValue1', 'checkboxValue2', 'checkboxValue3'],
 							template: (item, i) => checkbox({ model: item }),
 						}),
-						text({ text: 'Home', style: 'h1Text' }),
+						text({ value: 'Home', style: 'h1Text' }),
 						new CircleComponent({
 							style: { size: 1, bg: 'var:accent', borderColor: '#f00' },
 							radius: this.state.radius,

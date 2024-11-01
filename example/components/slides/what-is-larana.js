@@ -18,7 +18,7 @@ class WhatIsLaranaSlideComponent extends BaseComponent {
 			children: [
 				text({
 					style: 'h1Text',
-					text: 'Что такое LaranaJS',
+					value: 'Что такое LaranaJS',
 				}),
 				layout({
 					style: ['col', 'gap_1', 'size_5'],
@@ -26,11 +26,11 @@ class WhatIsLaranaSlideComponent extends BaseComponent {
 						text({}),
 						text({
 							style: 'h2Text',
-							text: 'Larana — философия',
+							value: 'Larana — философия',
 						}),
 						text({
 							style: 'h2Text',
-							text: 'LaranaJS — имплементация',
+							value: 'LaranaJS — имплементация',
 						}),
 					].splice(0, this.step),
 				}),

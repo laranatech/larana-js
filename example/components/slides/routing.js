@@ -12,22 +12,22 @@ class RoutingSlideComponent extends BaseComponent {
 			children: [
 				text({
 					style: 'h1Text',
-					text: 'Routing в LaranaJS',
+					value: 'Routing в LaranaJS',
 				}),
 				layout({
 					style: ['col', 'gap_1', 'size_5'],
 					children: [
 						text({
 							style: 'h2Text',
-							text: 'Пример инициализации',
+							value: 'Пример инициализации',
 						}),
 						text({
 							style: 'h2Text',
-							text: 'Пример использования 1',
+							value: 'Пример использования 1',
 						}),
 						text({
 							style: 'h2Text',
-							text: 'Пример использования 2',
+							value: 'Пример использования 2',
 						}),
 					],
 				}),

@@ -12,18 +12,18 @@ class ConfigSlideComponent extends BaseComponent {
 			children: [
 				text({
 					style: 'h1Text',
-					text: 'Config / DI',
+					value: 'Config / DI',
 				}),
 				layout({
 					style: ['col', 'gap_1', 'size_5'],
 					children: [
 						text({
 							style: 'h2Text',
-							text: 'скрин конфига',
+							value: 'скрин конфига',
 						}),
 						// text({
 						// 	style: 'h2Text',
-						// 	text: 'ссылка на сайт',
+						// 	value: 'ссылка на сайт',
 						// }),
 					],
 				}),

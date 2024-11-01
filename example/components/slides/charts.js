@@ -18,14 +18,14 @@ class ChartsSlideComponent extends BaseComponent {
 			children: [
 				text({
 					style: 'h1Text',
-					text: 'Построение графиков',
+					value: 'Построение графиков',
 				}),
 				layout({
 					style: ['col', 'gap_1', 'size_5'],
 					children: [
 						this.step === 1 ? text({
 							style: 'h2Text',
-							text: 'Пример кода колончатого графика',
+							value: 'Пример кода колончатого графика',
 						})
 						: this.step === 2 ? barChart({
 							model: 'chartItems',
@@ -33,7 +33,7 @@ class ChartsSlideComponent extends BaseComponent {
 						})
 						: this.step === 3 ? text({
 							style: 'h2Text',
-							text: 'Пример кода линейного графика',
+							value: 'Пример кода линейного графика',
 						})
 						: lineChart({
 							model: 'chartItems',

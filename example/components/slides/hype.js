@@ -12,18 +12,18 @@ class HypeJSSlideComponent extends BaseComponent {
 			children: [
 				text({
 					style: 'h1Text',
-					text: 'Hype.js',
+					value: 'Hype.js',
 				}),
 				layout({
 					style: ['col', 'gap_1', 'size_5'],
 					children: [
 						text({
 							style: 'h2Text',
-							text: 'Скрин доклада с холи',
+							value: 'Скрин доклада с холи',
 						}),
 						// text({
 						// 	style: 'h2Text',
-						// 	text: 'ссылка на сайт',
+						// 	value: 'ссылка на сайт',
 						// }),
 					],
 				}),

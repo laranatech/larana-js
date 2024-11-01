@@ -16,11 +16,11 @@ class ConsSlideComponent extends BaseComponent {
 	root() {
 		return layout({
 			children: [
-				text({ text: 'Недостатки', style: 'h1Text' }),
+				text({ value: 'Недостатки', style: 'h1Text' }),
 				layout({
 					style: { direction: 'column', size: 9 },
 					children: [
-						text({ text: this.step === 2 ? '1. Game changer' : '', style: 'h3Text' }),
+						text({ value: this.step === 2 ? '1. Game changer' : '', style: 'h3Text' }),
 						layout({ style: { size: 9 } }),
 					],
 				}),

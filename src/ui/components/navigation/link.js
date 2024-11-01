@@ -1,4 +1,4 @@
-const { BaseComponent } = require('../base-component.js')
+const { BaseComponent } = require('../base')
 const { layout } = require('../layout.js')
 const { text } = require('../text.js')
 
@@ -32,7 +32,7 @@ class LinkComponent extends BaseComponent {
 		return layout({
 			children: [
 				text({
-					text: this.text,
+					value: this.text,
 					style,
 				}),
 			],

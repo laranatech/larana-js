@@ -1,4 +1,4 @@
-const { BaseComponent } = require('../base-component.js')
+const { BaseComponent } = require('../base')
 
 class SelectComponent extends BaseComponent {}
 

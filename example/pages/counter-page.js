@@ -38,7 +38,7 @@ class CounterPage extends Page {
 									fg: 'var:fg',
 								},
 							],
-							text: `Counter: ${this.state.counter}`,
+							value: `Counter: ${this.state.counter}`,
 						}),
 						layout({
 							style: {

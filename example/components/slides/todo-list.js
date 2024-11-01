@@ -61,12 +61,10 @@ class TODOListSlideComponent extends BaseComponent {
 	templateItem = (item, i) => {
 		return layout({
 			children: [
-				text({
-					text: i,
-				}),
+				text({ value: i }),
 				text({
 					style: ['text', { size: 9 }],
-					text: item.label,
+					value: item.label,
 				}),
 				layout({
 					style: 'gap_2',
@@ -95,12 +93,12 @@ class TODOListSlideComponent extends BaseComponent {
 			children: [
 				text({
 					style: 'h1Text',
-					text: 'TODO-List на LaranaJS',
+					value: 'TODO-List на LaranaJS',
 				}),
 				layout({
 					style: ['col', 'gap_1', 'size_5'],
 					children: [
-						this.step === 1 ? text({ text: 'Пример кода TODO list' })
+						this.step === 1 ? text({ value: 'Пример кода TODO list' })
 						: layout({
 							style: ['col', 'gap_1'],
 							children: [

@@ -12,22 +12,22 @@ class TestingSlideComponent extends BaseComponent {
 			children: [
 				text({
 					style: 'h1Text',
-					text: 'Тестирование LaranaJS',
+					value: 'Тестирование LaranaJS',
 				}),
 				layout({
 					style: ['col', 'gap_1', 'size_5'],
 					children: [
 						text({
 							style: 'h2Text',
-							text: 'Использование стейта в тестах',
+							value: 'Использование стейта в тестах',
 						}),
 						text({
 							style: 'h2Text',
-							text: 'скриншотные тесты',
+							value: 'скриншотные тесты',
 						}),
 						text({
 							style: 'h2Text',
-							text: 'скриншотные тесты с чексуммой',
+							value: 'скриншотные тесты с чексуммой',
 						}),
 					],
 				}),

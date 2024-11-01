@@ -28,13 +28,13 @@ class NotFoundPage extends Page {
 						text({
 							outlineColor: '#0ff',
 							id: 'text1',
-							text: '404',
+							value: '404',
 							style: 'h1Text',
 						}),
 						text({
 							outlineColor: '#0ff',
 							id: 'text2',
-							text: 'Go back to home',
+							value: 'Go back to home',
 							style: 'text',
 						}),
 					],

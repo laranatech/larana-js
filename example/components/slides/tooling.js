@@ -12,30 +12,30 @@ class ToolingSlideComponent extends BaseComponent {
 			children: [
 				text({
 					style: 'h1Text',
-					text: 'Tooling в LaranaJS',
+					value: 'Tooling в LaranaJS',
 				}),
 				layout({
 					style: ['col', 'gap_1', 'size_5'],
 					children: [
 						text({
 							style: 'h2Text',
-							text: 'npm init larana-js',
+							value: 'npm init larana-js',
 						}),
 						text({
 							style: 'h2Text',
-							text: 'schemer',
+							value: 'schemer',
 						}),
 						text({
 							style: 'h2Text',
-							text: 'logger',
+							value: 'logger',
 						}),
 						text({
 							style: 'h2Text',
-							text: 'testing',
+							value: 'testing',
 						}),
 						text({
 							style: 'h2Text',
-							text: 'designer',
+							value: 'designer',
 						}),
 					],
 				}),

@@ -1,4 +1,4 @@
-const { BaseComponent } = require('../base-component.js')
+const { BaseComponent } = require('../base')
 const { layout } = require('../layout.js')
 const { button } = require('../button.js')
 
@@ -25,13 +25,13 @@ class TabsComponent extends BaseComponent {
 	}
 
 	root() {
-		const activeTab = this.getModelValue()
+		const { modelValue, setModel } = this.useModel()
 
 		return layout({
 			children: this.tabs.map((tab) => {
 				return button({
 					style: {
-						bg: tab.value === activeTab ? 'var:accent' : null,
+						bg: tab.value === modelValue ? 'var:accent' : null,
 						fg: tab.disabled ? '#888' : 'var:fg',
 						radius: 'var:radius',
 					},
@@ -45,7 +45,7 @@ class TabsComponent extends BaseComponent {
 							this.onChange(tab.value)
 						}
 
-						this.updateModelValue(tab.value)
+						setModel(tab.value)
 					},
 				})
 			}),

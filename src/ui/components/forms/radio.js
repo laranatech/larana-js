@@ -1,4 +1,4 @@
-const { BaseComponent } = require('../base-component.js')
+const { BaseComponent } = require('../base')
 const { click } = require('../../events/click.js')
 const { arc } = require('../../shapes/arc.js')
 
@@ -36,8 +36,8 @@ class RadioComponent extends BaseComponent {
 	}
 
 	getIsSelected() {
-		const value = this.getModelValue()
-		return value === this.name
+		const { modelValue } = this.useModel()
+		return modelValue === this.name
 	}
 
 	onClick() {
@@ -47,8 +47,10 @@ class RadioComponent extends BaseComponent {
 			return
 		}
 
+		const { setModel } = this.useModel()
+
 		this.onSelect(this.name)
-		this.updateModelValue(this.name)
+		setModel(this.name)
 	}
 
 	render(queue) {

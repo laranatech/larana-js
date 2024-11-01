@@ -1,20 +1,15 @@
 const crypto = require('crypto')
 
-const { Style } = require('../style')
-const { rect, line, point } = require('../shapes')
+const { Style } = require('../../style')
+const { rect, line, point } = require('../../shapes')
+const { Hooks } = require('./hooks')
 
-class BaseComponent {
+class BaseComponent extends Hooks {
 	id = crypto.randomUUID()
-
-	payload = null
 
 	focusable = false
 	disabled = false
 
-	model = ''
-	value = ''
-
-	page = null
 	parent = null
 
 	_root = null
@@ -54,28 +49,25 @@ class BaseComponent {
 
 	outlineColor = '#f00'
 
-	constructor({
-		id,
-		parent,
-		page,
-		children,
-		value,
-		style = {},
-		focusedStyle = {},
-		hoveredStyle = {},
-		disabledStyle = {},
-		outlineColor = '#f00',
-		model = '',
-		events = [],
-		focusable = false,
-		disabled = false,
-	}) {
+	constructor(options) {
+		super(options)
+
+		const {
+			id,
+			parent,
+			children,
+			style = {},
+			focusedStyle = {},
+			hoveredStyle = {},
+			disabledStyle = {},
+			outlineColor = '#f00',
+			events = [],
+			focusable = false,
+			disabled = false,
+		} = options
+
 		if (id) {
 			this.id = id
-		}
-
-		if (value) {
-			this.value = value
 		}
 
 		this.outlineColor = outlineColor
@@ -98,10 +90,6 @@ class BaseComponent {
 
 		this.events = events.map((e) => e(this))
 
-		if (page !== undefined) {
-			this.page = page
-		}
-
 		if (children !== undefined) {
 			this.children = children
 
@@ -109,8 +97,6 @@ class BaseComponent {
 				child.setParent(this)
 			})
 		}
-
-		this.model = model
 	}
 
 	focus() {
@@ -123,21 +109,8 @@ class BaseComponent {
 		page.focus(this.id)
 	}
 
-	getModelValue() {
-		const { state } = this.useState()
-		return this.model ? state[this.model] : this.value
-	}
-
-	updateModelValue(value) {
-		if (this.disabled || !this.model) {
-			return
-		}
-
-		const { setState } = this.useState()
-
-		setState({
-			[this.model]: value,
-		})
+	isFocused() {
+		return this.usePage().focused === this.id
 	}
 
 	computeMaxRadius({ w, h }) {
@@ -179,18 +152,6 @@ class BaseComponent {
 		this.preComputedStyle = new Style(result)
 
 		return this.preComputedStyle
-	}
-
-	computeSize() {
-		return {
-			size: 0,
-			width: null,
-			minWidth: null,
-			maxWidth: null,
-			height: null,
-			minHeight: null,
-			maxHeight: null,
-		}
 	}
 
 	/**
@@ -287,6 +248,7 @@ class BaseComponent {
 		}
 
 		if (maxHeight && maxHeight < d.h) {
+			console.log(maxHeight)
 			d.h = maxHeight
 		}
 
@@ -299,20 +261,6 @@ class BaseComponent {
 
 	computeStyle() {
 		const styles = [this.preComputeStyle()]
-
-		// if (request.event) {
-		// 	// TODO
-		// 	this.activeEvents = this.events
-		// 		.map((e) => e(false))
-		// 		.filter((e) => e !== '')
-
-		// 	this.activeEvents.forEach((e) => {
-		// 		const s = this.eventStyles.get(e)
-		// 		if (s) {
-		// 			styles.push(s)
-		// 		}
-		// 	})
-		// }
 
 		const { request, session } = this.usePayload()
 
@@ -342,80 +290,6 @@ class BaseComponent {
 		this.parent = parent
 	}
 
-	setPayload(payload) {
-		this.payload = payload
-	}
-
-	_patchRoot() {
-
-	}
-
-	_patchChildren() {
-
-	}
-
-	_patch(root, payload) {
-		// if (this.parent) {
-			// root.setParent(this)
-		// }
-		root.setPayload(payload)
-
-		root.children.forEach((child) => {
-			root._patch(child, payload)
-			// if (root) {
-				// child.setParent(root)
-			// }
-		})
-	}
-
-	usePayload() {
-		return this.payload
-	}
-
-	useSession() {
-		const session = this.usePayload().session
-
-		return session
-	}
-
-	useRequest() {
-		return this.usePayload().request
-	}
-
-	useEvent() {
-		return this.useRequest().event
-	}
-
-	useMouse() {
-		return this.usePage().getMouse()
-	}
-
-	useRoute() {
-		const session = this.useSession()
-
-		return session.route
-	}
-
-	usePage() {
-		const session = this.useSession()
-
-		return session.page
-	}
-
-	useState() {
-		const page = this.usePage()
-
-		return page.getState()
-	}
-
-	useConfig() {
-		return this.usePage().config
-	}
-
-	isFocused() {
-		return this.usePage().focused === this.id
-	}
-
 	update() {
 		const event = this.useEvent()
 
@@ -438,8 +312,8 @@ class BaseComponent {
 		}
 
 		// TODO
-		return true
-		// return updated
+		// return true
+		return updated
 	}
 
 	_renderOutline(queue) {
@@ -495,7 +369,6 @@ class BaseComponent {
 		root.render(queue)
 
 		root.children.forEach((child) => {
-			// child.setParent(root)
 			child._render(queue)
 		})
 
@@ -515,15 +388,6 @@ class BaseComponent {
 		}
 
 		root.style = this.computeStyle()
-
-		// root.setParent(this.parent ?? this)
-		// if (this.parent) {
-		// 	root.setParent(this.parent)
-		// }
-
-		// root.children.forEach(() => {
-
-		// })
 
 		this._patch(root, payload)
 

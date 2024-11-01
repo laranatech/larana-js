@@ -12,7 +12,7 @@ class AnimationsSlideComponent extends BaseComponent {
 			children: [
 				text({
 					style: 'h1Text',
-					text: 'Анимация',
+					value: 'Анимация',
 				}),
 				layout({
 					style: ['col', 'gap_1', 'size_5'],

@@ -30,15 +30,15 @@ class TitleSlideComponent extends BaseComponent {
 					children: [
 						text({
 							style: 'h1Text',
-							text: 'LaranaJS: Настоящий SSR',
+							value: 'LaranaJS: Настоящий SSR',
 						}),
 						text({
 							style: 'h2Text',
-							text: 'Женя Кучерявый',
+							value: 'Женя Кучерявый',
 						}),
 						text({
 							style: 'h3Text',
-							text: 'Founder of LaranaTech',
+							value: 'Founder of LaranaTech',
 						}),
 					],
 				}),

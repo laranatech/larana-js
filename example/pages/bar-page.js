@@ -22,7 +22,7 @@ class BarPage extends Page {
 
 		this.initialRoot = layout({
 			children: [
-				text({ text: 'Loading...', style: 'text' }),
+				text({ value: 'Loading...', style: 'text' }),
 			],
 		})
 
@@ -43,7 +43,7 @@ class BarPage extends Page {
 				layout({
 					children: [
 						text({
-							text: 'Loading data for chart',
+							value: 'Loading data for chart',
 							style: 'h1Text',
 						}),
 					],
@@ -54,7 +54,7 @@ class BarPage extends Page {
 						this.state.loaded
 							? barChart({ model: 'items' })
 							: text({
-								text: `Loading: ${this.state.loadingTick}`,
+								value: `Loading: ${this.state.loadingTick}`,
 								style: 'text',
 							}),
 					],

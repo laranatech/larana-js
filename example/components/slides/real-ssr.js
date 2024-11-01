@@ -12,18 +12,18 @@ class RealSSRSlideComponent extends BaseComponent {
 			children: [
 				text({
 					style: 'h1Text',
-					text: 'Настоящий SSR/CSR',
+					value: 'Настоящий SSR/CSR',
 				}),
 				layout({
 					style: ['col', 'gap_1', 'size_5'],
 					children: [
 						text({
 							style: 'h2Text',
-							text: 'Фреймворк сам решает, как всё рендерить',
+							value: 'Фреймворк сам решает, как всё рендерить',
 						}),
 						// text({
 						// 	style: 'h2Text',
-						// 	text: 'ссылка на сайт',
+						// 	value: 'ссылка на сайт',
 						// }),
 					],
 				}),

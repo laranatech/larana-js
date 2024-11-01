@@ -12,18 +12,18 @@ class ImplementationSlideComponent extends BaseComponent {
 			children: [
 				text({
 					style: 'h1Text',
-					text: 'Имплементация LaranaJS',
+					value: 'Имплементация LaranaJS',
 				}),
 				layout({
 					style: ['col', 'gap_1', 'size_5'],
 					children: [
 						text({
 							style: 'h2Text',
-							text: 'Похожие инструменты',
+							value: 'Похожие инструменты',
 						}),
 						text({
 							style: 'h2Text',
-							text: 'Другой результат',
+							value: 'Другой результат',
 						}),
 					],
 				}),

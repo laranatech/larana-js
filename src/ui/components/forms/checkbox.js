@@ -1,4 +1,4 @@
-const { BaseComponent } = require('../base-component.js')
+const { BaseComponent } = require('../base')
 const { click } = require('../../events/click.js')
 const { rect, line, point } = require('../../shapes')
 
@@ -41,25 +41,25 @@ class CheckboxComponent extends BaseComponent {
 		if (this.disabled) {
 			return
 		}
-		const value = this.getModelValue()
+		const { modelValue, setModel } = this.useModel()
 
-		this.onChange(!value)
-		this.updateModelValue(!value)
+		this.onChange(!modelValue)
+		setModel(!modelValue)
 	}
 
 	render(queue) {
 		const { x, y, w, h } = this.computeDimensions()
 		const style = this.computeStyle()
 
-		const value = this.getModelValue()
+		const { modelValue } = this.useModel()
 
 		rect({
 			x, y, w, h,
 			...style,
-			bg: value ? style.fg : style.bg,
+			bg: modelValue ? style.fg : style.bg,
 		}).to(queue)
 
-		if (value) {
+		if (modelValue) {
 			line({
 				points: [
 					point({ x: x + w * 0.15, y: y + h * 0.4 }),

@@ -1,4 +1,4 @@
-const { BaseComponent } = require('./base-component.js')
+const { BaseComponent } = require('./base')
 const { layout } = require('./layout.js')
 const { text } = require('./text.js')
 
@@ -9,7 +9,7 @@ class ListComponent extends BaseComponent {
 	}
 
 	template = (item, i) => {
-		return text({ text: item })
+		return text({ value: item })
 	}
 
 	constructor(options) {
@@ -21,10 +21,11 @@ class ListComponent extends BaseComponent {
 	}
 
 	root() {
-		const items = this.getModelValue()
+		const { modelValue } = this.useModel()
+		console.log(this.useModel())
 
 		return layout({
-			children: items.map((item, i) => {
+			children: modelValue.map((item, i) => {
 				return this.template(item, i)
 			}),
 		})

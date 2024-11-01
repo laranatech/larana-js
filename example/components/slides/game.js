@@ -12,18 +12,18 @@ class GameSlideComponent extends BaseComponent {
 			children: [
 				text({
 					style: 'h1Text',
-					text: 'Demo: game',
+					value: 'Demo: game',
 				}),
 				layout({
 					style: ['col', 'gap_1', 'size_5'],
 					children: [
 						text({
 							style: 'h2Text',
-							text: 'Тут будет демо игры',
+							value: 'Тут будет демо игры',
 						}),
 						// text({
 						// 	style: 'h2Text',
-						// 	text: 'ссылка на сайт',
+						// 	value: 'ссылка на сайт',
 						// }),
 					],
 				}),

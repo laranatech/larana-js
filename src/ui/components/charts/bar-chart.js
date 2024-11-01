@@ -1,4 +1,4 @@
-const { BaseComponent } = require('../base-component.js')
+const { BaseComponent } = require('../base')
 const { layout } = require('../layout.js')
 const { text } = require('../text.js')
 
@@ -20,7 +20,8 @@ class BarChartComponent extends BaseComponent {
 	}
 
 	root() {
-		const items = this.getModelValue()
+		const { modelValue } = this.useModel()
+		const items = modelValue
 
 		let maxValue = 0
 		let totalValue = 0
@@ -35,7 +36,7 @@ class BarChartComponent extends BaseComponent {
 
 		maxValue *= 1.05
 
-		const root = layout({
+		return layout({
 			style: ['row', 'p_1', 'gap_1'],
 			children: items.map((item) => {
 				const s = item.value / maxValue * 10
@@ -58,21 +59,19 @@ class BarChartComponent extends BaseComponent {
 							},
 							children: [
 								text({
-									text: item.value,
+									value: item.value,
 									style: { fg: cs.fg },
 								}),
 							],
 						}),
 						text({
-							text: item.label,
+							value: item.label,
 							style: { fg: cs.fg },
 						}),
 					]
 				})
 			}),
 		})
-
-		return root
 	}
 }
 

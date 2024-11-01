@@ -1,4 +1,4 @@
-const { BaseComponent } = require('./base-component.js')
+const { BaseComponent } = require('./base')
 const { resource, img, qrcode } = require('../../resources')
 const { line, rect, point } = require('../shapes')
 

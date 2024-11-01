@@ -18,10 +18,10 @@ class WhoamiSlideComponent extends BaseComponent {
 					style: { size: 2, direction: 'column', alignment: 'start' },
 					children: [
 						...[
-							text({ text: 'Женя Кучерявый', style: 'h1Text' }),
-							text({ text: '— Организатор BeerJS Moscow DrinkUp', style: 'h3Text' }),
-							text({ text: '— Автор канала «Директор фронтенда»', style: 'h3Text' }),
-							text({ text: '— Изобретатель LaranaJS', style: 'h3Text' }),
+							text({ value: 'Женя Кучерявый', style: 'h1Text' }),
+							text({ value: '— Организатор BeerJS Moscow DrinkUp', style: 'h3Text' }),
+							text({ value: '— Автор канала «Директор фронтенда»', style: 'h3Text' }),
+							text({ value: '— Изобретатель LaranaJS', style: 'h3Text' }),
 						].slice(0, this.step),
 						layout({
 							style: { size: WhoamiSlideComponent.steps - this.step },

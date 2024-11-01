@@ -1,5 +1,5 @@
+const { BaseComponent } = require('../base')
 const { click, keypress } = require('../../events/index.js')
-const { BaseComponent } = require('../base-component.js')
 const { layout } = require('../layout.js')
 const { text } = require('../text.js')
 
@@ -62,7 +62,9 @@ class TextInputComponent extends BaseComponent {
 			return
 		}
 
-		let inputValue = this.getModelValue()
+		const { modelValue, setModel } = this.useModel()
+
+		let inputValue = modelValue
 		if (value === 'Backspace') {
 			inputValue = inputValue.slice(0, -1)
 		} else if (value === 'Enter') {
@@ -88,11 +90,11 @@ class TextInputComponent extends BaseComponent {
 			this.moveCarret(value)
 		}
 		this.onInput(inputValue)
-		this.updateModelValue(inputValue)
+		setModel(inputValue)
 	}
 
 	moveCarret(key) {
-		const value = this.getModelValue()
+		const { modelValue } = this.useModel()
 
 		let carret = this.carretPosition
 
@@ -103,15 +105,15 @@ class TextInputComponent extends BaseComponent {
 		} else if (key === 'ArrowUp') {
 			carret = 0
 		} else if (key === 'ArrowDown') {
-			carret = value.length
+			carret = modelValue.length
 		}
 
 		if (carret < 0) {
 			carret = 0
 		}
 
-		if (carret > value.length) {
-			carret = value.length
+		if (carret > modelValue.length) {
+			carret = modelValue.length
 		}
 
 		this.carretPosition = carret
@@ -122,7 +124,8 @@ class TextInputComponent extends BaseComponent {
 	}
 
 	root() {
-		let inputValue = this.getModelValue()
+		const { modelValue } = this.useModel()
+		let inputValue = modelValue
 
 		const carret = this.getCarret()
 
@@ -132,7 +135,7 @@ class TextInputComponent extends BaseComponent {
 		return layout({
 			children: [
 				text({
-					text: a.join(''),
+					value: a.join(''),
 					style: this.computeStyle(),
 				}),
 			],

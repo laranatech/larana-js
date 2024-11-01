@@ -12,18 +12,18 @@ class SeoSlideComponent extends BaseComponent {
 			children: [
 				text({
 					style: 'h1Text',
-					text: 'SEO',
+					value: 'SEO',
 				}),
 				layout({
 					style: ['col', 'gap_1', 'size_5'],
 					children: [
 						text({
 							style: 'h2Text',
-							text: 'Как ларана работает с SEO?',
+							value: 'Как ларана работает с SEO?',
 						}),
 						// text({
 						// 	style: 'h2Text',
-						// 	text: 'ссылка на сайт',
+						// 	value: 'ссылка на сайт',
 						// }),
 					],
 				}),

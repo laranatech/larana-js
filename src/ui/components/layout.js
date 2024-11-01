@@ -1,4 +1,4 @@
-const { BaseComponent } = require('./base-component.js')
+const { BaseComponent } = require('./base')
 const { rect } = require('../shapes')
 
 class LayoutComponent extends BaseComponent {

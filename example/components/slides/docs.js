@@ -12,18 +12,18 @@ class DocsSlideComponent extends BaseComponent {
 			children: [
 				text({
 					style: 'h1Text',
-					text: 'Понятная документация',
+					value: 'Понятная документация',
 				}),
 				layout({
 					style: ['col', 'gap_1', 'size_5'],
 					children: [
 						text({
 							style: 'h2Text',
-							text: 'ссылка на канал',
+							value: 'ссылка на канал',
 						}),
 						text({
 							style: 'h2Text',
-							text: 'ссылка на сайт',
+							value: 'ссылка на сайт',
 						}),
 					],
 				}),

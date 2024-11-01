@@ -41,7 +41,7 @@ class TodoPage extends Page {
 					style: { size: 9, gap: 'var:u2', direction: 'column' },
 					children: [
 						text({
-							text: 'Todo',
+							value: 'Todo',
 							style: 'h1Text',
 						}),
 						list({

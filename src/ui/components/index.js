@@ -1,5 +1,5 @@
 module.exports = {
-	...require('./base-component.js'),
+	...require('./base'),
 	...require('./layout.js'),
 	...require('./button.js'),
 	...require('./image.js'),

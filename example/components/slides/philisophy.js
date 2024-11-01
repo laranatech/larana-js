@@ -18,7 +18,7 @@ class PhylosophySlideComponent extends BaseComponent {
 			children: [
 				text({
 					style: 'h1Text',
-					text: 'Философия Larana',
+					value: 'Философия Larana',
 				}),
 				layout({
 					style: ['col', 'gap_1', 'size_5'],
@@ -26,15 +26,15 @@ class PhylosophySlideComponent extends BaseComponent {
 						text({}),
 						text({
 							style: 'h2Text',
-							text: 'Минимум кода на клиенте',
+							value: 'Минимум кода на клиенте',
 						}),
 						text({
 							style: 'h2Text',
-							text: 'Минимум доверия клиенту',
+							value: 'Минимум доверия клиенту',
 						}),
 						text({
 							style: 'h2Text',
-							text: 'Rebuild the web',
+							value: 'Rebuild the web',
 						}),
 					].splice(0, this.step),
 				}),

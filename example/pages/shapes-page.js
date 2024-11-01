@@ -20,11 +20,11 @@ class ShapesPage extends Page {
 					},
 					children: [
 						text({
-							text: 'shapes',
+							value: 'shapes',
 							style: 'h1Text',
 						}),
 						text({
-							text: 'Go back to home',
+							value: 'Go back to home',
 							style: 'text',
 						}),
 					],

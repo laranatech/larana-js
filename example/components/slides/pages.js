@@ -12,14 +12,14 @@ class PagesSlideComponent extends BaseComponent {
 			children: [
 				text({
 					style: 'h1Text',
-					text: 'Создание страницы',
+					value: 'Создание страницы',
 				}),
 				layout({
 					style: ['col', 'gap_1', 'size_5'],
 					children: [
 						text({
 							style: 'h2Text',
-							text: 'скрин кода страницы',
+							value: 'скрин кода страницы',
 						}),
 					],
 				}),

@@ -1,4 +1,4 @@
-const { BaseComponent } = require('./base-component.js')
+const { BaseComponent } = require('./base')
 const { layout } = require('./layout.js')
 
 class ProgressBarComponent extends BaseComponent {
@@ -23,15 +23,15 @@ class ProgressBarComponent extends BaseComponent {
 
 	root() {
 		const style = this.computeStyle()
-		const value = this.getModelValue()
+		const { modelValue } = this.useModel()
 
 		return layout({
 			children: [
 				layout({
-					style: { bg: style.fg, size: value, radius: style.radius },
+					style: { bg: style.fg, size: modelValue, radius: style.radius },
 				}),
 				layout({
-					style: { size: this.total - value },
+					style: { size: this.total - modelValue },
 				}),
 			],
 		})

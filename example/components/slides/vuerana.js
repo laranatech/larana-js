@@ -17,7 +17,7 @@ class VueranaSlideComponent extends BaseComponent {
 				layout({
 					style: { size: 2, direction: 'column', alignment: 'start' },
 					children: [
-						text({ text: [
+						text({ value: [
 							'Vue + React = Vueact',
 							'Vue + Larana = Vuerana',
 						][this.step-1], style: 'h1Text' }),

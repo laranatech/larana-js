@@ -132,7 +132,7 @@ class SlidesPage extends Page {
 								}),
 								text({
 									style: 'text',
-									text: this.state.currentStep,
+									value: this.state.currentStep,
 								}),
 								button({
 									text: '→',

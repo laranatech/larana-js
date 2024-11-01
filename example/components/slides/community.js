@@ -18,7 +18,7 @@ class CommunitySlideComponent extends BaseComponent {
 
 		return layout({
 			children: [
-				text({ text: 'Большое сообщество', style: 'h1Text' }),
+				text({ value: 'Большое сообщество', style: 'h1Text' }),
 				layout({
 					style: ['size_5', 'gap_2'],
 					children: [

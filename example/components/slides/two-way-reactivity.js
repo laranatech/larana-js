@@ -51,7 +51,7 @@ class ReactivitySlideComponent extends BaseComponent {
 
 		return layout({
 			children: [
-				text({ text: 'Реактивность', style: 'h1Text' }),
+				text({ value: 'Реактивность', style: 'h1Text' }),
 				layout({
 					style: { size: 9 },
 					children: [
@@ -70,7 +70,7 @@ class ReactivitySlideComponent extends BaseComponent {
 										name: item.name,
 										style: { fg: item.fg },
 									}),
-									text({ text: item.text, style: 'h2Text' }),
+									text({ value: item.text, style: 'h2Text' }),
 								],
 							}),
 						}),
@@ -90,7 +90,7 @@ class ReactivitySlideComponent extends BaseComponent {
 												fg: getLineColor(line),
 											},
 										],
-										text: line,
+										value: line,
 									})
 								}),
 							],

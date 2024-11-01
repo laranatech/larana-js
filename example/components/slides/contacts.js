@@ -12,7 +12,7 @@ class ContactsSlideComponent extends BaseComponent {
 		
 		return layout({
 			children: [
-				text({ text: 'Контакты', style: 'h1Text' }),
+				text({ value: 'Контакты', style: 'h1Text' }),
 				layout({
 					style: { size: 9, gap: 16 },
 					children: [
@@ -26,7 +26,7 @@ class ContactsSlideComponent extends BaseComponent {
 										page.rerender()
 									},
 								}),
-								text({ style: 'h3Text', text: '@frontend_director' }),
+								text({ style: 'h3Text', value: '@frontend_director' }),
 							],
 						}),
 						layout({
@@ -39,7 +39,7 @@ class ContactsSlideComponent extends BaseComponent {
 										page.rerender()
 									},
 								}),
-								text({ style: 'h3Text', text: '@laranatech' }),
+								text({ style: 'h3Text', value: '@laranatech' }),
 							],
 						}),
 					],
