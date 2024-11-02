@@ -150,7 +150,9 @@ class SizedComponent extends StyledComponent {
 				ch = oneSize
 			}
 
-			d = { ...wd, y: wd.y + offset, h: ch }
+			const cw = compSize.w ?? wd.w
+
+			d = { ...wd, w: cw, y: wd.y + offset, h: ch }
 		} else if (direction === 'row') {
 			const side = computeSide(wd.w, 'w')
 			const oneSize = side / totalSize
@@ -167,7 +169,9 @@ class SizedComponent extends StyledComponent {
 				cw = oneSize
 			}
 
-			d = { ...wd, x: wd.x + offset, w: cw }
+			const ch = compSize.h ?? wd.h
+
+			d = { ...wd, x: wd.x + offset, w: cw, h: ch }
 		}
 
 		this._computedDimensions = d

@@ -15,6 +15,7 @@ class RadioComponent extends BaseComponent {
 		borderCap: 'round',
 		borderColor: 'var:componentBorderColor',
 		height: 'var:componentHeight',
+		width: 'var:componentHeight',
 	}
 
 	constructor(options) {
@@ -63,9 +64,12 @@ class RadioComponent extends BaseComponent {
 				const { x, y, w, h } = fig.computeDimensions()
 				const r = fig.computeMaxRadius()
 
+				const cX = x + w / 2
+				const cY = y + h / 2
+
 				arc({
-					x: x + w / 2,
-					y: y + h / 2,
+					x: cX,
+					y: cY,
 					radius: r,
 					bg,
 					borderColor,
@@ -74,8 +78,8 @@ class RadioComponent extends BaseComponent {
 		
 				if (selected) {
 					arc({
-						x: x + w / 2,
-						y: y + h / 2,
+						x: cX,
+						y: cY,
 						radius: r * 0.8,
 						fg,
 					}).to(queue)
