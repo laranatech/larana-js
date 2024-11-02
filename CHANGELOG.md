@@ -2,6 +2,9 @@
 
 - **fix:** reduced animation freezing
 - **fix:** `queryParams` bug
+- **fix:** min/max dimensions now don't break layout
+- **feat:** `width` and `height` style properties
+- **feat:** auto rerender when image is loaded
 - **feat:** `renderPadding` debug option
 - **feat:** `renderGaps` debug option
 - **feat:** hooks: `useState()`, `useRoute()`, `usePage()`, `useSession()`, `useMouse()`, `useModel()` etc.
@@ -20,6 +23,7 @@
 - **feat:** `renderOutline` debug option
 - **feat:** two way reactivity
 - **feat:** `CheckboxComponent`
+- **feat:** `ToggleComponent`
 - **feat:** `RadioComponent`
 - **feat:** client-side resize
 - **feat:** `TabsComponent`
@@ -47,35 +51,6 @@
 - **demo:** `/tabs` page
 - **demo:** `/todo` page
 - **demo:** `/slides` page
-
-## TODO
-
-- fix: min/max dimensions break layout
-- fix: client fonts
-- fix: errors when using quotes in text
-- feat: `blur` event
-- feat: save session id to localStorage
-- feat: TextInput carret
-- feat: `TableComponent`
-- feat: seo features
-- feat: a11y features
-- feat: remember sessionId
-- feat: border radius for images
-- feat: `FormConstructor`
-- feat: filters
-- feat: width, height
-- feat: aspect ratio
-- feat: `alignment`
-- feat: `textAlign`
-- feat: style validation
-- feat: `scroll`
-- feat: text decoration
-- feat: `router.push()`
-- refactor: eslint
-- docs: styleguide
-- docs: howto
-- demo: `/test` page
-- demo: `/game` page
 
 # 0.1.1
 

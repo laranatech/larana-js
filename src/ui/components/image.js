@@ -1,6 +1,7 @@
 const { BaseComponent } = require('./base')
 const { resource, img, qrcode } = require('../../resources')
 const { line, rect, point } = require('../shapes')
+const { figure } = require('./figure')
 
 class ImageComponent extends BaseComponent {
 	w = 0
@@ -9,6 +10,7 @@ class ImageComponent extends BaseComponent {
 	src = null
 	qr = null
 	loaded = false
+	rerenderOnLoad = true
 	onLoad = () => {}
 
 	defaultStyle = {
@@ -21,7 +23,7 @@ class ImageComponent extends BaseComponent {
 	constructor(options) {
 		super(options)
 
-		const { src, qr, alt, w, h, onLoad } = options
+		const { src, qr, alt, w, h, onLoad, rerenderOnLoad = true } = options
 
 		this.alt = alt
 		this.w = w
@@ -33,53 +35,70 @@ class ImageComponent extends BaseComponent {
 
 		if (qr) {
 			this.qr = qr
-			qrcode(qr, this.onLoad)
+			qrcode(qr, () => {
+				if (this.rerenderOnLoad) {
+					try {
+						const page = this.usePage()
+						page.rerender()
+					} catch(_) {}
+				}
+				this.onLoad()
+			})
 		} else {
 			this.src = src
-			img(src, this.onLoad)
+			img(src, () => {
+				if (this.rerenderOnLoad) {
+					try {
+						const page = this.usePage()
+						page.rerender()
+					} catch(_) {}
+				}
+				this.onLoad()
+			})
 		}
 	}
 
-	render(queue) {
-		const d = this.computeDimensions()
+	root() {
 		const style = this.computeStyle()
-
-		const { x, y, w, h } = d
-
 		const r = resource(this.qr ?? this.src)
 
-		if (r && r !== 'pending') {
-			queue.add('image', {
-				...d,
-				data: r,
-				src: this.src,
-			})
-			return queue
-		}
+		return figure({
+			template: (fig, queue) => {
+				const d = fig.computeDimensions()
+				const { x, y, w, h } = d
 
-		rect({
-			x, y, w, h,
-			...style,
-			borderColor: style.fg,
-		}).to(queue)
-
-		line({
-			points: [
-				point({ x: x + 1, y: y + 1 }),
-				point({ x: x + w - 1, y: y + h - 1 }),
-			],
-			...style,
-		}).to(queue)
-
-		line({
-			points: [
-				point({ x: x + w - 1, y: y + 1 }),
-					point({ x: x + 1, y: y + h - 1 }),
-			],
-			...style,
-		}).to(queue)
-
-		return queue
+				if (r && r !== 'pending') {
+					queue.add('image', {
+						...d,
+						data: r,
+						src: this.src,
+					})
+					return queue
+				}
+		
+				rect({
+					x, y, w, h,
+					...style,
+					borderColor: style.fg,
+				}).to(queue)
+		
+				line({
+					points: [
+						point({ x: x + 1, y: y + 1 }),
+						point({ x: x + w - 1, y: y + h - 1 }),
+					],
+					...style,
+				}).to(queue)
+		
+				line({
+					points: [
+						point({ x: x + w - 1, y: y + 1 }),
+							point({ x: x + 1, y: y + h - 1 }),
+					],
+					...style,
+				}).to(queue)
+			},
+		})
 	}
 }
 

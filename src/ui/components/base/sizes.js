@@ -6,7 +6,7 @@ class SizedComponent extends StyledComponent {
 	_computedSize = null
 	_computedGaps = null
 
-	computeSize() {
+	computeSize({ w, h, totalGap }) {
 		if (this._computedSize) {
 			return this._computedSize
 		}
@@ -16,6 +16,10 @@ class SizedComponent extends StyledComponent {
 		let sH = style.height
 		let sW = style.width
 		let size = style.size ?? 1
+
+		if (!style.height && style.minHeight) {
+			
+		}
 
 		if (style.height) {
 			sH = style.height
@@ -72,11 +76,12 @@ class SizedComponent extends StyledComponent {
 		}
 
 		const siblings = this.parent.getChildren()
+		const totalGap = (siblings.length - 1) * gap
 
-		const compSize = this.computeSize()
+		const compSize = this.computeSize({ ...wd, totalGap })
 
 		const totalSize = siblings.reduce((acc, s) => {
-			const sSize = s.computeSize()
+			const sSize = s.computeSize({ ...wd, totalGap })
 
 			if ((direction === 'row' && sSize.w) || (direction === 'column' && sSize.h)) {
 				return acc
@@ -86,7 +91,7 @@ class SizedComponent extends StyledComponent {
 
 		let d = { ...wd }
 
-		const totalGap = (siblings.length - 1) * gap
+		
 
 		const computeOffset = (side, key) => {
 			let offset = 0
@@ -103,7 +108,7 @@ class SizedComponent extends StyledComponent {
 					return
 				}
 
-				const sibSize = sibling.computeSize()
+				const sibSize = sibling.computeSize({ ...wd, totalGap })
 
 				let p = 0
 
@@ -123,7 +128,7 @@ class SizedComponent extends StyledComponent {
 
 		const computeSide = (side, key) => {
 			return side - siblings.reduce((acc, sibling) => {
-				const sibSize = sibling.computeSize()
+				const sibSize = sibling.computeSize({ ...wd, totalGap })
 
 				if (sibSize[key]) {
 					return acc + sibSize[key]

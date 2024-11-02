@@ -4,6 +4,7 @@ const {
 	text,
 	radio,
 	checkbox,
+	toggle,
 	list,
 } = require('larana-js')
 
@@ -62,10 +63,20 @@ class HomePage extends Page {
 								],
 							}),
 						}),
-						list({
+						layout({
 							style: ['column', 'gap_2'],
-							value: ['checkboxValue1', 'checkboxValue2', 'checkboxValue3'],
-							template: (item, i) => checkbox({ model: item }),
+							children: [
+								list({
+									style: ['column', 'gap_2'],
+									value: ['checkboxValue1', 'checkboxValue2', 'checkboxValue3'],
+									template: (item, i) => checkbox({ model: item }),
+								}),
+								list({
+									style: ['column', 'gap_2'],
+									value: ['checkboxValue1', 'checkboxValue2', 'checkboxValue3'],
+									template: (item, i) => toggle({ model: item }),
+								}),
+							],
 						}),
 						text({ value: 'Home', style: 'h1Text' }),
 						new CircleComponent({

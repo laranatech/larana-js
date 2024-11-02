@@ -22,9 +22,6 @@ class ContactsSlideComponent extends BaseComponent {
 								image({
 									style: { size: 9 },
 									qr: 'https://t.me/+1aK0hJw21ShlMWVi',
-									onLoad: () => {
-										page.rerender()
-									},
 								}),
 								text({ style: 'h3Text', value: '@frontend_director' }),
 							],
@@ -35,9 +32,6 @@ class ContactsSlideComponent extends BaseComponent {
 								image({
 									style: { size: 9 },
 									qr: 'https://t.me/+oiDOgBndnZ5hYzIy',
-									onLoad: () => {
-										page.rerender()
-									},
 								}),
 								text({ style: 'h3Text', value: '@laranatech' }),
 							],

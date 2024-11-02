@@ -19,9 +19,6 @@ class TitleSlideComponent extends BaseComponent {
 					children: [
 						image({
 							src: 'https://larana.tech/larana.svg',
-							onLoad: (r) => {
-								page.rerender()
-							},
 						}),
 					],
 				}),

@@ -1,0 +1,27 @@
+# Roadmap
+
+- fix: client fonts
+- fix: errors when using quotes in text
+- feat: `blur` event
+- feat: save session id to localStorage
+- feat: TextInput carret
+- feat: `TableComponent`
+- feat: seo features
+- feat: a11y features
+- feat: remember sessionId
+- feat: border radius for images
+- feat: `FormConstructor`
+- feat: filters
+- feat: aspect ratio
+- feat: `alignment`: `start|center|end|stretch`
+- feat: `size`: `fit-content`
+- feat: `textAlign`
+- feat: style validation
+- feat: `scroll`
+- feat: text decoration
+- feat: `router.push()`
+- refactor: eslint
+- docs: styleguide
+- docs: howto
+- demo: `/test` page
+- demo: `/game` page

@@ -25,9 +25,6 @@ class CommunitySlideComponent extends BaseComponent {
 						image({
 							style: { size: 2 },
 							src: 'https://kucheriavyi.ru/images/slides/larana-suit.jpg',
-							onLoad: () => {
-								page.rerender()
-							},
 						}),
 						image({
 							style: { size: 2 },
@@ -40,9 +37,6 @@ class CommunitySlideComponent extends BaseComponent {
 						image({
 							style: { size: 2 },
 							src: 'https://kucheriavyi.ru/images/slides/larana-suit.jpg',
-							onLoad: () => {
-								page.rerender()
-							},
 						}),
 					],
 				}),

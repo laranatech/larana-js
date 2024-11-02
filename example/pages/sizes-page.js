@@ -1,6 +1,4 @@
-const { Page, layout, text } = require('larana-js')
-
-const { header } = require('../components')
+const { Page, layout } = require('larana-js')
 
 class SizesPage extends Page {
 	title = 'Sizes'
@@ -24,31 +22,31 @@ class SizesPage extends Page {
 					id: 'blue',
 					style: { bg: '#00f', size: 3, padding: 'var:u2', gap: 'var:u2' },
 					children: [
-						layout({ style: { size: 10, bg: '#ff0'} }),
-						layout({ style: { size: 20, bg: '#f0f'} }),
-						layout({ style: { size: 10, bg: '#0ff'} }),
-						layout({ id: 'white', style: { width: 100, bg: '#fff'} }),
-						// layout({ id: 'white', style: { size: 1, bg: '#fff'} }),
-						layout({ style: { size: 10, bg: '#0ff'} }),
-						layout({ style: { size: 10, bg: '#0ff'} }),
-						layout({ style: { size: 10, bg: '#0ff'} }),
-						layout({ style: { size: 10, bg: '#0ff'} }),
+						layout({ style: { size: 10, bg: '#ff0', maxWidth: 150 } }),
+						layout({ style: { size: 20, bg: '#f0f' } }),
+						layout({ style: { size: 10, bg: '#0ff', minWidth: 500 } }),
+						layout({ id: 'white', style: { width: 100, bg: '#fff' } }),
+						layout({ style: { size: 10, bg: '#0ff' } }),
+						layout({ style: { size: 10, bg: '#0ff' } }),
+						layout({ style: { size: 10, bg: '#0ff' } }),
+						layout({ style: { size: 10, bg: '#0ff' } }),
 					],
 				}),
 				layout({
 					id: 'red',
+					outlineColor: '#00f',
+					style: { bg: '#f00', size: 2, maxHeight: 150 },
+				}),
+				layout({
+					outlineColor: '#00f',
 					style: { bg: '#f00', size: 2 },
 				}),
 				layout({
-					// id: 'red',
-					style: { bg: '#f00', size: 2 },
+					outlineColor: '#00f',
+					style: { bg: '#f00', size: 2, minHeight: 500 },
 				}),
 				layout({
-					// id: 'red',
-					style: { bg: '#f00', size: 2 },
-				}),
-				layout({
-					// id: 'red',
+					outlineColor: '#00f',
 					style: { bg: '#f00', size: 2 },
 				}),
 			],

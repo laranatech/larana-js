@@ -27,9 +27,6 @@ class VueranaSlideComponent extends BaseComponent {
 								'https://kucheriavyi.ru/images/slides/vueact.png',
 								'https://kucheriavyi.ru/images/slides/vuerana.png',
 							][this.step-1],
-							onLoad: () => {
-								page.rerender()
-							},
 						}),
 					],
 				}),
