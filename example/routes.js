@@ -8,6 +8,7 @@ const {
 	SlidesPage,
 	ShapesPage,
 	NotFoundPage,
+	SizesPage,
 } = require('./pages')
 
 module.exports = {
@@ -20,6 +21,7 @@ module.exports = {
 		{ path: '/slides', name: 'holy-slides', page: SlidesPage },
 		{ path: '/shapes', name: 'shapes', page: ShapesPage },
 		{ path: '/counter', name: 'counter', page: CounterPage },
+		{ path: '/sizes', name: 'sizes', page: SizesPage },
 
 		{ path: '404', name: 'not-found', page: NotFoundPage },
 	],

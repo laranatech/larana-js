@@ -61,7 +61,7 @@ class RadioComponent extends BaseComponent {
 		return figure({
 			template: (fig, queue) => {
 				const { x, y, w, h } = fig.computeDimensions()
-				const r = fig.computeMaxRadius({ w, h })
+				const r = fig.computeMaxRadius()
 
 				arc({
 					x: x + w / 2,

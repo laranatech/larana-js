@@ -1,6 +1,8 @@
 const { BaseComponent, layout, text } = require('larana-js')
 
 class HeaderComponent extends BaseComponent {
+	id = 'header'
+
 	items = [
 		{ label: 'Home', name: 'home' },
 		{ label: 'Bar chart', name: 'home' },
@@ -8,8 +10,7 @@ class HeaderComponent extends BaseComponent {
 	]
 
 	defaultStyle = {
-		minHeight: 80,
-		maxHeight: 100,
+		height: 80,
 		direction: 'row',
 		gap: 'var:u2',
 		bg: 'var:accent',
@@ -19,18 +20,17 @@ class HeaderComponent extends BaseComponent {
 		const route = this.useRoute()
 
 		return layout({
-			outlineColor: '#f00',
 			id: 'header',
 			children: [
 				text({
-					outlineColor: '#f0f',
 					id: 'headerText1',
+					outlineColor: '#f0f',
 					value: 'LaranaJS',
 					style: 'h1Text',
 				}),
 				text({
-					outlineColor: '#f0f',
 					id: 'headerText2',
+					outlineColor: '#f0f',
 					value: route.name,
 					style: 'h3Text',
 				}),

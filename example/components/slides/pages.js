@@ -4,7 +4,7 @@ class PagesSlideComponent extends BaseComponent {
 	static steps = 1
 
 	defaultStyle = {
-		direction: 'col',
+		direction: 'column',
 	}
 
 	root() {

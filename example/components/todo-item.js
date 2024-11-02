@@ -25,6 +25,7 @@ class TodoItemComponent extends BaseComponent {
 		return layout({
 			children: [
 				text({
+					// id: 'todo_text_id',
 					value: this.item.label,
 					style: ['text', { size: 9 }],
 				}),

@@ -7,5 +7,6 @@ module.exports = {
 	...require('./game-page.js'),
 	...require('./slides-page.js'),
 	...require('./shapes-page.js'),
+	...require('./sizes-page.js'),
 	...require('./404-page.js'),
 }

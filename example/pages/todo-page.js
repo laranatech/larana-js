@@ -28,6 +28,7 @@ class TodoPage extends Page {
 		const buttonDisabled = this.state.inputValue === ''
 
 		return layout({
+			id: 'body',
 			style: [
 				'body',
 				{
@@ -38,16 +39,20 @@ class TodoPage extends Page {
 			children: [
 				header({}),
 				layout({
+					id: 'layout',
 					style: { size: 9, gap: 'var:u2', direction: 'column' },
 					children: [
 						text({
+							id: 'titleText',
 							value: 'Todo',
 							style: 'h1Text',
 						}),
 						list({
+							id: 'list',
 							style: { size: 9, padding: 'var:u2' },
 							model: 'items',
 							template: (item, i) => new TodoItemComponent({
+								id: `todo-item_${i}`,
 								item,
 								onDelete: (value) => {
 									this.setState({
@@ -57,6 +62,7 @@ class TodoPage extends Page {
 							}),
 						}),
 						layout({
+							id: 'bottom',
 							style: { padding: 'var:u2', gap: 'var:u2' },
 							children: [
 								textInput({
@@ -66,7 +72,8 @@ class TodoPage extends Page {
 									},
 								}),
 								button({
-									style: buttonDisabled ? { fg: 'var:disabledFg' } : {},
+									id: 'addButton',
+									// style: buttonDisabled ? { fg: 'var:disabledFg' } : {},
 									text: 'Add',
 									onClick: () => {
 										if (buttonDisabled) {

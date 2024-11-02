@@ -116,7 +116,7 @@ const styleScheme = {
 		type: 'string',
 		required: false,
 		rules: [
-			rules.allowlist(['start', 'end', 'center', 'stretch']),
+			rules.allowlist(['start', 'end', 'center']),
 		],
 	},
 	direction: {
@@ -134,11 +134,13 @@ const styleScheme = {
 const styleSchemer = new Schemer(styleScheme)
 
 class Style {
-	alignment = 'stretch'
+	alignment = 'start'
 	direction = 'row'
-	size = 1
+	size = null
+	width = null
 	minWidth = null
 	maxWidth = null
+	height = null
 	minHeight = null
 	maxHeight = null
 	fg = null

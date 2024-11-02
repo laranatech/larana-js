@@ -101,8 +101,19 @@ class BaseComponent extends DebuggedComponent {
 			updated = true
 		}
 
-		// TODO
-		// return true
+		const d = this.computeDimensions()
+
+		const { lastMouse, currMouse } = this.useMouse()
+
+		const wasHovered = lastMouse.collide(d)
+		const isHovered = currMouse.collide(d)
+
+		const hoverChanged = (wasHovered && !isHovered) || (!wasHovered && isHovered)
+
+		if (hoverChanged) {
+			updated = true
+		}
+
 		return updated
 	}
 
@@ -139,6 +150,7 @@ class BaseComponent extends DebuggedComponent {
 		}
 
 		root.style = this.computeStyle()
+		root._computedDimensions = this.computeDimensions()
 
 		this._patch(root, payload)
 
