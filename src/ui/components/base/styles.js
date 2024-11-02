@@ -12,17 +12,17 @@ class StyledComponent extends HookedComponent {
 	disabledStyle = {}
 	defaultDisabledStyle = {}
 
-	defaultStyle = {
-		_disabled: {},
-		_focused: {},
-		_hovered: {},
-	}
+	// defaultStyle = {
+	// 	_disabled: {},
+	// 	_focused: {},
+	// 	_hovered: {},
+	// }
 
-	style = {
-		_disabled: {},
-		_focused: {},
-		_hovered: {},
-	}
+	// style = {
+	// 	_disabled: {},
+	// 	_focused: {},
+	// 	_hovered: {},
+	// }
 
 	preComputedStyle = null
 	computedStyle = null

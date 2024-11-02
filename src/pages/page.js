@@ -2,15 +2,15 @@ const { RenderQueue } = require('../ui/rendering')
 const { layout } = require('../ui/components')
 const { Request } = require('../network')
 const { point } = require('../ui/shapes')
+const { DebuggedPage } = require('./debug.js')
 
-class Page {
+class Page extends DebuggedPage {
 	session = null
 	config = {}
 
 	state = {}
 	componentsState = new Map()
 
-	meta = ''
 	root = null
 	initialRoot = null
 
@@ -34,7 +34,10 @@ class Page {
 	scripts = ''
 	styles = ''
 
-	constructor({ state, meta, config, appConfig }) {
+	constructor(options) {
+		super(options)
+
+		const { state, meta, config, appConfig } = options
 		if (state !== undefined) {
 			this.state = state
 		}
@@ -69,7 +72,11 @@ class Page {
 	}
 
 	get state() {
-		return Object.freeze(structuredClone(this.state))
+		return Object.freeze(this.state)
+	}
+
+	initState(state) {
+		this.state = state
 	}
 
 	getState() {
@@ -77,7 +84,7 @@ class Page {
 			state: this.state,
 			setState: (newState, options = { needsRerender: true }) => {
 				this.setState(newState, options)
-			}
+			},
 		}
 	}
 
@@ -150,8 +157,7 @@ class Page {
 	// Rendering
 
 	/**
-	 * 
-	 * @param {Request} request 
+	 * @param {Request} request
 	 * @returns {RenderQueue}
 	 */
 	renderInitialDraw(request) {
@@ -166,8 +172,7 @@ class Page {
 	}
 
 	/**
-	 * 
-	 * @param {Request} request 
+	 * @param {Request} request
 	 * @returns {RenderQueue}
 	 */
 	renderFirstDraw(request) {
@@ -182,8 +187,7 @@ class Page {
 	}
 
 	/**
-	 * 
-	 * @param {Request} request 
+	 * @param {Request} request
 	 * @returns {RenderQueue}
 	 */
 	render(request) {
@@ -221,15 +225,16 @@ class Page {
 
 		root._render(queue)
 
+		this._renderDebug(queue)
+
 		return queue
 	}
 
 	// Handling events
 
 	/**
-	 * 
-	 * @param {Request} request 
-	 * @returns 
+	 * @param {Request} request
+	 * @returns
 	 */
 	update(request) {
 		const { w, h } = request

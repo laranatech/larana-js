@@ -175,21 +175,17 @@ class Style {
 		if (!value) {
 			throw new Error(`Cannot compute style: ${value}`)
 		}
-
 		if (Array.isArray(value)) {
 			const m = mixStyles(value.map((v) => Style.compute(v, request, session)))
 			return m
 		}
-
 		if (typeof value === 'object') {
 			return Style.resolveVars(value, request, session)
 		}
-
 		if (typeof value === 'string') {
 			const cs = Style.resolveVars(styleName(value), request, session)
 			return cs
 		}
-
 		throw new Error(`Invalid type: [${typeof value}] ${value}`)
 	}
 

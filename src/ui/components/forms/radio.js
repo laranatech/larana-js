@@ -75,7 +75,7 @@ class RadioComponent extends BaseComponent {
 					borderColor,
 					borderWidth,
 				}).to(queue)
-		
+
 				if (selected) {
 					arc({
 						x: cX,

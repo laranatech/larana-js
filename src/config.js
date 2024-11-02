@@ -56,8 +56,9 @@ const defaultConfig = {
 	debug: false,
 	debugOptions: {
 		renderOutline: true,
-		renderPaddings: true, // TODO
-		renderGaps: true, // TODO
+		renderPaddings: true,
+		renderGaps: true,
+		renderCursor: true,
 	},
 	port: 1610,
 	wsPath: 'ws://localhost:1610/',
@@ -72,7 +73,6 @@ const defaultConfig = {
 }
 
 /**
- * 
  * @param {{
  * debug: boolean;
  * debugOptions: *;
@@ -86,7 +86,7 @@ const defaultConfig = {
  * initialH: number;
  * defaultTheme: string;
  * defaultLang: string;
- * }} config 
+ * }} config
  * @returns validated config
  */
 const createConfig = (config) => {

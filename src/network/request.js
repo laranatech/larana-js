@@ -7,8 +7,8 @@ class Request {
 
 	event = null
 
-	constructor({ x, y, w, h, type, value }) {
-		this.sessionId = this.sessionId
+	constructor({ x, y, w, h, type, value, sessionId }) {
+		this.sessionId = sessionId
 		this.w = w
 		this.h = h
 

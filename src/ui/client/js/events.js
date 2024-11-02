@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 window.addEventListener('resize', function () {
 	clearTimeout(resizeTimeout);
 	resizeTimeout = setTimeout(function() {

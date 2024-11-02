@@ -6,7 +6,9 @@ const { BaseRenderer } = require('./base-renderer.js')
 const { CanvasRenderer } = require('./canvas-renderer.js')
 
 const readStaticCode = () => {
-	const clientPath = path.join(__dirname, 'static', 'server-renderer-client.js')
+	// eslint-disable-next-line no-undef
+	const dir = __dirname
+	const clientPath = path.join(dir, 'static', 'server-renderer-client.js')
 	return fs.readFileSync(clientPath, 'utf-8')
 }
 

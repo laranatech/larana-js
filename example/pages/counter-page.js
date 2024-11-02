@@ -11,9 +11,9 @@ class CounterPage extends Page {
 	title = 'Counter'
 
 	init() {
-		this.state = {
+		this.initState({
 			counter: 0,
-		}
+		})
 	}
 
 	prepareRoot({ w, h }) {

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 var ENDPOINT = '%WS_PATH%';
 var SESSION_ID = '%SESSION_ID%';
 

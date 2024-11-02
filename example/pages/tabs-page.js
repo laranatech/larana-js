@@ -11,7 +11,7 @@ class TabsPage extends Page {
 	title = 'Tabs'
 
 	init() {
-		this.state = {
+		this.initState({
 			tabs: [
 				{ value: 'tab_1', label: 'Tab 1' },
 				{ value: 'tab_2', label: 'Tab 2' },
@@ -19,7 +19,7 @@ class TabsPage extends Page {
 				{ value: 'tab_4', label: 'Tab 4' },
 			],
 			activeTab: 'tab_1',
-		}
+		})
 	}
 
 	prepareRoot({ w, h }) {

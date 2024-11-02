@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 var INITIAL_W = Number('%INITIAL_W%');
 var INITIAL_H = Number('%INITIAL_H%');
 

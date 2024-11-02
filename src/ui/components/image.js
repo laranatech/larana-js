@@ -75,13 +75,13 @@ class ImageComponent extends BaseComponent {
 					})
 					return queue
 				}
-		
+
 				rect({
 					x, y, w, h,
 					...style,
 					borderColor: style.fg,
 				}).to(queue)
-		
+
 				line({
 					points: [
 						point({ x: x + 1, y: y + 1 }),
@@ -89,11 +89,11 @@ class ImageComponent extends BaseComponent {
 					],
 					...style,
 				}).to(queue)
-		
+
 				line({
 					points: [
 						point({ x: x + w - 1, y: y + 1 }),
-							point({ x: x + 1, y: y + h - 1 }),
+						point({ x: x + 1, y: y + h - 1 }),
 					],
 					...style,
 				}).to(queue)

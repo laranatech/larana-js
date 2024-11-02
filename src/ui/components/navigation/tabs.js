@@ -17,7 +17,6 @@ class TabsComponent extends BaseComponent {
 
 	constructor(options) {
 		super(options)
-		
 		const { tabs, onChange } = options
 
 		this.tabs = tabs

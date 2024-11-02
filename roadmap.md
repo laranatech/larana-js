@@ -3,8 +3,8 @@
 - fix: client fonts
 - fix: errors when using quotes in text
 - feat: `blur` event
-- feat: save session id to localStorage
-- feat: TextInput carret
+- feat: save session id to `localStorage`
+- feat: `TextInput` carret
 - feat: `TableComponent`
 - feat: seo features
 - feat: a11y features
@@ -20,7 +20,6 @@
 - feat: `scroll`
 - feat: text decoration
 - feat: `router.push()`
-- refactor: eslint
 - docs: styleguide
 - docs: howto
 - demo: `/test` page

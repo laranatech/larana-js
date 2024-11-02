@@ -20,14 +20,14 @@ class HomePage extends Page {
 	}
 
 	init() {
-		this.state = {
+		this.initState({
 			radius: 30,
 			d: 1,
 			checkboxValue1: true,
 			checkboxValue2: true,
 			checkboxValue3: true,
 			radioValue: 'item_1',
-		}
+		})
 	}
 
 	prepareRoot({ w, h }) {

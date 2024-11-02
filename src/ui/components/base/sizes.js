@@ -17,9 +17,7 @@ class SizedComponent extends StyledComponent {
 		let sW = style.width
 		let size = style.size ?? 1
 
-		if (!style.height && style.minHeight) {
-			
-		}
+		if (!style.height && style.minHeight) {}
 
 		if (style.height) {
 			sH = style.height
@@ -66,7 +64,7 @@ class SizedComponent extends StyledComponent {
 			return stateDimensions
 		}
 
-		const { gap, padding, direction, alignment } = this.parent.preComputeStyle()
+		const { gap, padding, direction } = this.parent.preComputeStyle()
 		const pd = this.parent.computeDimensions()
 		const wd = {
 			x: pd.x + padding,
@@ -90,8 +88,6 @@ class SizedComponent extends StyledComponent {
 		}, 0)
 
 		let d = { ...wd }
-
-		
 
 		const computeOffset = (side, key) => {
 			let offset = 0

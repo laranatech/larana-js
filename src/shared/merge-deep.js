@@ -17,7 +17,7 @@ const mergeDeep = (target, ...sources) => {
 		return target
 	}
 	const source = sources.shift()
-	
+
 	if (!isObject(target) || !isObject(source)) {
 		return mergeDeep(target, ...sources)
 	}
@@ -32,7 +32,7 @@ const mergeDeep = (target, ...sources) => {
 		}
 		mergeDeep(target[key], source[key])
 	}
-	
+
 	return mergeDeep(target, ...sources)
 }
 

@@ -72,7 +72,7 @@ class TextInputComponent extends BaseComponent {
 			return
 		} else if (value === 'Delete') {
 
-		} else if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown',].includes(value)) {
+		} else if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(value)) {
 			this.moveCarret(value)
 		} else {
 			if ([

@@ -1,5 +1,5 @@
 const { CheckboxComponent } = require('./checkbox.js')
-const { rect, line, point, arc } = require('../../shapes')
+const { rect, arc } = require('../../shapes')
 const { figure } = require('../figure.js')
 const { useStyleVar } = require('../../style/style-variables.js')
 
@@ -32,9 +32,9 @@ class ToggleComponent extends CheckboxComponent {
 					y: y + h / 2,
 					x: modelValue ? x + w * 0.75 : x + w * 0.25,
 					radius: radius * 0.8,
-					bg: '#fff'
+					bg: '#fff',
 				}).to(queue)
-			}
+			},
 		})
 	}
 }

@@ -12,7 +12,6 @@ class Line extends Shape {
 	}
 
 	command() {
-		
 		return {
 			points: this.points,
 			...this.style,

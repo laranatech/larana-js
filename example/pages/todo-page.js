@@ -14,14 +14,14 @@ class TodoPage extends Page {
 	title = 'Todo'
 
 	init() {
-		this.state = {
+		this.initState({
 			items: [
 				{ label: 'Item 1', value: crypto.randomUUID() },
 				{ label: 'Item 2', value: crypto.randomUUID() },
 				{ label: 'Item 3', value: crypto.randomUUID() },
 			],
 			inputValue: '',
-		}
+		})
 	}
 
 	prepareRoot({ w, h }) {

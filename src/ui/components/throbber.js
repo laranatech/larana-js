@@ -48,7 +48,7 @@ class ThrobberComponent extends BaseComponent {
 				arc({
 					x: x + w * 0.5,
 					y: y + h * 0.5,
-					radius: this.computeMaxRadius(),
+					radius: this.computeMaxRadius() * 0.8,
 					start: modelValue,
 					end: modelValue + this.length,
 					borderColor,

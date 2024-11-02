@@ -56,7 +56,6 @@ class DefaultRouter extends BaseRouter {
 
 		if (!route) {
 			const notFoundRoute = this.routes.find((p) => p.name === 'not-found')
-			
 			return {
 				url,
 				name: 'not-found',

@@ -1,5 +1,4 @@
 const { Schemer } = require('@laranatech/schemer')
-const { readonlyProperty } = require('../../shared/readonly-property.js')
 
 const pointSchemer = new Schemer({ x: 'number', y: 'number' })
 
@@ -10,8 +9,7 @@ class Point {
 	y = 0
 
 	/**
-	 * 
-	 * @param {{ x: number; y: number }} p 
+	 * @param {{ x: number; y: number }} p
 	 */
 	constructor(p) {
 		pointSchemer.validate(p)
@@ -29,14 +27,6 @@ class Point {
 			return false
 		}
 		return true
-	}
-
-	set x(value) {
-		readonlyProperty('x', value)
-	}
-
-	set y(value) {
-		readonlyProperty('y', value)
 	}
 }
 

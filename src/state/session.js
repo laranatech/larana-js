@@ -3,19 +3,19 @@ class Session {
 	lastUpdate = 0
 	page = null
 	route = null
-	storage = {}
+	_storage = {}
 
 	constructor({ sessionId, page, route, storage }) {
 		this.sessionId = sessionId
 		this.page = page
 		this.route = route
-		this.storage = storage
+		this._storage = storage
 
 		this.lastUpdate = Date.now()
 	}
 
 	get storage() {
-		return Object.freeze(structuredClone(this.storage))
+		return Object.freeze(structuredClone(this._storage))
 	}
 
 	update() {
@@ -34,7 +34,7 @@ class Session {
 			storage: this.storage,
 			setStorage: (newStorage) => {
 				this.setStorage(newStorage)
-			}
+			},
 		}
 	}
 

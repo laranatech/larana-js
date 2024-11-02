@@ -28,11 +28,8 @@ class BarChartComponent extends BaseComponent {
 		const style = this.computeStyle()
 
 		let maxValue = 0
-		let totalValue = 0
 
 		items.forEach((item) => {
-			totalValue += item.value
-
 			if (maxValue < item.value) {
 				maxValue = item.value
 			}
@@ -52,7 +49,7 @@ class BarChartComponent extends BaseComponent {
 					},
 					children: [
 						layout({
-							style: { size: 10 - s, bg: style.bg, },
+							style: { size: 10 - s, bg: style.bg },
 						}),
 						layout({
 							style: {
@@ -70,7 +67,7 @@ class BarChartComponent extends BaseComponent {
 							value: item.label,
 							style: { fg: style.fg },
 						}),
-					]
+					],
 				})
 			}),
 		})

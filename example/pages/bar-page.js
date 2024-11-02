@@ -13,12 +13,12 @@ class BarPage extends Page {
 	title = 'Bar chart page'
 
 	init() {
-		this.state = {
+		this.initState({
 			items: [],
 			loaded: false,
 			loadingTick: 0,
 			loadingText: 'Loading',
-		}
+		})
 
 		this.initialRoot = layout({
 			children: [

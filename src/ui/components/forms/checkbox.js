@@ -73,7 +73,7 @@ class CheckboxComponent extends BaseComponent {
 						borderColor: style.bg,
 					}).to(queue)
 				}
-			}
+			},
 		})
 	}
 }

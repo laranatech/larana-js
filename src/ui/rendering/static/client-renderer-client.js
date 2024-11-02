@@ -1,3 +1,4 @@
+/* eslint-disable */
 "%RENDERER_CLASS%"
 
 function onPageLoad() {

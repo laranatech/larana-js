@@ -92,13 +92,13 @@ class CanvasRenderer {
 			ctx.textAlign = align
 			ctx.textAlign = ''
 		}
-		
+
 		if (baseline) {
 			ctx.textBaseline = baseline
 		}
 
 		ctx.fillText(text, x, y, maxWidth)
-		
+
 		return canvas
 	}
 
@@ -171,7 +171,6 @@ class CanvasRenderer {
 				ctx.roundRect(x, y, w, h, radius)
 				ctx.stroke()
 			}
-			
 		} else {
 			if (fillStyle) {
 				ctx.fillStyle = fillStyle
@@ -188,9 +187,7 @@ class CanvasRenderer {
 
 	line(canvas, options) {
 		const ctx = canvas.getContext('2d')
-
 		const { points } = options
-
 		this.applyLineParams(ctx, options)
 
 		ctx.beginPath()

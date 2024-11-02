@@ -12,7 +12,9 @@ const { initDefaultStyleVars, initDefaultStyleNames } = require('./ui/style')
 
 
 const readFavicon = () => {
-	const clientPath = path.join(__dirname, 'static', 'favicon.ico')
+	// eslint-disable-next-line no-undef
+	const dir = __dirname
+	const clientPath = path.join(dir, 'static', 'favicon.ico')
 	return fs.readFileSync(clientPath, 'utf-8')
 }
 
@@ -89,9 +91,6 @@ class LaranaApp {
 		res.end(favicon)
 	}
 
-	/**
-	 * 
-	 */
 	server(req, res) {
 		if (req.url === '/favicon.ico') {
 			this.serveFavicon(req, res)

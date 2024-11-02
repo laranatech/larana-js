@@ -11,7 +11,7 @@ const click = ({ handler, style }) => {
 				return ''
 			}
 
-			const { x, y, type } = event
+			const { x, y } = event
 
 			const p = point({ x, y })
 			const d = component.computeDimensions()

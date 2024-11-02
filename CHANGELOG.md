@@ -7,6 +7,7 @@
 - **feat:** auto rerender when image is loaded
 - **feat:** `renderPadding` debug option
 - **feat:** `renderGaps` debug option
+- **feat:** `renderCursor` debug option
 - **feat:** hooks: `useState()`, `useRoute()`, `usePage()`, `useSession()`, `useMouse()`, `useModel()` etc.
 - **feat:** `hoveredStyle`
 - **feat:** `focusedStyle`
@@ -48,6 +49,7 @@
 - **refactor:** `getDimensions()` -> `computeDimensions()`
 - **refactor:** put form components to `form` folder
 - **refactor:** put navigational components to `navigation` folder
+- **refactor:** eslint
 - **demo:** `/tabs` page
 - **demo:** `/todo` page
 - **demo:** `/slides` page

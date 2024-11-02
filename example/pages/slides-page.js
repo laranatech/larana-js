@@ -12,7 +12,7 @@ class SlidesPage extends Page {
 
 		const s = Object.values(slides)
 
-		this.state = {
+		this.initState({
 			slides: s,
 			currentStep,
 			totalSteps: s.reduce((acc, curr) => acc + curr.steps, 0),
@@ -29,7 +29,7 @@ class SlidesPage extends Page {
 				{ ts: Date.now() + 4, label: 'Buy cookies', done: false },
 			],
 			todoInputValue: '',
-		}
+		})
 	}
 
 	loadResources() {

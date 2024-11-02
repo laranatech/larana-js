@@ -5,7 +5,8 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "vitest run",
-		"format": "prettier --write src/"
+		"format": "prettier --write src/",
+		"lint": "eslint src"
 	},
 	"repository": {
 		"type": "git",
@@ -26,7 +27,9 @@
 	},
 	"homepage": "https://github.com/laranatech/larana-js#readme",
 	"devDependencies": {
-		"prettier": "^3.3.3",
+		"@eslint/js": "^8.57.1",
+		"eslint": "^8.57.1",
+		"globals": "^15.11.0",
 		"vitest": "^2.0.5"
 	},
 	"dependencies": {

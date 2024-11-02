@@ -129,7 +129,7 @@ class HookedComponent {
 
 		const model = this._model
 		const value = this._value
-		
+
 		const getModel = () => {
 			return model ? state[model] : value
 		}
@@ -138,19 +138,10 @@ class HookedComponent {
 			if (!model) {
 				return
 			}
-
 			setState({ [model]: value })
 		}
 
-		const modelValue = getModel()
-
-		return {
-			model,
-			modelValue,
-			value,
-			getModel,
-			setModel,
-		}
+		return { model, modelValue: getModel(), value, getModel, setModel }
 	}
 
 	useStorage() {
