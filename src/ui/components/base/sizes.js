@@ -43,6 +43,9 @@ class SizedComponent extends StyledComponent {
 	}
 
 	computeDimensions() {
+		const log = (...args) =>{
+			['white', 'red'].includes(this.id) && console.log('>', this.id, '>', ...args)
+		}
 		if (this._computedDimensions) {
 			return this._computedDimensions
 		}
@@ -78,12 +81,12 @@ class SizedComponent extends StyledComponent {
 		const compSize = this.computeSize()
 
 		const totalSize = siblings.reduce((acc, s) => {
-			const { size } = s.computeSize()
+			const sSize = s.computeSize()
 
-			if (size) {
-				return acc + size
+			if ((direction === 'row' && sSize.w) || (direction === 'column' && sSize.h)) {
+				return acc
 			}
-			return acc
+			return acc + sSize.size
 		}, 0)
 
 		let d = { ...wd }
@@ -176,6 +179,8 @@ class SizedComponent extends StyledComponent {
 
 		this._computedDimensions = d
 		dimensions.set(this.id, d)
+
+		log(d)
 
 		return d
 	}

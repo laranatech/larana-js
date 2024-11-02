@@ -41,7 +41,7 @@ class HomePage extends Page {
 			children: [
 				header({}),
 				layout({
-					style: ['gap_2', { size: 9 }],
+					style: ['gap_2', 'size_1'],
 					children: [
 						list({
 							style: ['col', 'gap_2'],
@@ -72,14 +72,14 @@ class HomePage extends Page {
 							style: { size: 1, bg: 'var:accent', borderColor: '#f00' },
 							radius: this.state.radius,
 							onAnimate: () => {
-								let d = this.state.d
-								if (this.state.radius >= 100 || this.state.radius <= 3) {
-									d *= -1
-								}
-								this.setState({
-									radius: this.state.radius + 1 * d,
-									d,
-								})
+								// let d = this.state.d
+								// if (this.state.radius >= 100 || this.state.radius <= 3) {
+								// 	d *= -1
+								// }
+								// this.setState({
+								// 	radius: this.state.radius + 1 * d,
+								// 	d,
+								// })
 							},
 						}),
 					],
