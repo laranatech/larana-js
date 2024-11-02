@@ -96,11 +96,11 @@ class TODOListSlideComponent extends BaseComponent {
 					value: 'TODO-List на LaranaJS',
 				}),
 				layout({
-					style: ['col', 'gap_1', 'size_5'],
+					style: ['column', 'gap_1', 'size_5'],
 					children: [
 						this.step === 1 ? text({ value: 'Пример кода TODO list' })
 						: layout({
-							style: ['col', 'gap_1'],
+							style: ['column', 'gap_1'],
 							children: [
 								list({
 									style: 'size_5',

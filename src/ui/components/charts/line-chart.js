@@ -9,9 +9,10 @@ class LineChartComponent extends BaseComponent {
 
 	defaultStyle = {
 		fg: 'var:fg',
-		bg: 'var:accent',
 		borderWidth: 'var:u1',
 		borderCap: 'round',
+		direction: 'column',
+		borderColor: 'var:accent',
 	}
 
 	constructor(options) {
@@ -43,11 +44,6 @@ class LineChartComponent extends BaseComponent {
 		maxValue *= 1.05
 
 		return layout({
-			style: [
-				'col',
-				'gap_1',
-				'p_1',
-			],
 			children: [
 				figure({
 					style: { size: 10 },
@@ -66,10 +62,9 @@ class LineChartComponent extends BaseComponent {
 									y: bottom - d.h * s,
 								})
 							}),
-							borderColor: style.bg,
+							borderColor: style.borderColor,
 							borderWidth: style.borderWidth,
 							borderCap: style.borderCap,
-							bg: 'var:accent',
 						}).to(queue)
 
 						items.forEach((item, i) => {
@@ -77,7 +72,7 @@ class LineChartComponent extends BaseComponent {
 							arc({
 								x: d.x + i * deltaW + deltaW / 2,
 								y: bottom - d.h * s,
-								borderColor: 'var:componentBg',
+								borderColor: style.borderColor,
 								bg: style.bg,
 								radius: style.borderWidth,
 							}).to(queue)

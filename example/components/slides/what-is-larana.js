@@ -21,7 +21,7 @@ class WhatIsLaranaSlideComponent extends BaseComponent {
 					value: 'Что такое LaranaJS',
 				}),
 				layout({
-					style: ['col', 'gap_1', 'size_5'],
+					style: ['column', 'gap_1', 'size_5'],
 					children: [
 						text({}),
 						text({

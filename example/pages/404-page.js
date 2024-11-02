@@ -11,14 +11,14 @@ class NotFoundPage extends Page {
 			id: 'body',
 			style: [
 				'body',
-				'col',
+				'column',
 			],
 			children: [
 				header({ id: 'headerWrap' }),
 				layout({
 					id: 'layout1',
 					style: {
-						direction: w > 1028 ? 'row' : 'col',
+						direction: w > 1028 ? 'row' : 'column',
 						size: 9,
 						padding: 'var:u2',
 						gap: 'var:u2',

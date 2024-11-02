@@ -7,7 +7,9 @@ class BarChartComponent extends BaseComponent {
 
 	defaultStyle = {
 		fg: 'var:fg',
-		bg: 'var:accent',
+		// bg: 'var:accent',
+		padding: 'var:u2',
+		gap: 'var:u2',
 	}
 
 	constructor(options) {
@@ -23,6 +25,8 @@ class BarChartComponent extends BaseComponent {
 		const { modelValue } = this.useModel()
 		const items = modelValue
 
+		const style = this.computeStyle()
+
 		let maxValue = 0
 		let totalValue = 0
 
@@ -37,36 +41,34 @@ class BarChartComponent extends BaseComponent {
 		maxValue *= 1.05
 
 		return layout({
-			style: ['row', 'p_1', 'gap_1'],
 			children: items.map((item) => {
 				const s = item.value / maxValue * 10
-
-				const cs = this.computeStyle()
 
 				return layout({
 					style: {
 						direction: 'column',
 						gap: 4,
+						bg: style.bg,
 					},
 					children: [
 						layout({
-							style: { size: 10 - s },
+							style: { size: 10 - s, bg: style.bg, },
 						}),
 						layout({
 							style: {
 								size: s,
-								bg: item.color ?? cs.bg,
+								bg: item.color ?? 'var:accent', // TODO: fix
 							},
 							children: [
 								text({
 									value: item.value,
-									style: { fg: cs.fg },
+									style: { fg: style.fg },
 								}),
 							],
 						}),
 						text({
 							value: item.label,
-							style: { fg: cs.fg },
+							style: { fg: style.fg },
 						}),
 					]
 				})

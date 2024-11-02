@@ -21,7 +21,7 @@ class PhylosophySlideComponent extends BaseComponent {
 					value: 'Философия Larana',
 				}),
 				layout({
-					style: ['col', 'gap_1', 'size_5'],
+					style: ['column', 'gap_1', 'size_5'],
 					children: [
 						text({}),
 						text({

@@ -27,7 +27,7 @@ class UIKitSlideComponent extends BaseComponent {
 					style: ['row', 'gap_2', 'size_5'],
 					children: [
 						layout({
-							style: ['col', 'gap_2'],
+							style: ['column', 'gap_2'],
 							children: [
 								button({ text: 'Button' }),
 								button({ text: 'Select' }),
@@ -36,7 +36,7 @@ class UIKitSlideComponent extends BaseComponent {
 							],
 						}),
 						list({
-							style: ['col', 'gap_2'],
+							style: ['column', 'gap_2'],
 							value: [
 								{ name: 'item_1', text: 'item_1', fg: '#ff0' },
 								{ name: 'item_2', text: 'item_2', fg: '#f0f' },
@@ -55,13 +55,13 @@ class UIKitSlideComponent extends BaseComponent {
 							}),
 						}),
 						list({
-							style: ['col', 'gap_2'],
+							style: ['column', 'gap_2'],
 							value: ['checkboxValue1', 'checkboxValue2', 'checkboxValue3'],
 							template: (item, i) => checkbox({ model: item }),
 						}),
 						image({ qr: 'Hello, world!' }),
 						layout({
-							style: 'col',
+							style: 'column',
 							children: [
 								text({
 									style: 'h2Text',

@@ -15,7 +15,7 @@ class TestingSlideComponent extends BaseComponent {
 					value: 'Тестирование LaranaJS',
 				}),
 				layout({
-					style: ['col', 'gap_1', 'size_5'],
+					style: ['column', 'gap_1', 'size_5'],
 					children: [
 						text({
 							style: 'h2Text',

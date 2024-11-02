@@ -15,7 +15,7 @@ class AnimationsSlideComponent extends BaseComponent {
 					value: 'Анимация',
 				}),
 				layout({
-					style: ['col', 'gap_1', 'size_5'],
+					style: ['column', 'gap_1', 'size_5'],
 					children: [
 						throbber({ model: 'throbber' }),
 					],

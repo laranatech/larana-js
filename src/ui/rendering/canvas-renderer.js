@@ -106,10 +106,35 @@ class CanvasRenderer {
 		const {
 			lineWidth,
 			lineCap,
+			lineColor,
+			strokeStyle,
+			borderColor,
+			borderWidth,
+			borderCap,
 		} = options
+
+		if (borderColor) {
+			ctx.strokeStyle = borderColor
+		}
+
+		if (lineColor) {
+			ctx.strokeStyle = lineColor
+		}
+
+		if (strokeStyle) {
+			ctx.strokeStyle = strokeStyle
+		}
+
+		if (borderWidth) {
+			ctx.lineWidth = borderWidth
+		}
 
 		if (lineWidth) {
 			ctx.lineWidth = lineWidth
+		}
+
+		if (borderCap) {
+			ctx.lineCap = borderCap
 		}
 
 		if (lineCap) {
@@ -164,14 +189,11 @@ class CanvasRenderer {
 	line(canvas, options) {
 		const ctx = canvas.getContext('2d')
 
-		const {
-			points,
-			strokeStyle,
-		} = options
+		const { points } = options
 
 		this.applyLineParams(ctx, options)
 
-		ctx.strokeStyle = strokeStyle
+		console.log(options)
 
 		ctx.beginPath()
 

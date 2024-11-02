@@ -44,7 +44,7 @@ class HomePage extends Page {
 					style: ['gap_2', 'size_1'],
 					children: [
 						list({
-							style: ['col', 'gap_2'],
+							style: ['column', 'gap_2'],
 							value: [
 								{ name: 'item_1', text: 'item_1', fg: '#ff0' },
 								{ name: 'item_2', text: 'item_2', fg: '#f0f' },
@@ -63,7 +63,7 @@ class HomePage extends Page {
 							}),
 						}),
 						list({
-							style: ['col', 'gap_2'],
+							style: ['column', 'gap_2'],
 							value: ['checkboxValue1', 'checkboxValue2', 'checkboxValue3'],
 							template: (item, i) => checkbox({ model: item }),
 						}),

@@ -21,7 +21,7 @@ class ChartsSlideComponent extends BaseComponent {
 					value: 'Построение графиков',
 				}),
 				layout({
-					style: ['col', 'gap_1', 'size_5'],
+					style: ['column', 'gap_1', 'size_5'],
 					children: [
 						this.step === 1 ? text({
 							style: 'h2Text',

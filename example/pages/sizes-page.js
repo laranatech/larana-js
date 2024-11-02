@@ -11,7 +11,7 @@ class SizesPage extends Page {
 			id: 'body',
 			style: [
 				'body',
-				'col',
+				'column',
 				'gap_2',
 				'p_4',
 			],

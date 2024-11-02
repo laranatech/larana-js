@@ -26,7 +26,7 @@ class TitleSlideComponent extends BaseComponent {
 					],
 				}),
 				layout({
-					style: 'col',
+					style: 'column',
 					children: [
 						text({
 							style: 'h1Text',

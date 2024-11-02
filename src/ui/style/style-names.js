@@ -24,7 +24,7 @@ const styleNames = (values) => {
 const initDefaultStyleNames = () => {
 	const names = {
 		row: { direction: 'row' },
-		col: { direction: 'column' },
+		column: { direction: 'column' },
 	}
 
 	const items = [1, 2, 3, 4, 5]

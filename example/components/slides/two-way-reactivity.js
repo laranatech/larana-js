@@ -56,7 +56,7 @@ class ReactivitySlideComponent extends BaseComponent {
 					style: { size: 9 },
 					children: [
 						list({
-							style: ['col', 'gap_2'],
+							style: ['column', 'gap_2'],
 							value: [
 								{ name: 'item_1', text: 'item_1', fg: '#ff0' },
 								{ name: 'item_2', text: 'item_2', fg: '#f0f' },
@@ -75,12 +75,12 @@ class ReactivitySlideComponent extends BaseComponent {
 							}),
 						}),
 						list({
-							style: ['col', 'gap_2'],
+							style: ['column', 'gap_2'],
 							value: ['checkboxValue1', 'checkboxValue2', 'checkboxValue3'],
 							template: (item, i) => checkbox({ model: item }),
 						}),
 						layout({
-							style: ['size_5', 'col'],
+							style: ['size_5', 'column'],
 							children: [
 								...textLines.map((line) => {
 									return text({
