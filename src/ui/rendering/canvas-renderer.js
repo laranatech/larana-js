@@ -193,8 +193,6 @@ class CanvasRenderer {
 
 		this.applyLineParams(ctx, options)
 
-		console.log(options)
-
 		ctx.beginPath()
 
 		points.forEach(({ x, y }, i) => {

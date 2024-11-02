@@ -43,9 +43,6 @@ class SizedComponent extends StyledComponent {
 	}
 
 	computeDimensions() {
-		const log = (...args) =>{
-			['white', 'red'].includes(this.id) && console.log('>', this.id, '>', ...args)
-		}
 		if (this._computedDimensions) {
 			return this._computedDimensions
 		}
@@ -73,8 +70,6 @@ class SizedComponent extends StyledComponent {
 			w: pd.w - padding * 2,
 			h: pd.h - padding * 2,
 		}
-
-		const style = this.preComputeStyle()
 
 		const siblings = this.parent.getChildren()
 
@@ -179,8 +174,6 @@ class SizedComponent extends StyledComponent {
 
 		this._computedDimensions = d
 		dimensions.set(this.id, d)
-
-		log(d)
 
 		return d
 	}
