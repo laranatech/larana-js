@@ -83,7 +83,6 @@ class TODOListSlideComponent extends BaseComponent {
 						}),
 					],
 				}),
-				
 			],
 		})
 	}

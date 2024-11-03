@@ -136,6 +136,7 @@ const styleSchemer = new Schemer(styleScheme)
 class Style {
 	alignment = 'start'
 	direction = 'row'
+
 	size = null
 	width = null
 	minWidth = null
@@ -143,6 +144,8 @@ class Style {
 	height = null
 	minHeight = null
 	maxHeight = null
+	aspectRatio = null
+
 	fg = null
 	bg = null
 	padding = 0

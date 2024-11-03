@@ -7,6 +7,7 @@ module.exports = {
 	...require('./progress-bar.js'),
 	...require('./throbber.js'),
 	...require('./list.js'),
+	...require('./table.js'),
 	...require('./charts'),
 	...require('./forms'),
 	...require('./navigation'),

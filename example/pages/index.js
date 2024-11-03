@@ -8,5 +8,6 @@ module.exports = {
 	...require('./slides-page.js'),
 	...require('./shapes-page.js'),
 	...require('./sizes-page.js'),
+	...require('./table-page.js'),
 	...require('./404-page.js'),
 }

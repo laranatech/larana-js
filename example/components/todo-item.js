@@ -11,14 +11,16 @@ class TodoItemComponent extends BaseComponent {
 
 	item = null
 	onDelete = null
+	onDone = null
 
 	constructor(options) {
 		super(options)
 
-		const { item, onDelete } = options
+		const { item, onDelete, onDone } = options
 
 		this.item = item
 		this.onDelete = onDelete
+		this.onDone = onDone
 	}
 
 	root() {
@@ -29,6 +31,23 @@ class TodoItemComponent extends BaseComponent {
 					value: this.item.label,
 					style: ['text', { size: 9 }],
 				}),
+				// layout({
+				// 	style: 'gap_2',
+				// 	children: [
+				// 		checkbox({
+				// 			value: item.done,
+				// 			onChange: () => {
+				// 				this.toggleItem(item, i)
+				// 			},
+				// 		}),
+				// 		button({
+				// 			text: 'X',
+				// 			onClick: () => {
+				// 				this.deleteItem(item, i)
+				// 			},
+				// 		}),
+				// 	],
+				// }),
 				button({
 					text: 'X',
 					onClick: () => {

@@ -17,7 +17,7 @@ class HeaderComponent extends BaseComponent {
 	}
 
 	root() {
-		const route = this.useRoute()
+		const page = this.usePage()
 
 		return layout({
 			id: 'header',
@@ -31,7 +31,7 @@ class HeaderComponent extends BaseComponent {
 				text({
 					id: 'headerText2',
 					outlineColor: '#f0f',
-					value: route.name,
+					value: page.title,
 					style: 'h3Text',
 				}),
 			],

@@ -5,6 +5,7 @@ const {
 	list,
 	radio,
 	checkbox,
+	toggle,
 } = require('larana-js')
 
 class ReactivitySlideComponent extends BaseComponent {
@@ -74,10 +75,20 @@ class ReactivitySlideComponent extends BaseComponent {
 								],
 							}),
 						}),
-						list({
+						layout({
 							style: ['column', 'gap_2'],
-							value: ['checkboxValue1', 'checkboxValue2', 'checkboxValue3'],
-							template: (item, i) => checkbox({ model: item }),
+							children: [
+								list({
+									style: ['column', 'gap_2'],
+									value: ['checkboxValue1', 'checkboxValue2', 'checkboxValue3'],
+									template: (item, i) => checkbox({ model: item }),
+								}),
+								list({
+									style: ['column', 'gap_2'],
+									value: ['checkboxValue1', 'checkboxValue2', 'checkboxValue3'],
+									template: (item, i) => toggle({ model: item }),
+								}),
+							],
 						}),
 						layout({
 							style: ['size_5', 'column'],

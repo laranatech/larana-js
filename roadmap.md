@@ -2,10 +2,10 @@
 
 - fix: client fonts
 - fix: errors when using quotes in text
+- feat: `list` cursors
 - feat: `blur` event
 - feat: save session id to `localStorage`
 - feat: `TextInput` carret
-- feat: `TableComponent`
 - feat: seo features
 - feat: a11y features
 - feat: remember sessionId
@@ -22,5 +22,5 @@
 - feat: `router.push()`
 - docs: styleguide
 - docs: howto
-- demo: `/test` page
+- demo: `/quiz` page
 - demo: `/game` page

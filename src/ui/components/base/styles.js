@@ -77,8 +77,12 @@ class StyledComponent extends HookedComponent {
 		return this.preComputedStyle
 	}
 
-	computeStyle() {
+	computeStyle(s = []) {
 		const styles = [this.preComputeStyle()]
+
+		if (s.length > 1) {
+			s.forEach((item) => styles.push(item))
+		}
 
 		const { request, session } = this.usePayload()
 

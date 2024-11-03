@@ -11,7 +11,7 @@ class ListComponent extends BaseComponent {
 	}
 
 	template = (item, i) => {
-		return text({ value: item })
+		return text({ value: String(item) })
 	}
 
 	constructor(options) {

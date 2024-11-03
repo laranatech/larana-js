@@ -14,7 +14,7 @@ class NotFoundPage extends Page {
 				'column',
 			],
 			children: [
-				header({ id: 'headerWrap' }),
+				header({}),
 				layout({
 					id: 'layout1',
 					style: {

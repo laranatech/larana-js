@@ -149,7 +149,7 @@ class BaseComponent extends DebuggedComponent {
 			root.setParent(this)
 		}
 
-		root.style = this.computeStyle()
+		root.style = this.computeStyle([root.style, root.defaultStyle])
 		root._computedDimensions = this.computeDimensions()
 
 		this._patch(root, payload)
