@@ -5,7 +5,7 @@ const { header } = require('../components')
 class ShapesPage extends Page {
 	title = 'Shapes page'
 
-	prepareRoot({ w, h }) {
+	prepareRoot({ w }) {
 		return layout({
 			style: [
 				'body',
@@ -28,7 +28,7 @@ class ShapesPage extends Page {
 							style: 'text',
 						}),
 					],
-				})
+				}),
 			],
 		})
 	}

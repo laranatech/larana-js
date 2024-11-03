@@ -51,7 +51,7 @@ class TableComponent extends BaseComponent {
 				this.columns = columns
 			}
 
-			// this.columns = 
+			// this.columns =
 		}
 
 		if (template) {
@@ -87,7 +87,7 @@ class TableComponent extends BaseComponent {
 					},
 					value: modelValue,
 					template: this.template,
-				})
+				}),
 			],
 		})
 	}

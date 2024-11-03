@@ -58,7 +58,7 @@ class QuizPage extends Page {
 		})
 	}
 
-	questionBody({ w, h }) {
+	questionBody() {
 		const { answers, questions } = this.state
 		const current = answers.length
 
@@ -70,7 +70,7 @@ class QuizPage extends Page {
 				text({ value: question.caption, style: 'h1Text' }),
 				list({
 					value: question.options,
-					template: (item, i) => {
+					template: (item) => {
 						return layout({
 							style: { gap: 'var:u2', height: 'var:componentHeight' },
 							children: [
@@ -81,9 +81,9 @@ class QuizPage extends Page {
 								}),
 								text({ value: item.label, style: 'h3Text' }),
 								layout({ style: { size: 2 } }),
-							]
+							],
 						})
-					}
+					},
 				}),
 				layout({}),
 				layout({
@@ -112,7 +112,7 @@ class QuizPage extends Page {
 		})
 	}
 
-	resultBody({ w, h }) {
+	resultBody() {
 		let totalScore = 0
 		let score = 0
 
@@ -155,7 +155,7 @@ class QuizPage extends Page {
 							],
 						})
 					},
-				})
+				}),
 			],
 		})
 	}

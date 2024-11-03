@@ -18,7 +18,7 @@ class TablePage extends Page {
 		})
 	}
 
-	prepareRoot({ w, h }) {
+	prepareRoot() {
 		return layout({
 			outlineColor: '#00f',
 			id: 'body',
@@ -39,7 +39,7 @@ class TablePage extends Page {
 							showIndex: true,
 							columns: [
 								{ name: 'name', label: 'Name', size: 3 },
-								{ name: 'language', label: 'Language', size: 2, },
+								{ name: 'language', label: 'Language', size: 2 },
 								{ name: 'version', label: 'Latest version', size: 1, sortable: true },
 								{ name: 'state', label: 'State', size: 1, sortable: true },
 							],

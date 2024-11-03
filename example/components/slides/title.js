@@ -8,8 +8,6 @@ class TitleSlideComponent extends BaseComponent {
 	}
 
 	root() {
-		const page = this.usePage()
-
 		return layout({
 			children: [
 				layout({

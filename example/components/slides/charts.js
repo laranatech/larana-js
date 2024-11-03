@@ -14,6 +14,26 @@ class ChartsSlideComponent extends BaseComponent {
 	}
 
 	root() {
+		const barChartCode = text({
+			style: 'h2Text',
+			value: 'Пример кода колончатого графика',
+		})
+
+		const barChartExample = barChart({
+			model: 'chartItems',
+			text: 'ссылка на сайт',
+		})
+
+		const lineChartCode = text({
+			style: 'h2Text',
+			value: 'Пример кода линейного графика',
+		})
+
+		const lineChartExample = lineChart({
+			model: 'chartItems',
+			text: 'ссылка на сайт',
+		})
+
 		return layout({
 			children: [
 				text({
@@ -23,22 +43,12 @@ class ChartsSlideComponent extends BaseComponent {
 				layout({
 					style: ['column', 'gap_1', 'size_5'],
 					children: [
-						this.step === 1 ? text({
-							style: 'h2Text',
-							value: 'Пример кода колончатого графика',
-						})
-						: this.step === 2 ? barChart({
-							model: 'chartItems',
-							text: 'ссылка на сайт',
-						})
-						: this.step === 3 ? text({
-							style: 'h2Text',
-							value: 'Пример кода линейного графика',
-						})
-						: lineChart({
-							model: 'chartItems',
-							text: 'ссылка на сайт',
-						}),
+						[
+							barChartCode,
+							barChartExample,
+							lineChartCode,
+							lineChartExample,
+						][this.step - 1],
 					],
 				}),
 			],

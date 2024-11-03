@@ -29,6 +29,8 @@ class ImageComponent extends BaseComponent {
 		this.w = w
 		this.h = h
 
+		this.rerenderOnLoad = rerenderOnLoad
+
 		if (onLoad) {
 			this.onLoad = onLoad
 		}

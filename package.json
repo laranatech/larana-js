@@ -5,8 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "vitest run",
-		"format": "prettier --write src/",
-		"lint": "eslint src"
+		"lint": "eslint . --ignore-pattern node_modules"
 	},
 	"repository": {
 		"type": "git",

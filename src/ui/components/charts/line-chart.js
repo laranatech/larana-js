@@ -31,11 +31,8 @@ class LineChartComponent extends BaseComponent {
 		const style = this.computeStyle()
 
 		let maxValue = 0
-		let totalValue = 0
 
 		items.forEach((item) => {
-			totalValue += item.value
-
 			if (maxValue < item.value) {
 				maxValue = item.value
 			}

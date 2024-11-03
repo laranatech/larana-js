@@ -27,7 +27,7 @@ export default [
 				'exports': 'always-multiline',
 				'functions': 'always-multiline',
 			}],
-			quotes: ['error', 'single']
+			quotes: ['error', 'single'],
 		},
 	},
 ]

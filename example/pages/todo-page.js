@@ -4,7 +4,6 @@ const {
 	text,
 	textInput,
 	button,
-	hover,
 	list,
 } = require('larana-js')
 
@@ -24,7 +23,7 @@ class TodoPage extends Page {
 		})
 	}
 
-	prepareRoot({ w, h }) {
+	prepareRoot() {
 		const buttonDisabled = this.state.inputValue === ''
 
 		return layout({
@@ -56,9 +55,9 @@ class TodoPage extends Page {
 								item,
 								onDelete: (value) => {
 									this.setState({
-										items: this.state.items.filter((it) => it.value !== value)
+										items: this.state.items.filter((it) => it.value !== value),
 									})
-								}
+								},
 							}),
 						}),
 						layout({

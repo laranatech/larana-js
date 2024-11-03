@@ -5,7 +5,7 @@ const { header } = require('../components')
 class NotFoundPage extends Page {
 	title = '404 | Page not found'
 
-	prepareRoot({ w, h }) {
+	prepareRoot({ w }) {
 		return layout({
 			outlineColor: '#00f',
 			id: 'body',

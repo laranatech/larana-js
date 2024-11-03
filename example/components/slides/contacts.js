@@ -8,8 +8,6 @@ class ContactsSlideComponent extends BaseComponent {
 	}
 
 	root() {
-		const page = this.usePage()
-		
 		return layout({
 			children: [
 				text({ value: 'Контакты', style: 'h1Text' }),

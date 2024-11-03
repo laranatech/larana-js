@@ -42,7 +42,7 @@ class UIKitSlideComponent extends BaseComponent {
 								{ name: 'item_2', text: 'item_2', fg: '#f0f' },
 								{ name: 'item_3', text: 'item_3', fg: '#00f' },
 							],
-							template: (item, i) => layout({
+							template: (item) => layout({
 								style: 'gap_1',
 								children: [
 									radio({
@@ -57,7 +57,7 @@ class UIKitSlideComponent extends BaseComponent {
 						list({
 							style: ['column', 'gap_2'],
 							value: ['checkboxValue1', 'checkboxValue2', 'checkboxValue3'],
-							template: (item, i) => checkbox({ model: item }),
+							template: (item) => checkbox({ model: item }),
 						}),
 						image({ qr: 'Hello, world!' }),
 						layout({

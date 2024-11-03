@@ -16,7 +16,7 @@ class CounterPage extends Page {
 		})
 	}
 
-	prepareRoot({ w, h }) {
+	prepareRoot() {
 		return layout({
 			style: [
 				'body',

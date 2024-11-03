@@ -66,15 +66,15 @@ class BarPage extends Page {
 	fetchData() {
 		clearTimeout(this.loadingTextTimeout)
 		const tickLoading = () => {
-				if (this.state.loaded) {
-					return
-				}
-				this.setState({
-					loadingTick: this.state.loadingTick + 1,
-					loadingText: 'Loading',
-				})
-	
-				this.loadingTextTimeout = setTimeout(tickLoading, 100)
+			if (this.state.loaded) {
+				return
+			}
+			this.setState({
+				loadingTick: this.state.loadingTick + 1,
+				loadingText: 'Loading',
+			})
+
+			this.loadingTextTimeout = setTimeout(tickLoading, 100)
 		}
 
 		this.loadingTextTimeout = setTimeout(tickLoading, 100)

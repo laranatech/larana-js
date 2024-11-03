@@ -53,7 +53,7 @@ class TodoItemComponent extends BaseComponent {
 					onClick: () => {
 						this.onDelete(this.item.value)
 					},
-				})
+				}),
 			],
 		})
 	}

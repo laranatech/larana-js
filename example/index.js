@@ -1,9 +1,9 @@
 const {
 	MemoryStateManager,
-	ServerRenderer,
+	// ServerRenderer,
 	ClientRenderer,
 	LaranaApp,
-	DefaultRouter
+	DefaultRouter,
 } = require('larana-js')
 
 const config = require('./config.js')

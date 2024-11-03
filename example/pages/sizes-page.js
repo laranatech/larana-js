@@ -3,7 +3,7 @@ const { Page, layout } = require('larana-js')
 class SizesPage extends Page {
 	title = 'Sizes'
 
-	prepareRoot({ w, h }) {
+	prepareRoot() {
 		return layout({
 			outlineColor: '#00f',
 			id: 'body',

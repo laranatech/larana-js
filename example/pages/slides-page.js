@@ -57,7 +57,7 @@ class SlidesPage extends Page {
 		let currentSlideIndex = -1
 		let passedSteps = 0
 
-		const { slides, currentStep, totalSteps } = this.state
+		const { slides, currentStep } = this.state
 
 		slides.forEach((slide, i) => {
 			const steps = slide.steps
@@ -83,7 +83,7 @@ class SlidesPage extends Page {
 		}
 	}
 
-	prepareRoot({ w, h }) {
+	prepareRoot() {
 		const { slide, passedSteps } = this.getCurrentSlideInfo()
 
 		return layout({
@@ -139,7 +139,7 @@ class SlidesPage extends Page {
 									onClick: () => this.changeStep(1),
 								}),
 							],
-						})
+						}),
 					],
 				}),
 			],

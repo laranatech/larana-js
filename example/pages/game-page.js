@@ -5,7 +5,7 @@ const { header } = require('../components')
 class GamePage extends Page {
 	title = 'Game'
 
-	prepareRoot({ w, h }) {
+	prepareRoot({ w }) {
 		return layout({
 			style: [
 				'body',
@@ -28,7 +28,7 @@ class GamePage extends Page {
 							style: 'text',
 						}),
 					],
-				})
+				}),
 			],
 		})
 	}

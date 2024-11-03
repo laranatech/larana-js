@@ -87,6 +87,36 @@ class TODOListSlideComponent extends BaseComponent {
 		})
 	}
 
+	todoBody() {
+		return layout({
+			style: ['column', 'gap_1'],
+			children: [
+				list({
+					style: 'size_5',
+					model: 'todoItems',
+					template: this.templateItem,
+				}),
+				layout({
+					style: 'gap_2',
+					children: [
+						textInput({
+							model: 'todoInputValue',
+							onEnter: () => {
+								this.createItem()
+							},
+						}),
+						button({
+							text: 'Add',
+							onClick: () => {
+								this.createItem()
+							},
+						}),
+					],
+				}),
+			],
+		})
+	}
+
 	root() {
 		return layout({
 			children: [
@@ -98,33 +128,7 @@ class TODOListSlideComponent extends BaseComponent {
 					style: ['column', 'gap_1', 'size_5'],
 					children: [
 						this.step === 1 ? text({ value: 'Пример кода TODO list' })
-						: layout({
-							style: ['column', 'gap_1'],
-							children: [
-								list({
-									style: 'size_5',
-									model: 'todoItems',
-									template: this.templateItem,
-								}),
-								layout({
-									style: 'gap_2',
-									children: [
-										textInput({
-											model: 'todoInputValue',
-											onEnter: () => {
-												this.createItem()
-											},
-										}),
-										button({
-											text: 'Add',
-											onClick: () => {
-												this.createItem()
-											},
-										}),
-									],
-								}),
-							],
-						}),
+							: this.todoBody(),
 					],
 				}),
 			],
