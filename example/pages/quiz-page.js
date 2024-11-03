@@ -28,7 +28,7 @@ class QuizPage extends Page {
 						{ value: 'philosophy', label: 'Philosophy' },
 					],
 					correctAnswer: 'framework',
-					score: 2,
+					score: 1,
 				},
 				{
 					caption: 'What was the first implementation of Larana?',
@@ -75,20 +75,29 @@ class QuizPage extends Page {
 							style: { gap: 'var:u2', height: 'var:componentHeight' },
 							children: [
 								layout({ style: { size: 2 } }),
-								radio({ model: 'selectedAnswer', name: item.value }),
-								text({ value: item.label }),
+								radio({
+									model: 'selectedAnswer',
+									name: item.value,
+								}),
+								text({ value: item.label, style: 'h3Text' }),
 								layout({ style: { size: 2 } }),
 							]
 						})
 					}
 				}),
-				button({
-					text: 'Next',
-					disabled: this.state.selectedAnswer === '',
-					onClick: () => {	
-						this.nextQuestion()
-					},
-				})
+				layout({}),
+				layout({
+					children: [
+						layout({}),
+						button({
+							text: 'Next',
+							disabled: this.state.selectedAnswer === '',
+							onClick: () => this.nextQuestion(),
+						}),
+						layout({}),
+					],
+				}),
+				layout({}),
 			],
 		})
 	}
@@ -131,15 +140,18 @@ class QuizPage extends Page {
 
 						return layout({
 							children: [
-								layout({ style: { size: 2 } }),
-								text({ value: item.caption }),
+								layout({ style: { size: 1 } }),
+								text({ value: item.caption, style: 'h3Text' }),
 								text({
 									value: `${selectedOption.label} ${correct ? '(+' + item.score + ')' : ''}`,
-									style: {
-										fg: correct ? 'var:accent' : '#f00',
-									},
+									style: [
+										'h3Text',
+										{
+											fg: correct ? 'var:accent' : '#f00',
+										},
+									],
 								}),
-								layout({ style: { size: 2 } }),
+								layout({ style: { size: 1 } }),
 							],
 						})
 					},
