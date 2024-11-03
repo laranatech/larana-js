@@ -30,7 +30,7 @@ class WhoamiSlideComponent extends BaseComponent {
 					children: [
 						image({
 							src: 'https://kucheriavyi.ru/images/evgenii-kucheriavyi_2.webp',
-							style: { width: 200, height: 200 },
+							style: { width: 200, aspectRatio: 1 },
 						}),
 					],
 				}),

@@ -4,6 +4,7 @@
 - **fix:** `queryParams` bug
 - **fix:** min/max dimensions now don't break layout
 - **feat:** `TableComponent`
+- **feat:** `aspectRatio`
 - **feat:** `width` and `height` style properties
 - **feat:** auto rerender when image is loaded
 - **feat:** `renderPadding` debug option

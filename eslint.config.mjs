@@ -14,6 +14,7 @@ export default [
 			'max-len': ['error', 150],
 			'max-lines': ['error', 700],
 			'max-lines-per-function': ['error', 134],
+			'no-multiple-empty-lines': ['error'],
 			'no-empty': ['error', { allowEmptyCatch: true }],
 			'no-console': ['error'],
 			'no-trailing-spaces': ['error'],

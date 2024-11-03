@@ -18,8 +18,6 @@ class SizedComponent extends StyledComponent {
 		let size = style.size ?? 1
 		const aspectRatio = style.aspectRatio ?? null
 
-		if (!style.height && style.minHeight) {}
-
 		if (style.height) {
 			sH = style.height
 
@@ -28,6 +26,10 @@ class SizedComponent extends StyledComponent {
 			}
 			if (style.minHeight && sH < style.minHeight) {
 				sH = style.minHeight
+			}
+
+			if (aspectRatio && !sW) {
+				sW = sH * aspectRatio
 			}
 		}
 		if (style.width) {
@@ -38,6 +40,10 @@ class SizedComponent extends StyledComponent {
 			}
 			if (style.minWidth && sW < style.minWidth) {
 				sW = style.minWidth
+			}
+
+			if (aspectRatio && !sH) {
+				sH = sW / aspectRatio
 			}
 		}
 

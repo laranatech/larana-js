@@ -11,7 +11,6 @@ const mixStyles = (styles) => {
 	return style
 }
 
-
 module.exports = {
 	mixStyles,
 }
