@@ -15,6 +15,7 @@
 - feat: aspect ratio
 - feat: `alignment`: `start|center|end|stretch`
 - feat: `size`: `fit-content`
+- feat: `wrap`
 - feat: `textAlign`
 - feat: style validation
 - feat: `scroll`
@@ -22,5 +23,4 @@
 - feat: `router.push()`
 - docs: styleguide
 - docs: howto
-- demo: `/quiz` page
 - demo: `/game` page

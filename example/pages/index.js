@@ -9,5 +9,6 @@ module.exports = {
 	...require('./shapes-page.js'),
 	...require('./sizes-page.js'),
 	...require('./table-page.js'),
+	...require('./quiz-page.js'),
 	...require('./404-page.js'),
 }

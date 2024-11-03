@@ -54,6 +54,7 @@
 - **demo:** `/tabs` page
 - **demo:** `/todo` page
 - **demo:** `/slides` page
+- **demo:** `/quiz` page
 
 # 0.1.1
 
