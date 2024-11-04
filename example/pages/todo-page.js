@@ -10,10 +10,14 @@ const {
 const { header, TodoItemComponent } = require('../components')
 
 class TodoPage extends Page {
-	title = 'Todo'
+	title() {
+		return 'Todo'
+	}
 
 	init() {
-		this.initState({
+		const { initState } = this.useState()
+
+		initState({
 			items: [
 				{ label: 'Item 1', value: crypto.randomUUID() },
 				{ label: 'Item 2', value: crypto.randomUUID() },
@@ -23,8 +27,10 @@ class TodoPage extends Page {
 		})
 	}
 
-	prepareRoot() {
-		const buttonDisabled = this.state.inputValue === ''
+	root() {
+		const { state, setState } = this.useState()
+
+		const buttonDisabled = state.inputValue === ''
 
 		return layout({
 			id: 'body',
@@ -54,22 +60,20 @@ class TodoPage extends Page {
 								id: `todo-item_${i}`,
 								item,
 								onDelete: (value) => {
-									this.setState({
-										items: this.state.items.filter((it) => it.value !== value),
+									setState({
+										items: state.items.filter((it) => it.value !== value),
 									})
 								},
 							}),
 						}),
 						layout({
 							id: 'bottom',
-							style: { padding: 'var:u2', gap: 'var:u2' },
+							style: {
+								padding: 'var:u2', gap: 'var:u2',
+								size: 'hug',
+							},
 							children: [
-								textInput({
-									model: 'inputValue',
-									onFocus: (id) => {
-										this.focused = id
-									},
-								}),
+								textInput({ model: 'inputValue' }),
 								button({
 									id: 'addButton',
 									// style: buttonDisabled ? { fg: 'var:disabledFg' } : {},
@@ -78,10 +82,10 @@ class TodoPage extends Page {
 										if (buttonDisabled) {
 											return
 										}
-										this.setState({
+										setState({
 											items: [
-												...this.state.items,
-												{ label: this.state.inputValue, value: crypto.randomUUID() },
+												...state.items,
+												{ label: state.inputValue, value: crypto.randomUUID() },
 											],
 											inputValue: '',
 										})

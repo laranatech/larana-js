@@ -8,22 +8,23 @@ const {
 const { header } = require('../components')
 
 class CounterPage extends Page {
-	title = 'Counter'
-
-	init() {
-		this.initState({
-			counter: 0,
-		})
+	title() {
+		'Counter'
 	}
 
-	prepareRoot() {
+	init() {
+		const { initState } = this.useState()
+
+		initState({ counter: 0 })
+	}
+
+	root() {
+		const { state, setState } = this.useState()
+
 		return layout({
 			style: [
 				'body',
-				{
-					gap: 'var:u2',
-					direction: 'column',
-				},
+				{ gap: 'var:u2', direction: 'column' },
 			],
 			children: [
 				header({}),
@@ -33,12 +34,9 @@ class CounterPage extends Page {
 						text({
 							style: [
 								'h2Text',
-								{
-									size: 9,
-									fg: 'var:fg',
-								},
+								{ size: 9, fg: 'var:fg' },
 							],
-							value: `Counter: ${this.state.counter}`,
+							value: `Counter: ${state.counter}`,
 						}),
 						layout({
 							style: {
@@ -51,13 +49,13 @@ class CounterPage extends Page {
 								button({
 									text: '+',
 									onClick: () => {
-										this.setState({ counter: this.state.counter + 1 })
+										setState({ counter: state.counter + 1 })
 									},
 								}),
 								button({
 									text: '-',
 									onClick: () => {
-										this.setState({ counter: this.state.counter - 1 })
+										setState({ counter: state.counter - 1 })
 									},
 								}),
 							],

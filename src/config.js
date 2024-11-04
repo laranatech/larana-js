@@ -59,6 +59,7 @@ const defaultConfig = {
 		renderPaddings: true,
 		renderGaps: true,
 		renderCursor: true,
+		logMessages: false,
 	},
 	port: 1610,
 	wsPath: 'ws://localhost:1610/',

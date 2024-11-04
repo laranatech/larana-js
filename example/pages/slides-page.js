@@ -3,16 +3,20 @@ const { Page, text, layout, keypress, progressBar, button, qrcode } = require('l
 const { slides } = require('../components')
 
 class SlidesPage extends Page {
-	title = 'LaranaJS | Slides'
+	title() {
+		return 'LaranaJS | Slides'
+	}
 
 	focused = 'body'
 
 	init() {
+		const { initState } = this.useState()
+
 		const currentStep = Number(this.session.route.queryParams.step ?? 1)
 
 		const s = Object.values(slides)
 
-		this.initState({
+		initState({
 			slides: s,
 			currentStep,
 			totalSteps: s.reduce((acc, curr) => acc + curr.steps, 0),
@@ -54,10 +58,12 @@ class SlidesPage extends Page {
 	}
 
 	getCurrentSlideInfo() {
+		const { state } = this.useState()
+
 		let currentSlideIndex = -1
 		let passedSteps = 0
 
-		const { slides, currentStep } = this.state
+		const { slides, currentStep } = state
 
 		slides.forEach((slide, i) => {
 			const steps = slide.steps
@@ -78,12 +84,13 @@ class SlidesPage extends Page {
 		}
 
 		return {
-			slide: this.state.slides[currentSlideIndex],
+			slide: state.slides[currentSlideIndex],
 			passedSteps,
 		}
 	}
 
-	prepareRoot() {
+	root() {
+		const { state } = this.useState()
 		const { slide, passedSteps } = this.getCurrentSlideInfo()
 
 		return layout({
@@ -107,16 +114,20 @@ class SlidesPage extends Page {
 					},
 					children: [
 						new slide({
-							step: this.state.currentStep - passedSteps,
+							step: state.currentStep - passedSteps,
 						}),
 					],
 				}),
 				layout({
-					style: { gap: 'var:u2', padding: 'var:u2' },
+					style: {
+						gap: 'var:u2',
+						padding: 'var:u2',
+						size: 'hug',
+					},
 					children: [
 						progressBar({
 							model: 'currentStep',
-							total: this.state.totalSteps,
+							total: state.totalSteps,
 							style: { size: 12 },
 						}),
 						layout({
@@ -124,6 +135,7 @@ class SlidesPage extends Page {
 								borderColor: '#ccc',
 								padding: 'var:u1',
 								radius: 'var:radius',
+								// size: 'hug',
 							},
 							children: [
 								button({
@@ -132,7 +144,7 @@ class SlidesPage extends Page {
 								}),
 								text({
 									style: 'text',
-									value: this.state.currentStep,
+									value: state.currentStep,
 								}),
 								button({
 									text: '→',
@@ -153,17 +165,20 @@ class SlidesPage extends Page {
 	}
 
 	changeStep(d) {
-		let currentStep = this.state.currentStep + d
+		const { state, setState } = this.useState()
+		const router = this.useRouter()
+
+		let currentStep = state.currentStep + d
 
 		if (currentStep < 1) {
 			currentStep = 1
 		}
-		if (currentStep >= this.state.totalSteps) {
-			currentStep = this.state.totalSteps
+		if (currentStep >= state.totalSteps) {
+			currentStep = state.totalSteps
 		}
 
-		this.setState({ currentStep })
-		this.pushQueryParams({ step: currentStep })
+		setState({ currentStep })
+		router.push({ queryParams: { step: currentStep } })
 	}
 }
 

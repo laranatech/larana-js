@@ -2,7 +2,7 @@ const { createConfig } = require('larana-js')
 
 module.exports = createConfig({
 	defaultTheme: 'dark',
-	debug: false,
+	debug: true,
 	debugOptions: {
 		renderOutline: true,
 		renderPaddings: true,

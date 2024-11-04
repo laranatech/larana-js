@@ -80,7 +80,7 @@ class HookedComponent {
 			return this._mouse
 		}
 
-		this._mouse = this.usePage().getMouse()
+		this._mouse = this.usePage().useMouse()
 
 		return this._mouse
 	}
@@ -109,7 +109,7 @@ class HookedComponent {
 		if (this._state) {
 			return this._state
 		}
-		this._state = this.usePage().getState()
+		this._state = this.usePage().useState()
 
 		return this._state
 	}

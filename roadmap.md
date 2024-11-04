@@ -4,7 +4,6 @@
 
 - feat: min/max dimensions
 - feat: `alignment`: `start|center|end|stretch`
-- feat: `size`: `fit-content`
 - feat: root style fix
 
 # 0.3.0

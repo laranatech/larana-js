@@ -31,7 +31,7 @@ class HeaderComponent extends BaseComponent {
 				text({
 					id: 'headerText2',
 					outlineColor: '#f0f',
-					value: page.title,
+					value: page.title(),
 					style: 'h3Text',
 				}),
 			],

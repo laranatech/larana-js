@@ -4,8 +4,8 @@ const { rect, line, point } = require('../../shapes')
 class DebuggedComponent extends SizedComponent {
 	_outlineColor = 'rgba(255, 0, 0, 0.4)'
 	_outlineWidth = 1
-	_gapColor = 'rgba(255, 255, 0, 0.3)'
-	_paddingColor = 'rgba(255, 0, 255, 0.3)'
+	_gapColor = 'rgba(255, 0, 255, 0.3)'
+	_paddingColor = 'rgba(255, 255, 0, 0.3)'
 
 	constructor(options) {
 		super(options)

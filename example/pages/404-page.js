@@ -3,9 +3,11 @@ const { Page, layout, text } = require('larana-js')
 const { header } = require('../components')
 
 class NotFoundPage extends Page {
-	title = '404 | Page not found'
+	title() {
+		return '404 | Page not found'
+	}
 
-	prepareRoot({ w }) {
+	root({ w }) {
 		return layout({
 			outlineColor: '#00f',
 			id: 'body',

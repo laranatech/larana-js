@@ -8,10 +8,14 @@ const {
 const { header } = require('../components')
 
 class TabsPage extends Page {
-	title = 'Tabs'
+	title() {
+		return 'Tabs'
+	}
 
 	init() {
-		this.initState({
+		const { initState } = this.useState()
+
+		initState({
 			tabs: [
 				{ value: 'tab_1', label: 'Tab 1' },
 				{ value: 'tab_2', label: 'Tab 2' },
@@ -22,7 +26,9 @@ class TabsPage extends Page {
 		})
 	}
 
-	prepareRoot() {
+	root() {
+		const { state } = this.useState()
+
 		return layout({
 			style: [
 				'body',
@@ -37,7 +43,7 @@ class TabsPage extends Page {
 					style: { size: 9, direction: 'column', padding: 'var:u2' },
 					children: [
 						tabs({
-							tabs: this.state.tabs,
+							tabs: state.tabs,
 							model: 'activeTab',
 						}),
 						text({ style: ['h1Text', { size: 9 }], model: 'activeTab' }),

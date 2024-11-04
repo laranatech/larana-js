@@ -3,9 +3,11 @@ const { Page, text, layout } = require('larana-js')
 const { header } = require('../components')
 
 class GamePage extends Page {
-	title = 'Game'
+	title() {
+		return 'Game'
+	}
 
-	prepareRoot({ w }) {
+	root({ w }) {
 		return layout({
 			style: [
 				'body',

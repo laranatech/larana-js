@@ -47,6 +47,9 @@ class TextInputComponent extends BaseComponent {
 			click({
 				handler: () => {
 					this.focus()
+					if (this.onFocus) {
+						this.onFocus()
+					}
 				},
 			})(this),
 			keypress({

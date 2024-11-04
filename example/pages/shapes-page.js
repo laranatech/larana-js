@@ -3,9 +3,11 @@ const { Page, layout, text } = require('larana-js')
 const { header } = require('../components')
 
 class ShapesPage extends Page {
-	title = 'Shapes page'
+	title() {
+		return 'Shapes page'
+	}
 
-	prepareRoot({ w }) {
+	root({ w }) {
 		return layout({
 			style: [
 				'body',

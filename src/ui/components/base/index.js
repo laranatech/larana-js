@@ -13,7 +13,7 @@ class BaseComponent extends DebuggedComponent {
 	_root = null
 
 	children = []
-	computedChildren = []
+	_computedChildren = null
 
 	events = []
 	eventStyles = new Map()
@@ -72,8 +72,11 @@ class BaseComponent extends DebuggedComponent {
 	}
 
 	getChildren() {
-		const root = this.getRoot()
-		return root.children
+		if (this._computedChildren) {
+			return this._computedChildren
+		}
+		this._computedChildren = this.getRoot().children
+		return this._computedChildren
 	}
 
 	setParent(parent) {
@@ -147,10 +150,14 @@ class BaseComponent extends DebuggedComponent {
 
 		if (root !== this) {
 			root.setParent(this)
+			root._isRoot = true
 		}
 
-		root.style = this.computeStyle([root.style, root.defaultStyle])
-		root._computedDimensions = this.computeDimensions()
+		root.style = this.preComputeStyle([root.style, root.defaultStyle])
+		if (this._computedDimensions) {
+			root._computedDimensions = this._computedDimensions
+		}
+		// root._computedDimensions = this.computeDimensions() // TODO: hug
 
 		this._patch(root, payload)
 

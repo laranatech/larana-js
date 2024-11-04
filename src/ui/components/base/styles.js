@@ -24,8 +24,8 @@ class StyledComponent extends HookedComponent {
 	// 	_hovered: {},
 	// }
 
-	preComputedStyle = null
-	computedStyle = null
+	_preComputedStyle = null
+	_computedStyle = null
 
 	constructor(options) {
 		super(options)
@@ -44,8 +44,8 @@ class StyledComponent extends HookedComponent {
 	}
 
 	preComputeStyle() {
-		if (this.preComputedStyle) {
-			return this.preComputedStyle
+		if (this._preComputedStyle) {
+			return this._preComputedStyle
 		}
 
 		const styles = [
@@ -72,17 +72,17 @@ class StyledComponent extends HookedComponent {
 
 		const result = Style.compute(styles, request, session)
 
-		this.preComputedStyle = new Style(result)
+		this._preComputedStyle = new Style(result)
 
-		return this.preComputedStyle
+		return this._preComputedStyle
 	}
 
 	computeStyle(s = []) {
-		const styles = [this.preComputeStyle()]
-
-		if (s.length > 1) {
-			s.forEach((item) => styles.push(item))
+		if (this._computedStyle) {
+			return this._computedStyle
 		}
+
+		const styles = [this.preComputeStyle(), ...s]
 
 		const { request, session } = this.usePayload()
 
@@ -98,9 +98,9 @@ class StyledComponent extends HookedComponent {
 
 		const result = Style.compute(styles, request, session)
 
-		this.computedStyle = new Style(result)
+		this._computedStyle = new Style(result)
 
-		return this.computedStyle
+		return this._computedStyle
 	}
 }
 

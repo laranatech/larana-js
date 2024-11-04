@@ -11,16 +11,20 @@ const {
 const { header, CircleComponent } = require('../components')
 
 class HomePage extends Page {
-	title = 'Home'
+	title() {
+		'Home'
+	}
 
-	prepareMeta() {
+	meta() {
 		return [
 			'<meta name="description" content="Larana-js example home page"/>',
 		].join('\n')
 	}
 
 	init() {
-		this.initState({
+		const { initState } = this.useState()
+
+		initState({
 			radius: 30,
 			d: 1,
 			checkboxValue1: true,
@@ -30,7 +34,9 @@ class HomePage extends Page {
 		})
 	}
 
-	prepareRoot() {
+	root() {
+		const { state } = this.useState()
+
 		return layout({
 			style: [
 				'body',
@@ -81,14 +87,14 @@ class HomePage extends Page {
 						text({ value: 'Home', style: 'h1Text' }),
 						new CircleComponent({
 							style: { size: 1, bg: 'var:accent', borderColor: '#f00' },
-							radius: this.state.radius,
+							radius: state.radius,
 							onAnimate: () => {
-								// let d = this.state.d
-								// if (this.state.radius >= 100 || this.state.radius <= 3) {
+								// let d = state.d
+								// if (state.radius >= 100 || state.radius <= 3) {
 								// 	d *= -1
 								// }
-								// this.setState({
-								// 	radius: this.state.radius + 1 * d,
+								// setState({
+								// 	radius: state.radius + 1 * d,
 								// 	d,
 								// })
 							},

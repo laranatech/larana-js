@@ -1,9 +1,11 @@
 const { Page, layout } = require('larana-js')
 
 class SizesPage extends Page {
-	title = 'Sizes'
+	title() {
+		return 'Sizes'
+	}
 
-	prepareRoot() {
+	root() {
 		return layout({
 			outlineColor: '#00f',
 			id: 'body',
@@ -25,11 +27,26 @@ class SizesPage extends Page {
 						layout({ style: { size: 10, bg: '#ff0', maxWidth: 150 } }),
 						layout({ style: { size: 20, bg: '#f0f' } }),
 						layout({ style: { size: 10, bg: '#0ff', minWidth: 500 } }),
-						layout({ id: 'white', style: { width: 100, bg: '#fff' } }),
+						layout({ id: 'white', style: { width: 100, bg: '#fff', aspectRatio: 16/9 } }),
 						layout({ style: { size: 10, bg: '#0ff' } }),
 						layout({ style: { size: 10, bg: '#0ff' } }),
 						layout({ style: { size: 10, bg: '#0ff' } }),
-						layout({ style: { size: 10, bg: '#0ff' } }),
+						layout({
+							id: 'hug',
+							style: {
+								size: 'hug',
+								bg: '#0ff',
+								direction: 'column',
+								gap: 'var:u2',
+								padding: 'var:u2',
+							},
+							children: [
+								layout({}),
+								layout({ style: { width: 100 } }),
+								layout({}),
+								layout({}),
+							],
+						}),
 					],
 				}),
 				layout({

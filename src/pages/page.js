@@ -8,11 +8,8 @@ class Page extends DebuggedPage {
 	session = null
 	config = {}
 
-	state = {}
-	componentsState = new Map()
-
-	root = null
-	initialRoot = null
+	_root = null
+	_initialRoot = null
 
 	focused = ''
 
@@ -20,79 +17,27 @@ class Page extends DebuggedPage {
 	lastH = 0
 	lastRender = 0
 
-	currMouse = point({ x: 0, y: 0 })
-	lastMouse = point({ x: 0, y: 0 })
-
 	rerenderDelay = 1
 	rerenderTimeout = null
 
 	previousRender = null
 	previousRequest = {}
 
-	title = ''
-	meta = ''
-	scripts = ''
-	styles = ''
-
 	constructor(options) {
 		super(options)
 
-		const { state, meta, config, appConfig } = options
-		if (state !== undefined) {
-			this.state = state
-		}
-		if (meta !== undefined) {
-			this.meta = meta
-		}
+		const { config, appConfig } = options
 
 		this.config = appConfig
 		this.rerenderDelay = config.rerenderDelay
 	}
 
 	init() {
-		this.root = layout({})
+		this._root = layout({})
 	}
 
-	pushQueryParams(params) {}
-
-	// State
-
-	setSession(session) {
+	_setSession(session) {
 		this.session = session
-	}
-
-	setState(newState, options = { needsRerender: true }) {
-		this.state = { ...this.state, ...newState }
-
-		const { needsRerender } = options
-
-		if (needsRerender) {
-			this.rerender()
-		}
-	}
-
-	get state() {
-		return Object.freeze(this.state)
-	}
-
-	initState(state) {
-		this.state = state
-	}
-
-	getState() {
-		return {
-			state: this.state,
-			setState: (newState, options = { needsRerender: true }) => {
-				this.setState(newState, options)
-			},
-		}
-	}
-
-	getMouse() {
-		return {
-			currMouse: this.currMouse,
-			lastMouse: this.lastMouse,
-		}
 	}
 
 	focus(id) {
@@ -113,20 +58,24 @@ class Page extends DebuggedPage {
 
 	// Meta info
 
-	prepareTitle() {
-		return this.title
+	title() {
+		return this._title
 	}
 
-	prepareMeta() {
-		return this.meta
+	meta() {
+		return this._meta
 	}
 
-	prepareScripts() {
-		return this.scripts
+	scripts() {
+		return this._scripts
 	}
 
-	prepareStyles() {
-		return this.styles
+	styles() {
+		return this._styles
+	}
+
+	content() {
+		return this._content
 	}
 
 	//
@@ -135,19 +84,19 @@ class Page extends DebuggedPage {
 
 	// Markup
 
-	prepareRoot({ w, h, request }) {
-		return this.root
+	root({ w, h, request }) {
+		return this._root
 	}
 
-	prepareInitialRoot({ w, h, request }) {
-		if (this.initialRoot) {
-			return this.initialRoot
+	initialRoot({ w, h, request }) {
+		if (this._initialRoot) {
+			return this._initialRoot
 		}
-		return this.prepareFirstRoot({ w, h, request })
+		return this.firstRoot({ w, h, request })
 	}
 
-	prepareFirstRoot({ w, h, request }) {
-		return this.prepareRoot({ w, h, request })
+	firstRoot({ w, h, request }) {
+		return this.root({ w, h, request })
 	}
 
 	_patchRoot(root, payload) {
@@ -163,7 +112,7 @@ class Page extends DebuggedPage {
 	renderInitialDraw(request) {
 		const { w, h } = request
 
-		return this.r({
+		return this._r({
 			w,
 			h,
 			request,
@@ -178,7 +127,7 @@ class Page extends DebuggedPage {
 	renderFirstDraw(request) {
 		const { w, h } = request
 
-		return this.r({
+		return this._r({
 			w,
 			h,
 			request,
@@ -193,15 +142,15 @@ class Page extends DebuggedPage {
 	render(request) {
 		const { w, h } = request
 
-		return this.r({
+		return this._r({
 			w,
 			h,
 			request,
-			root: this.prepareRoot({ w, h, request }),
+			root: this.root({ w, h, request }),
 		})
 	}
 
-	r({ w, h, request, root }) {
+	_r({ w, h, request, root }) {
 		this.lastW = w
 		this.lastH = h
 		this.lastRender = Date.now()
@@ -211,7 +160,7 @@ class Page extends DebuggedPage {
 		const dimensions = new Map()
 
 		const payload = {
-			state: this.state,
+			state: this._state,
 			x: 0,
 			y: 0,
 			w,
@@ -239,15 +188,17 @@ class Page extends DebuggedPage {
 	update(request) {
 		const { w, h } = request
 
+		const { setMouse } = this.useMouse()
+		const { state } = this.useState()
+
 		if (request.event.type === 'mousemove') {
-			this.lastMouse = this.currMouse
-			this.currMouse = point({
+			setMouse(point({
 				x: request.event.x,
 				y: request.event.y,
-			})
+			}))
 		}
 
-		const root = this.prepareRoot({ w, h, request })
+		const root = this.root({ w, h, request })
 
 		const dimensions = new Map()
 
@@ -258,7 +209,7 @@ class Page extends DebuggedPage {
 			y: 0,
 			request,
 			dimensions,
-			state: this.state,
+			state,
 			session: this.session,
 		}
 

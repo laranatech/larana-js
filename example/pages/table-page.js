@@ -3,10 +3,14 @@ const { Page, layout, text, table } = require('larana-js')
 const { header } = require('../components')
 
 class TablePage extends Page {
-	title = 'Table page'
+	title() {
+		return 'Table page'
+	}
 
 	init() {
-		this.initState({
+		const { initState } = this.useState()
+
+		initState({
 			items: [
 				{ name: 'LaranaJS', language: 'JavaScript', version: '0.2.0', state: 'Active' },
 				{ name: 'LaranaRS', language: 'Rust', version: '-', state: 'none' },
@@ -18,7 +22,7 @@ class TablePage extends Page {
 		})
 	}
 
-	prepareRoot() {
+	root() {
 		return layout({
 			outlineColor: '#00f',
 			id: 'body',

@@ -10,10 +10,14 @@ const { header } = require('../components')
 class BarPage extends Page {
 	loadingTextTimeout = null
 
-	title = 'Bar chart page'
+	title() {
+		return 'Bar chart page'
+	}
 
 	init() {
-		this.initState({
+		const { initState } = this.useState()
+
+		initState({
 			items: [],
 			loaded: false,
 			loadingTick: 0,
@@ -29,7 +33,9 @@ class BarPage extends Page {
 		this.fetchData()
 	}
 
-	prepareRoot() {
+	root() {
+		const { state } = this.useState()
+
 		return layout({
 			style: [
 				'body',
@@ -51,10 +57,10 @@ class BarPage extends Page {
 				layout({
 					style: { size: 9 },
 					children: [
-						this.state.loaded
+						state.loaded
 							? barChart({ model: 'items' })
 							: text({
-								value: `Loading: ${this.state.loadingTick}`,
+								value: `Loading: ${state.loadingTick}`,
 								style: 'text',
 							}),
 					],
@@ -64,13 +70,15 @@ class BarPage extends Page {
 	}
 
 	fetchData() {
+		const { state, setState } = this.useState()
+
 		clearTimeout(this.loadingTextTimeout)
 		const tickLoading = () => {
-			if (this.state.loaded) {
+			if (state.loaded) {
 				return
 			}
-			this.setState({
-				loadingTick: this.state.loadingTick + 1,
+			setState({
+				loadingTick: state.loadingTick + 1,
 				loadingText: 'Loading',
 			})
 
@@ -80,7 +88,7 @@ class BarPage extends Page {
 		this.loadingTextTimeout = setTimeout(tickLoading, 100)
 
 		setTimeout(() => {
-			this.setState({
+			setState({
 				items: [
 					{ value: 100, label: '01' },
 					{ value: 90, label: '02' },

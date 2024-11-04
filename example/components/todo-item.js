@@ -6,7 +6,7 @@ class TodoItemComponent extends BaseComponent {
 		padding: 'var:u2',
 		radius: 'var:radius',
 		borderColor: 'var:fg',
-		height: 'var:componentHeight',
+		size: 'hug',
 	}
 
 	item = null

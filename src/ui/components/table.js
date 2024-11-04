@@ -66,8 +66,6 @@ class TableComponent extends BaseComponent {
 	root() {
 		const { modelValue } = this.useModel()
 
-		// console.log(modelValue)
-
 		return layout({
 			children: [
 				list({

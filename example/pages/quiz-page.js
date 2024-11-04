@@ -3,10 +3,14 @@ const { Page, layout, text, list, radio, button } = require('larana-js')
 const { header } = require('../components')
 
 class QuizPage extends Page {
-	title = 'Quiz'
+	title() {
+		return 'Quiz'
+	}
 
 	init() {
-		this.initState({
+		const { initState } = this.useState()
+
+		initState({
 			questions: [
 				{
 					caption: 'What is Larana?',
@@ -59,7 +63,8 @@ class QuizPage extends Page {
 	}
 
 	questionBody() {
-		const { answers, questions } = this.state
+		const { state } = this.useState()
+		const { answers, questions } = state
 		const current = answers.length
 
 		const question = questions[current]
@@ -91,7 +96,7 @@ class QuizPage extends Page {
 						layout({}),
 						button({
 							text: 'Next',
-							disabled: this.state.selectedAnswer === '',
+							disabled: state.selectedAnswer === '',
 							onClick: () => this.nextQuestion(),
 						}),
 						layout({}),
@@ -103,21 +108,25 @@ class QuizPage extends Page {
 	}
 
 	nextQuestion() {
-		if (!this.state.selectedAnswer) {
+		const { state, setState } = this.useState()
+
+		if (!state.selectedAnswer) {
 			return
 		}
-		this.setState({
-			answers: [...this.state.answers, this.state.selectedAnswer],
+		setState({
+			answers: [...state.answers, state.selectedAnswer],
 			selectedAnswer: '',
 		})
 	}
 
 	resultBody() {
+		const { state } = this.useState()
+
 		let totalScore = 0
 		let score = 0
 
-		this.state.questions.forEach((q, i) => {
-			const answer = this.state.answers[i]
+		state.questions.forEach((q, i) => {
+			const answer = state.answers[i]
 			const correct = answer === q.correctAnswer
 			totalScore += q.score
 
@@ -132,9 +141,9 @@ class QuizPage extends Page {
 				text({ value: `Your score: ${score}/${totalScore}`, style: 'h1Text' }),
 				list({
 					style: { size: 3 },
-					value: this.state.questions,
+					value: state.questions,
 					template: (item, i) => {
-						const answer = this.state.answers[i]
+						const answer = state.answers[i]
 						const correct = answer === item.correctAnswer
 						const selectedOption = item.options.find((o) => o.value === answer)
 
@@ -160,8 +169,10 @@ class QuizPage extends Page {
 		})
 	}
 
-	prepareRoot({ w, h }) {
-		const allAnswered = this.state.answers.length === this.state.questions.length
+	root({ w, h }) {
+		const { state } = this.useState()
+
+		const allAnswered = state.answers.length === state.questions.length
 
 		return layout({
 			outlineColor: '#00f',

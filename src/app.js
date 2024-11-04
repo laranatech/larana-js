@@ -40,25 +40,25 @@ class LaranaApp {
 			renderer,
 			stateManager,
 			onConnect = (data) => {
-				if (!config.debug) {
+				if (!config.debug || !config.debugOptions.logMessages) {
 					return
 				}
 				console.log('[onConnect]', Date.now())
 			},
 			onServe = (data) => {
-				if (!config.debug) {
+				if (!config.debug || !config.debugOptions.logMessages) {
 					return
 				}
 				console.log('[onServe]', Date.now())
 			},
 			onMessage = (data) => {
-				if (!config.debug) {
+				if (!config.debug || !config.debugOptions.logMessages) {
 					return
 				}
 				console.log('[onMessage]', Date.now())
 			},
 			onClose = (data) => {
-				if (!config.debug) {
+				if (!config.debug || !config.debugOptions.logMessages) {
 					return
 				}
 				console.log('[onClose]', Date.now())
@@ -126,7 +126,7 @@ class LaranaApp {
 			storage: { lang: this.config.defaultLang, theme: this.config.defaultTheme },
 		})
 		this.stateManager.addSession(sessionId, session)
-		page.setSession(session)
+		page._setSession(session)
 		page.init()
 
 		const w = this.config.initialW
@@ -143,10 +143,10 @@ class LaranaApp {
 			wsPath: this.config.wsPath,
 			sessionId,
 			lang: session.storage.lang,
-			title: page.prepareTitle(),
-			meta: page.prepareMeta(),
-			styles: page.prepareStyles(),
-			scripts: page.prepareScripts(),
+			title: page.title(),
+			meta: page.meta(),
+			styles: page.styles(),
+			scripts: page.scripts(),
 			clientCode: this.renderer.clientCode,
 			w,
 			h,
@@ -226,6 +226,10 @@ class LaranaApp {
 			}
 		})
 
+		this._onClose(ws)
+	}
+
+	_onClose(ws) {
 		ws.on('close', () => {
 			this.clients.delete(ws)
 			this.onClose({ ws })

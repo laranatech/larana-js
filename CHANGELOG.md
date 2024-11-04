@@ -3,6 +3,7 @@
 - **fix:** reduced animation freezing
 - **fix:** `queryParams` bug
 - **fix:** min/max dimensions now don't break layout
+- **feat:** `size`: `hug`
 - **feat:** `TableComponent`
 - **feat:** `aspectRatio`
 - **feat:** `width` and `height` style properties
@@ -43,6 +44,7 @@
 - **feat:** `ImageComponent`
 - **feat:** qrcodes
 - **feat:** rendering line on `CanvasRenderer`
+- **refactor:** inner framework methods are now with underscore, eg `_setState()`
 - **refactor:** `Session.state` -> `Session.storage`
 - **refactor:** hooks moved to another class
 - **refactor:** `TextComponent.text` -> `TextComponent.value`

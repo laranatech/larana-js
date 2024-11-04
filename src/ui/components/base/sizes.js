@@ -1,53 +1,110 @@
 const { StyledComponent } = require('./styles.js')
 
 class SizedComponent extends StyledComponent {
+	_isRoot = false
+
 	_computedDimensions = null
 	_computedRadius = null
 	_computedSize = null
 	_computedGaps = null
 
-	computeSize({ w, h, totalGap }) {
+	computeWH() {
+		const style = this.preComputeStyle()
+
+		let w = style.width
+		let h = style.height
+		const aspectRatio = style.aspectRatio ?? null
+
+		if (style.height) {
+			h = style.height
+
+			if (style.maxHeight && h > style.maxHeight) {
+				h = style.maxHeight
+			}
+			if (style.minHeight && h < style.minHeight) {
+				sH = style.minHeight
+			}
+
+			if (aspectRatio && !w) {
+				w = h * aspectRatio
+			}
+		}
+		if (style.width) {
+			w = style.width
+
+			if (style.maxWidth && w > style.maxWidth) {
+				w = style.maxWidth
+			}
+			if (style.minWidth && w < style.minWidth) {
+				w = style.minWidth
+			}
+
+			if (aspectRatio && !h) {
+				h = w / aspectRatio
+			}
+		}
+
+		return { w, h }
+	}
+
+	computeFitContentSize({ direction, padding }) {
+		const children = this.getChildren()
+
+		const key = direction === 'row' ? 'h' : 'w'
+
+		let side = null
+
+		children.forEach((child) => {
+			const style = child.preComputeStyle()
+
+			let d = { w: null, h: null }
+
+			if (style.size === 'hug') {
+				d = child.computeFitContentSize({
+					direction: style.direction,
+					padding: style.padding,
+				})
+			} else if (style.width || style.height) {
+				d = child.computeWH()
+			}
+
+			if (d[key] && d[key] > side) {
+				side = d[key] + padding * 2
+			}
+		})
+
+		return side
+	}
+
+	computeSize() {
 		if (this._computedSize) {
 			return this._computedSize
 		}
 
 		const style = this.preComputeStyle()
 
-		let sH = style.height
-		let sW = style.width
 		let size = style.size ?? 1
-		const aspectRatio = style.aspectRatio ?? null
+		let d = { w: 0, h: 0 }
 
-		if (style.height) {
-			sH = style.height
+		if (size === 'hug') {
+			const side = this.computeFitContentSize({
+				direction: style.direction,
+				padding: style.padding,
+			})
 
-			if (style.maxHeight && sH > style.maxHeight) {
-				sH = style.maxHeight
+			if (style.direction === 'column') {
+				d.w = side
+				d.h = null
+			} else {
+				d.w = null
+				d.h = side
 			}
-			if (style.minHeight && sH < style.minHeight) {
-				sH = style.minHeight
-			}
-
-			if (aspectRatio && !sW) {
-				sW = sH * aspectRatio
-			}
-		}
-		if (style.width) {
-			sW = style.width
-
-			if (style.maxWidth && sW > style.maxWidth) {
-				sW = style.maxWidth
-			}
-			if (style.minWidth && sW < style.minWidth) {
-				sW = style.minWidth
-			}
-
-			if (aspectRatio && !sH) {
-				sH = sW / aspectRatio
-			}
+		} else {
+			d = this.computeWH()
 		}
 
-		this._computedSize = { size, w: sW, h: sH }
+		this._computedSize = { size, ...d }
+
 		return this._computedSize
 	}
 
@@ -71,8 +128,15 @@ class SizedComponent extends StyledComponent {
 			return stateDimensions
 		}
 
-		const { gap, padding, direction } = this.parent.preComputeStyle()
+		const { gap, padding, direction, size } = this.parent.preComputeStyle()
 		const pd = this.parent.computeDimensions()
+
+		if (this._isRoot) {
+			this._computedDimensions = pd
+			dimensions.set(this.id, pd)
+			return this._computedDimensions
+		}
+
 		const wd = {
 			x: pd.x + padding,
 			y: pd.y + padding,
@@ -83,12 +147,16 @@ class SizedComponent extends StyledComponent {
 		const siblings = this.parent.getChildren()
 		const totalGap = (siblings.length - 1) * gap
 
-		const compSize = this.computeSize({ ...wd, totalGap })
+		const compSize = this.computeSize()
 
 		const totalSize = siblings.reduce((acc, s) => {
-			const sSize = s.computeSize({ ...wd, totalGap })
+			const sSize = s.computeSize()
 
-			if ((direction === 'row' && sSize.w) || (direction === 'column' && sSize.h)) {
+			if (
+				sSize.size === 'hug'
+				|| (direction === 'row' && sSize.w)
+				|| (direction === 'column' && sSize.h)
+			) {
 				return acc
 			}
 			return acc + sSize.size
@@ -111,16 +179,14 @@ class SizedComponent extends StyledComponent {
 					return
 				}
 
-				const sibSize = sibling.computeSize({ ...wd, totalGap })
+				const sibSize = sibling.computeSize()
 
 				let p = 0
 
 				if (sibSize[key]) {
 					p = sibSize[key]
-				} else if (sibSize.size) {
+				} else if (sibSize.size !== 'hug') {
 					p = sibSize.size * oneSize
-				} else {
-					p = oneSize
 				}
 
 				offset += p + gap
@@ -131,7 +197,7 @@ class SizedComponent extends StyledComponent {
 
 		const computeSide = (side, key) => {
 			return side - siblings.reduce((acc, sibling) => {
-				const sibSize = sibling.computeSize({ ...wd, totalGap })
+				const sibSize = sibling.computeSize()
 
 				if (sibSize[key]) {
 					return acc + sibSize[key]
@@ -150,10 +216,8 @@ class SizedComponent extends StyledComponent {
 
 			if (compSize.h) {
 				ch = compSize.h
-			} else if (compSize.size) {
+			} else if (compSize.size !== 'hug') {
 				ch = compSize.size * oneSize
-			} else {
-				ch = oneSize
 			}
 
 			const cw = compSize.w ?? wd.w
@@ -169,7 +233,7 @@ class SizedComponent extends StyledComponent {
 
 			if (compSize.w) {
 				cw = compSize.w
-			} else if (compSize.size) {
+			} else if (compSize.size !== 'hug') {
 				cw = compSize.size * oneSize
 			} else {
 				cw = oneSize
