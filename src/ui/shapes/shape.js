@@ -2,8 +2,10 @@ class Shape {
 	name = 'shape'
 
 	style = {}
+	rawOptions = {}
 
 	constructor(options) {
+		this.rawOptions = options
 		this.extractStyles(options)
 	}
 
@@ -15,6 +17,8 @@ class Shape {
 			borderWidth: 'lineWidth',
 			borderColor: 'strokeStyle',
 			font: 'font',
+			textBaseline: 'textBaseline',
+			textAlign: 'textAlign',
 			w: 'w',
 			h: 'h',
 		}

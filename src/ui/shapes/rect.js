@@ -1,6 +1,5 @@
 const { Shape } = require('./shape.js')
 
-
 class Rect extends Shape {
 	name = 'rect'
 

@@ -29,7 +29,7 @@ class Session {
 		}
 	}
 
-	getStorage() {
+	useStorage() {
 		return {
 			storage: this.storage,
 			setStorage: (newStorage) => {

@@ -22,7 +22,7 @@ class SizedComponent extends StyledComponent {
 				h = style.maxHeight
 			}
 			if (style.minHeight && h < style.minHeight) {
-				sH = style.minHeight
+				h = style.minHeight
 			}
 
 			if (aspectRatio && !w) {

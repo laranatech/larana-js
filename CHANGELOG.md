@@ -17,6 +17,8 @@
 - **feat:** `disabledStyle`
 - **feat:** more importing options
 - **feat:** `arc` shape
+- **feat:** `arrow` shape
+- **feat:** `t` shape for text
 - **feat:** `rect` shape
 - **feat:** `line` shape
 - **feat:** `FigureComponent`

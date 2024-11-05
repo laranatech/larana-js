@@ -131,12 +131,6 @@ class SlidesPage extends Page {
 							style: { size: 12 },
 						}),
 						layout({
-							style: {
-								borderColor: '#ccc',
-								padding: 'var:u1',
-								radius: 'var:radius',
-								// size: 'hug',
-							},
 							children: [
 								button({
 									text: '←',

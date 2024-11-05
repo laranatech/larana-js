@@ -203,6 +203,11 @@ class CanvasRenderer {
 
 		ctx.stroke()
 
+		if (options.fillStyle) {
+			ctx.fillStyle = options.fillStyle
+			ctx.fill()
+		}
+
 		return canvas
 	}
 

@@ -8,6 +8,7 @@ module.exports = {
 	...require('./throbber.js'),
 	...require('./list.js'),
 	...require('./table.js'),
+	...require('./figure.js'),
 	...require('./charts'),
 	...require('./forms'),
 	...require('./navigation'),

@@ -5,8 +5,7 @@ module.exports = {
 	...require('./what-is-larana.js'),
 	...require('./philisophy.js'),
 	...require('./real-ssr.js'),
-	// architecture
-	//
+	...require('./architecture.js'),
 	...require('./implementation.js'),
 	// pylarana javarana gorana laranavel
 	...require('./routing.js'),

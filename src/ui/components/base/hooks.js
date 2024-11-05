@@ -149,9 +149,17 @@ class HookedComponent {
 			return this._storage
 		}
 
-		this._storage = this.useSession().getStorage()
+		this._storage = this.useSession().useStorage()
 
 		return this._storage
+	}
+
+	useTheme() {
+		const { storage } = this.useStorage()
+
+		return {
+			theme: storage.theme ?? 'dark',
+		}
 	}
 
 	_patch(root, payload) {
