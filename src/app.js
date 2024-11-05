@@ -168,35 +168,6 @@ class LaranaApp {
 
 		this.onConnect({ ws })
 
-		const send = ({ image, queue, x, y }) => {
-			const r = new Response({ image: image ? image.toDataURL() : '', queue: queue.json(), x, y })
-			ws.send(r.jsonString())
-		}
-
-		const onOpen = (request, session) => {
-			session.page.send = (request) => {
-				const queue = session.page.render(request)
-				const image = this.renderer.render(queue, request)
-
-				if (image && session.page.previousRender) {
-					const diff = this.renderer.diff(session.page.previousRender, image)
-					const trimmed = this.renderer.trim(diff)
-					send({ image: trimmed.canvas, queue, x: trimmed.x, y: trimmed.y })
-					session.page.previousRender = image
-					return
-				}
-
-				session.page.previousRender = image
-				send({ image: image ? image.toDataURL() : '', queue, x: 0, y: 0 })
-			}
-
-			const queue = session.page.render(request)
-			const image = this.renderer.render(queue, request)
-			session.page.previousRender = image
-
-			send({ image, queue, x: 0, y: 0 })
-		}
-
 		ws.on('message', (message) => {
 			const payload = JSON.parse(message.toString())
 			const session = this.stateManager.getSession(payload.sessionId)
@@ -215,18 +186,47 @@ class LaranaApp {
 			this.onMessage({ message })
 
 			if (request.event.type === 'open') {
-				onOpen(request, session)
+				this._onOpen({ ws, request, session })
 				return
 			}
 
 			const updated = session.page.update(request)
 
 			if (updated) {
-				session.page.send(request)
+				session.page.tick(request)
 			}
 		})
 
 		this._onClose(ws)
+	}
+
+	_onOpen({ ws, request, session }) {
+		const send = ({ image, queue, x, y }) => {
+			const r = new Response({ image: image ? image.toDataURL() : '', queue: queue.json(), x, y })
+			ws.send(r.jsonString())
+		}
+
+		session.page.tick = (request) => {
+			const queue = session.page.render(request)
+			const image = this.renderer.render(queue, request)
+
+			if (image && session.page.previousRender) {
+				const diff = this.renderer.diff(session.page.previousRender, image)
+				const trimmed = this.renderer.trim(diff)
+				send({ image: trimmed.canvas, queue, x: trimmed.x, y: trimmed.y })
+				session.page.previousRender = image
+				return
+			}
+
+			session.page.previousRender = image
+			send({ image: image ? image.toDataURL() : '', queue, x: 0, y: 0 })
+		}
+
+		const queue = session.page.render(request)
+		const image = this.renderer.render(queue, request)
+		session.page.previousRender = image
+
+		send({ image, queue, x: 0, y: 0 })
 	}
 
 	_onClose(ws) {

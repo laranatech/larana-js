@@ -46,6 +46,7 @@
 - **feat:** `ImageComponent`
 - **feat:** qrcodes
 - **feat:** rendering line on `CanvasRenderer`
+- **refactor:** `page.send()` -> `page.tick()`
 - **refactor:** inner framework methods are now with underscore, eg `_setState()`
 - **refactor:** `Session.state` -> `Session.storage`
 - **refactor:** hooks moved to another class

@@ -45,14 +45,14 @@ class Page extends DebuggedPage {
 	}
 
 	rerender() {
-		if (!this.send) {
-			throw new Error('Page must have `send()` method')
+		if (!this.tick) {
+			throw new Error('Page must have `tick()` method')
 		}
 
 		clearTimeout(this.rerenderTimeout)
 
 		this.rerenderTimeout = setTimeout(() => {
-			this.send({ w: this.lastW, h: this.lastH })
+			this.tick({ w: this.lastW, h: this.lastH })
 		}, this.rerenderDelay)
 	}
 
@@ -80,7 +80,7 @@ class Page extends DebuggedPage {
 
 	//
 
-	send() {}
+	tick() {}
 
 	// Markup
 

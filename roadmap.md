@@ -52,6 +52,7 @@
 - feat: pyramid chart
 - feat: multiple series on a chart
 - feat: Gantt
+- feat: venn
 
 # 0.9.0
 
