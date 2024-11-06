@@ -33,7 +33,7 @@ class CounterPage extends Page {
 					children: [
 						text({
 							style: [
-								'h2Text',
+								'h2',
 								{ size: 9, fg: 'var:fg' },
 							],
 							value: `Counter: ${state.counter}`,

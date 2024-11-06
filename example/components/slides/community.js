@@ -1,24 +1,13 @@
-const { BaseComponent, text, image, layout } = require('larana-js')
+const { text, image, layout } = require('larana-js')
+const { SlideComponent } = require('../slide.js')
 
-class CommunitySlideComponent extends BaseComponent {
-	static steps = 1
-	step = 1
-
-	defaultStyle = {
-		direction: 'column',
-	}
-
-	constructor(options) {
-		super(options)
-		this.step = options.step
-	}
-
+class CommunitySlideComponent extends SlideComponent {
 	root() {
 		return layout({
 			children: [
-				text({ value: 'Большое сообщество', style: 'h1Text' }),
+				text({ value: 'Активное сообщество', style: 'h1' }),
 				layout({
-					style: ['size_5', 'gap_2'],
+					style: [{ size: 9 }, 'gap_2'],
 					children: [
 						image({
 							style: { size: 2 },

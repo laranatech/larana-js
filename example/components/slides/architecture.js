@@ -1,5 +1,4 @@
 const {
-	BaseComponent,
 	text,
 	layout,
 	figure,
@@ -9,20 +8,10 @@ const {
 	t,
 	useStyleVar,
 } = require('larana-js')
+const { SlideComponent } = require('../slide.js')
 
-class ArchitectureSlideComponent extends BaseComponent {
+class ArchitectureSlideComponent extends SlideComponent {
 	static steps = 10
-	step = 1
-
-	defaultStyle = {
-		direction: 'column',
-	}
-
-	constructor(options) {
-		super(options)
-
-		this.step = options.step
-	}
 
 	root() {
 		const { theme } = this.useTheme()
@@ -46,7 +35,7 @@ class ArchitectureSlideComponent extends BaseComponent {
 		return layout({
 			children: [
 				text({
-					style: 'h1Text',
+					style: 'h1',
 					value: 'Архитектура',
 				}),
 				figure({

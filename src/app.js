@@ -10,7 +10,6 @@ const { prepareTemplate } = require('./ui/client')
 const { DefaultRouter } = require('./routing')
 const { initDefaultStyleVars, initDefaultStyleNames } = require('./ui/style')
 
-
 const readFavicon = () => {
 	// eslint-disable-next-line no-undef
 	const dir = __dirname
@@ -19,7 +18,6 @@ const readFavicon = () => {
 }
 
 const favicon = readFavicon()
-
 
 class LaranaApp {
 	config = { ...defaultConfig }

@@ -19,6 +19,10 @@ class CheckboxComponent extends BaseComponent {
 		height: 'var:componentHeight',
 	}
 
+	defaultDisabledStyle = {
+		fg: 'var:disabledAccent',
+	}
+
 	constructor(options) {
 		super(options)
 
@@ -69,6 +73,7 @@ class CheckboxComponent extends BaseComponent {
 							point({ x: x + w * 0.9, y: y + h * 0.15 }),
 						],
 						...style,
+						bg: null,
 						borderWidth: w * 0.1,
 						borderColor: style.bg,
 					}).to(queue)

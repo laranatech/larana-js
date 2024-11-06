@@ -2,6 +2,7 @@ const { point } = require('../ui')
 
 class HookedPage {
 	_state = {}
+	_session = null
 	_componentsState = new Map()
 
 	_currMouse = point({ x: 0, y: 0 })
@@ -39,7 +40,19 @@ class HookedPage {
 		}
 	}
 
-	useRoute() {}
+	_setSession(session) {
+		this._session = session
+	}
+
+	useSession() {
+		return this._session
+	}
+
+	useRoute() {
+		const session = this.useSession()
+
+		return session.route
+	}
 
 	useRouter() {
 		const push = (options) => {}

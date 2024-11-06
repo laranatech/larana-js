@@ -1,16 +1,11 @@
-const { BaseComponent, text, image, layout } = require('larana-js')
+const { text, image, layout } = require('larana-js')
+const { SlideComponent } = require('../slide.js')
 
-class ContactsSlideComponent extends BaseComponent {
-	static steps = 1
-
-	defaultStyle = {
-		direction: 'column',
-	}
-
+class ContactsSlideComponent extends SlideComponent {
 	root() {
 		return layout({
 			children: [
-				text({ value: 'Контакты', style: 'h1Text' }),
+				text({ value: 'Контакты', style: 'h1' }),
 				layout({
 					style: { size: 9, gap: 16 },
 					children: [
@@ -21,7 +16,7 @@ class ContactsSlideComponent extends BaseComponent {
 									style: { size: 9 },
 									qr: 'https://t.me/+1aK0hJw21ShlMWVi',
 								}),
-								text({ style: 'h3Text', value: '@frontend_director' }),
+								text({ style: 'h3', value: '@frontend_director' }),
 							],
 						}),
 						layout({
@@ -31,7 +26,7 @@ class ContactsSlideComponent extends BaseComponent {
 									style: { size: 9 },
 									qr: 'https://t.me/+oiDOgBndnZ5hYzIy',
 								}),
-								text({ style: 'h3Text', value: '@laranatech' }),
+								text({ style: 'h3', value: '@laranatech' }),
 							],
 						}),
 					],

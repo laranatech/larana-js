@@ -1,30 +1,29 @@
-const { BaseComponent, text, layout } = require('larana-js')
+const { text, layout, code } = require('larana-js')
+const { SlideComponent } = require('../slide.js')
 
-class ConfigSlideComponent extends BaseComponent {
-	static steps = 1
-
-	defaultStyle = {
-		direction: 'column',
-	}
-
+class ConfigSlideComponent extends SlideComponent {
 	root() {
 		return layout({
 			children: [
-				text({
-					style: 'h1Text',
-					value: 'Config / DI',
-				}),
-				layout({
-					style: ['column', 'gap_1', 'size_5'],
-					children: [
-						text({
-							style: 'h2Text',
-							value: 'скрин конфига',
-						}),
-						// text({
-						// 	style: 'h2Text',
-						// 	value: 'ссылка на сайт',
-						// }),
+				text({ style: 'h1', value: 'Config / DI' }),
+				code({
+					style: { size: 9 },
+					value: [
+						'const router = new DefaultRouter({ routes })',
+						'',
+						'const renderer = new ServerRenderer({',
+						'    maxFPS: config.maxFPS,',
+						'})',
+						'',
+						'const stateManager = new MemoryStateManager({})',
+						'',
+						'const app = new LaranaApp({',
+						'    renderer,',
+						'    stateManager,',
+						'    router,',
+						'})',
+						'',
+						'app.run()',
 					],
 				}),
 			],

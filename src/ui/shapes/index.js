@@ -4,6 +4,7 @@ module.exports = {
 	...require('./line.js'),
 	...require('./arrow.js'),
 	...require('./point.js'),
+	...require('./arc-point.js'),
 	...require('./arc.js'),
 	...require('./t.js'),
 }

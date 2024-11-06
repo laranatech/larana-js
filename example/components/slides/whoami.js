@@ -1,28 +1,36 @@
-const { BaseComponent, text, layout, image } = require('larana-js')
+const { text, layout, image, list } = require('larana-js')
+const { SlideComponent } = require('../slide.js')
 
-class WhoamiSlideComponent extends BaseComponent {
-	static steps = 4
-	step = 1
+class WhoamiSlideComponent extends SlideComponent {
+	static steps = 7
 
-	constructor(options) {
-		super(options)
-		this.step = options.step
+	defaultStyle = {
+		direction: 'row',
 	}
 
 	root() {
 		return layout({
 			children: [
 				layout({
-					style: { size: 2, direction: 'column', alignment: 'start' },
+					style: ['column'],
 					children: [
-						...[
-							text({ value: 'Женя Кучерявый', style: 'h1Text' }),
-							text({ value: '— Организатор BeerJS Moscow DrinkUp', style: 'h3Text' }),
-							text({ value: '— Автор канала «Директор фронтенда»', style: 'h3Text' }),
-							text({ value: '— Изобретатель LaranaJS', style: 'h3Text' }),
-						].slice(0, this.step),
-						layout({
-							style: { size: WhoamiSlideComponent.steps - this.step },
+						text({ value: 'Женя Кучерявый', style: 'h1' }),
+						list({
+							style: ['size_5', 'gap_5', 'p_5'],
+							offset: 0,
+							limit: this.step - 1,
+							value: [
+								'— 10+ лет программирую',
+								'— Организатор BeerJS Moscow DrinkUp',
+								'— Автор канала «Директор фронтенда»',
+								'— Бывший служитель церкви',
+								'— Умер и воскрес (клиническая смерть)',
+								'— Изобретатель LaranaJS',
+							],
+							template: (line) => text({
+								value: line,
+								style: ['h1', { height: 'var:componentHeight', textAlign: 'start' }],
+							}),
 						}),
 					],
 				}),
@@ -30,7 +38,7 @@ class WhoamiSlideComponent extends BaseComponent {
 					children: [
 						image({
 							src: 'https://kucheriavyi.ru/images/evgenii-kucheriavyi_2.webp',
-							style: { width: 200, aspectRatio: 1 },
+							style: { width: 512, aspectRatio: 1 },
 						}),
 					],
 				}),

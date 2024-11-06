@@ -3,6 +3,7 @@
 - **fix:** reduced animation freezing
 - **fix:** `queryParams` bug
 - **fix:** min/max dimensions now don't break layout
+- **feat:** `CodeComponent`
 - **feat:** `size`: `hug`
 - **feat:** `TableComponent`
 - **feat:** `aspectRatio`
@@ -39,6 +40,7 @@
 - **feat:** `defaultStyleVars`
 - **feat:** default stylenames
 - **feat:** `roundedRect`
+- **feat:** `TextInput` placeholder
 - **feat:** `TextInputComponent`
 - **feat:** `onEnter` event for `TextInputComponent`
 - **feat:** `hover` event

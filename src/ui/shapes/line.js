@@ -12,8 +12,20 @@ class Line extends Shape {
 	}
 
 	command() {
+		const points = this.points.map((p) => {
+			if (p.name === 'point') {
+				const { x, y, name } = p
+				return { x, y, name }
+			}
+
+			if (p.name === 'arc-point') {
+				const { p1, p2, radius, name } = p
+				return { p1, p2, radius, name }
+			}
+		})
+
 		return {
-			points: this.points,
+			points,
 			...this.style,
 		}
 	}

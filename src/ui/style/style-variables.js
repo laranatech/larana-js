@@ -39,7 +39,7 @@ const defaultVars = {
 	bg: '#eee',
 	disabledBg: '#ddd',
 	accent: '#3caa3c',
-	disabledAccent: '#3caa3caa',
+	disabledAccent: '#3caa3c66',
 	componentBg: '#fff',
 	disabledComponentBg: '#efefef',
 	componentBorderColor: '#333',

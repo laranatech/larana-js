@@ -5,7 +5,7 @@ const { point } = require('../ui/shapes')
 const { DebuggedPage } = require('./debug.js')
 
 class Page extends DebuggedPage {
-	session = null
+	_session = null
 	config = {}
 
 	_root = null
@@ -34,10 +34,6 @@ class Page extends DebuggedPage {
 
 	init() {
 		this._root = layout({})
-	}
-
-	_setSession(session) {
-		this.session = session
 	}
 
 	focus(id) {
@@ -167,7 +163,7 @@ class Page extends DebuggedPage {
 			h,
 			dimensions,
 			request,
-			session: this.session,
+			session: this.useSession(),
 		}
 
 		this._patchRoot(root, payload)
@@ -210,7 +206,7 @@ class Page extends DebuggedPage {
 			request,
 			dimensions,
 			state,
-			session: this.session,
+			session: this.useSession(),
 		}
 
 		this._patchRoot(root, payload)

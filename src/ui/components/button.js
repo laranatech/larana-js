@@ -1,7 +1,7 @@
 const { click } = require('../events/click.js')
 const { BaseComponent } = require('./base')
 const { layout } = require('./layout.js')
-const { text } = require('./text.js')
+const { text } = require('./text/text.js')
 
 class ButtonComponent extends BaseComponent {
 	text = ''

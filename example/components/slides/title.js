@@ -1,12 +1,7 @@
-const { BaseComponent, text, layout, image } = require('larana-js')
+const { text, layout, image, laranaLogo } = require('larana-js')
+const { SlideComponent } = require('../slide.js')
 
-class TitleSlideComponent extends BaseComponent {
-	static steps = 1
-
-	defaultStyle = {
-		direction: 'column',
-	}
-
+class TitleSlideComponent extends SlideComponent {
 	root() {
 		return layout({
 			children: [
@@ -15,6 +10,9 @@ class TitleSlideComponent extends BaseComponent {
 						size: 2,
 					},
 					children: [
+						// laranaLogo({
+						// 	style: { width: 749 },
+						// }),
 						image({
 							src: 'https://larana.tech/larana.svg',
 						}),
@@ -24,15 +22,15 @@ class TitleSlideComponent extends BaseComponent {
 					style: 'column',
 					children: [
 						text({
-							style: 'h1Text',
+							style: 'h1',
 							value: 'LaranaJS: Настоящий SSR',
 						}),
 						text({
-							style: 'h2Text',
+							style: 'h2',
 							value: 'Женя Кучерявый',
 						}),
 						text({
-							style: 'h3Text',
+							style: 'h3',
 							value: 'Founder of LaranaTech',
 						}),
 					],

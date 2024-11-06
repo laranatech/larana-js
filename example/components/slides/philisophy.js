@@ -1,39 +1,30 @@
-const { BaseComponent, text, layout } = require('larana-js')
+const { text, layout } = require('larana-js')
+const { SlideComponent } = require('../slide.js')
 
-class PhylosophySlideComponent extends BaseComponent {
+class PhylosophySlideComponent extends SlideComponent {
 	static steps = 4
-	step = 1
-
-	defaultStyle = {
-		direction: 'column',
-	}
-
-	constructor(options) {
-		super(options)
-		this.step = options.step
-	}
 
 	root() {
 		return layout({
 			children: [
 				text({
-					style: 'h1Text',
+					style: 'h1',
 					value: 'Философия Larana',
 				}),
 				layout({
-					style: ['column', 'gap_1', 'size_5'],
+					style: ['column', 'gap_1', { size: 9 }],
 					children: [
 						text({}),
 						text({
-							style: 'h2Text',
+							style: 'h2',
 							value: 'Минимум кода на клиенте',
 						}),
 						text({
-							style: 'h2Text',
+							style: 'h2',
 							value: 'Минимум доверия клиенту',
 						}),
 						text({
-							style: 'h2Text',
+							style: 'h2',
 							value: 'Rebuild the web',
 						}),
 					].splice(0, this.step),

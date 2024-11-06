@@ -32,7 +32,7 @@ class TablePage extends Page {
 			],
 			children: [
 				header({}),
-				text({ value: 'Larana implementations', style: 'h1Text' }),
+				text({ value: 'Larana implementations', style: 'h1' }),
 				layout({
 					id: 'layout1',
 					style: ['p_2', { size: 9 }],

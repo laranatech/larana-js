@@ -72,7 +72,7 @@ class QuizPage extends Page {
 		return layout({
 			style: 'column',
 			children: [
-				text({ value: question.caption, style: 'h1Text' }),
+				text({ value: question.caption, style: 'h1' }),
 				list({
 					value: question.options,
 					template: (item) => {
@@ -84,7 +84,7 @@ class QuizPage extends Page {
 									model: 'selectedAnswer',
 									name: item.value,
 								}),
-								text({ value: item.label, style: 'h3Text' }),
+								text({ value: item.label, style: 'h3' }),
 								layout({ style: { size: 2 } }),
 							],
 						})
@@ -138,7 +138,7 @@ class QuizPage extends Page {
 		return layout({
 			style: 'column',
 			children: [
-				text({ value: `Your score: ${score}/${totalScore}`, style: 'h1Text' }),
+				text({ value: `Your score: ${score}/${totalScore}`, style: 'h1' }),
 				list({
 					style: { size: 3 },
 					value: state.questions,
@@ -150,11 +150,11 @@ class QuizPage extends Page {
 						return layout({
 							children: [
 								layout({ style: { size: 1 } }),
-								text({ value: item.caption, style: 'h3Text' }),
+								text({ value: item.caption, style: 'h3' }),
 								text({
 									value: `${selectedOption.label} ${correct ? '(+' + item.score + ')' : ''}`,
 									style: [
-										'h3Text',
+										'h3',
 										{
 											fg: correct ? 'var:accent' : '#f00',
 										},
@@ -183,7 +183,7 @@ class QuizPage extends Page {
 			],
 			children: [
 				header({}),
-				text({ value: 'Larana Quiz', style: 'h1Text' }),
+				text({ value: 'Larana Quiz', style: 'h1' }),
 				layout({
 					id: 'layout1',
 					style: {

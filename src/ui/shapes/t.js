@@ -1,3 +1,5 @@
+const { line } = require('./line.js')
+const { point } = require('./point.js')
 const { Shape } = require('./shape.js')
 
 class T extends Shape {
@@ -24,14 +26,27 @@ class T extends Shape {
 
 	clear(text) {
 		return String(text)
-			.replaceAll('"', '\\"')
-			.replaceAll("'", "\\'")
+			// .replaceAll('"', '\\"')
+			// .replaceAll("'", "\\'")
 	}
 
 	command() {
+		const { textAlign, textBaseline } = this.style
+
+		let x = this.x
+		let y = this.y
+
+		if (textAlign === 'center') {
+			x = x + this.w * 0.5
+		}
+
+		if (textBaseline === 'middle') {
+			y = y + this.h * 0.5
+		}
+
 		return {
-			x: this.x,
-			y: this.y,
+			x,
+			y,
 			w: this.w,
 			h: this.h,
 			font: this.style.font,
@@ -40,6 +55,37 @@ class T extends Shape {
 			baseline: this.style.textBaseline,
 			fg: this.rawOptions.fg ?? '#000',
 		}
+	}
+
+	to(queue) {
+		queue.add(this.name, this.command())
+
+		// if (this.style.striked) {
+		// 	const { textAlign, textBaseline } = this.style
+
+		// 	let x = this.x
+		// 	let y = this.y
+
+		// 	if (textAlign === 'center') {
+		// 		x = x + this.w * 0.5
+		// 	}
+
+		// 	if (textBaseline === 'middle') {
+		// 		y = y + this.h * 0.5
+		// 	}
+
+		// 	x -= 230
+
+		// 	line({
+		// 		points: [
+		// 			point({ x, y }),
+		// 			point({ x: x + 460, y }),
+		// 		],
+		// 		borderColor: this.style.fg,
+		// 		fg: this.style.fg,
+		// 		bg: this.style.fg,
+		// 	}).to(queue)
+		// }
 	}
 }
 

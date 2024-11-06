@@ -26,13 +26,13 @@ class HeaderComponent extends BaseComponent {
 					id: 'headerText1',
 					outlineColor: '#f0f',
 					value: 'LaranaJS',
-					style: 'h1Text',
+					style: 'h1',
 				}),
 				text({
 					id: 'headerText2',
 					outlineColor: '#f0f',
 					value: page.title(),
-					style: 'h3Text',
+					style: 'h3',
 				}),
 			],
 		})

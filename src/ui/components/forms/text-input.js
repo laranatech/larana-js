@@ -1,7 +1,7 @@
 const { BaseComponent } = require('../base')
 const { click, keypress } = require('../../events/index.js')
 const { layout } = require('../layout.js')
-const { text } = require('../text.js')
+const { text } = require('../text/text.js')
 
 class TextInputComponent extends BaseComponent {
 	focusable = true
@@ -17,11 +17,16 @@ class TextInputComponent extends BaseComponent {
 		borderColor: 'var:componentBorderColor',
 		radius: 'var:radius',
 		height: 'var:componentHeight',
+		textAlign: 'start',
+		textBaseline: 'top',
+		padding: 'var:u2',
 	}
 
 	defaultFocusedStyle = {
 		borderColor: 'var:accent',
 	}
+
+	placeholder = ''
 
 	constructor(options) {
 		super(options)
@@ -29,6 +34,7 @@ class TextInputComponent extends BaseComponent {
 		const {
 			model,
 			id,
+			placeholder = 'Type something...',
 			onFocus = () => {},
 			onInput = (value) => {},
 			onEnter = (value) => {},
@@ -37,6 +43,8 @@ class TextInputComponent extends BaseComponent {
 		if (!id) {
 			this.id = model
 		}
+
+		this.placeholder = placeholder
 
 		this.onInput = onInput
 		this.onFocus = onFocus
@@ -135,11 +143,18 @@ class TextInputComponent extends BaseComponent {
 		const a = inputValue.split('')
 		// a.splice(carret, 0, '|')
 
+		const style = this.computeStyle()
+
+		const placeholderVisibility = a.length === 0 && !this.isFocused()
+
 		return layout({
 			children: [
 				text({
-					value: a.join(''),
-					style: this.computeStyle(),
+					value: placeholderVisibility ? this.placeholder : a.join(''),
+					style: {
+						...style,
+						fg: placeholderVisibility ? 'var:disabledFg' : style.fg,
+					},
 				}),
 			],
 		})

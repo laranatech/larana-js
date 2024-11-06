@@ -1,28 +1,23 @@
-const { BaseComponent, text, layout } = require('larana-js')
+const { text, layout } = require('larana-js')
+const { SlideComponent } = require('../slide.js')
 
-class RealSSRSlideComponent extends BaseComponent {
-	static steps = 1
-
-	defaultStyle = {
-		direction: 'column',
-	}
-
+class RealSSRSlideComponent extends SlideComponent {
 	root() {
 		return layout({
 			children: [
 				text({
-					style: 'h1Text',
+					style: 'h1',
 					value: 'Настоящий SSR/CSR',
 				}),
 				layout({
-					style: ['column', 'gap_1', 'size_5'],
+					style: ['column', 'gap_1', { size: 9 }],
 					children: [
 						text({
-							style: 'h2Text',
+							style: 'h2',
 							value: 'Фреймворк сам решает, как всё рендерить',
 						}),
 						// text({
-						// 	style: 'h2Text',
+						// 	style: 'h2',
 						// 	value: 'ссылка на сайт',
 						// }),
 					],

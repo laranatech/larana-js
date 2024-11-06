@@ -1,40 +1,35 @@
-const { BaseComponent, text, layout } = require('larana-js')
+const { text, layout } = require('larana-js')
+const { SlideComponent } = require('../slide.js')
 
-class ToolingSlideComponent extends BaseComponent {
-	static steps = 1
-
-	defaultStyle = {
-		direction: 'column',
-	}
-
+class ToolingSlideComponent extends SlideComponent {
 	root() {
 		return layout({
 			children: [
 				text({
-					style: 'h1Text',
+					style: 'h1',
 					value: 'Tooling в LaranaJS',
 				}),
 				layout({
-					style: ['column', 'gap_1', 'size_5'],
+					style: ['column', 'gap_1', { size: 9 }],
 					children: [
 						text({
-							style: 'h2Text',
+							style: 'h2',
 							value: 'npm init larana-js',
 						}),
 						text({
-							style: 'h2Text',
+							style: 'h2',
 							value: 'schemer',
 						}),
 						text({
-							style: 'h2Text',
+							style: 'h2',
 							value: 'logger',
 						}),
 						text({
-							style: 'h2Text',
+							style: 'h2',
 							value: 'testing',
 						}),
 						text({
-							style: 'h2Text',
+							style: 'h2',
 							value: 'designer',
 						}),
 					],

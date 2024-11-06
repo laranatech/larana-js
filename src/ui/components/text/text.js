@@ -1,6 +1,7 @@
-const { t } = require('../shapes')
-const { BaseComponent } = require('./base')
-const { figure } = require('./figure')
+const { t } = require('../../shapes')
+const { BaseComponent } = require('../base')
+const { figure } = require('../figure')
+const { createCanvas } = require('canvas')
 
 class TextComponent extends BaseComponent {
 	defaultStyle = {
@@ -9,13 +10,11 @@ class TextComponent extends BaseComponent {
 
 	constructor(options) {
 		super(options)
-
-		const { text = '' } = options
-		this.text = text
 	}
 
 	root() {
 		const { modelValue } = this.useModel()
+
 		const style = this.computeStyle()
 
 		return figure({
@@ -23,12 +22,14 @@ class TextComponent extends BaseComponent {
 				const d = fig.computeDimensions()
 
 				const r = t({
-					x: d.x + (d.w / 2),
-					y: d.y + (d.h / 2),
+					// x: d.x + (d.w / 2),
+					// y: d.y + (d.h / 2),
+					...d,
 					text: modelValue,
 					...style,
 					font: style.font,
 					fg: style.fg,
+					w: this.defaultStyle.width ?? d.w,
 				})
 
 				r.to(queue)

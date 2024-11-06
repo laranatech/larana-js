@@ -46,7 +46,7 @@ class TabsPage extends Page {
 							tabs: state.tabs,
 							model: 'activeTab',
 						}),
-						text({ style: ['h1Text', { size: 9 }], model: 'activeTab' }),
+						text({ style: ['h1', { size: 9 }], model: 'activeTab' }),
 					],
 				}),
 			],

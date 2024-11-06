@@ -23,7 +23,7 @@ class GamePage extends Page {
 					children: [
 						text({
 							value: 'Game page',
-							style: 'h1Text',
+							style: 'h1',
 						}),
 						text({
 							value: 'Soon here will be demo',

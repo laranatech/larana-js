@@ -27,10 +27,10 @@ class HomePage extends Page {
 		initState({
 			radius: 30,
 			d: 1,
-			checkboxValue1: true,
-			checkboxValue2: true,
-			checkboxValue3: true,
-			radioValue: 'item_1',
+			checkbox1: true,
+			checkbox2: true,
+			checkbox3: true,
+			disabledCheckbox: 'checkbox1',
 		})
 	}
 
@@ -53,19 +53,19 @@ class HomePage extends Page {
 						list({
 							style: ['column', 'gap_2'],
 							value: [
-								{ name: 'item_1', text: 'item_1', fg: '#ff0' },
-								{ name: 'item_2', text: 'item_2', fg: '#f0f' },
-								{ name: 'item_3', text: 'item_3', fg: '#00f' },
+								{ name: 'checkbox1', text: 'checkbox1', fg: '#ff0' },
+								{ name: 'checkbox2', text: 'checkbox2', fg: '#f0f' },
+								{ name: 'checkbox3', text: 'checkbox3', fg: '#00f' },
 							],
 							template: (item) => layout({
 								style: 'gap_1',
 								children: [
 									radio({
-										model: 'radioValue',
+										model: 'disabledCheckbox',
 										name: item.name,
 										style: { fg: item.fg },
 									}),
-									text({ value: item.text, style: 'h2Text' }),
+									text({ value: item.text, style: 'h2' }),
 								],
 							}),
 						}),
@@ -74,17 +74,17 @@ class HomePage extends Page {
 							children: [
 								list({
 									style: ['column', 'gap_2'],
-									value: ['checkboxValue1', 'checkboxValue2', 'checkboxValue3'],
+									value: ['checkbox1', 'checkbox2', 'checkbox3'],
 									template: (item) => checkbox({ model: item }),
 								}),
 								list({
 									style: ['column', 'gap_2'],
-									value: ['checkboxValue1', 'checkboxValue2', 'checkboxValue3'],
+									value: ['checkbox1', 'checkbox2', 'checkbox3'],
 									template: (item) => toggle({ model: item }),
 								}),
 							],
 						}),
-						text({ value: 'Home', style: 'h1Text' }),
+						text({ value: 'Home', style: 'h1' }),
 						new CircleComponent({
 							style: { size: 1, bg: 'var:accent', borderColor: '#f00' },
 							radius: state.radius,

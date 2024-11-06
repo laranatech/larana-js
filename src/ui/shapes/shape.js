@@ -21,6 +21,8 @@ class Shape {
 			textAlign: 'textAlign',
 			w: 'w',
 			h: 'h',
+			striked: 'striked',
+			underline: 'underlined',
 		}
 
 		const keys = Object.keys(keysMap)

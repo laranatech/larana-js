@@ -90,7 +90,7 @@ class HookedComponent {
 			return this._route
 		}
 
-		this._route = this.useSession().route
+		this._route = this.usePage().useRoute()
 
 		return this._route
 	}

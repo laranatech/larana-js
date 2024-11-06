@@ -192,13 +192,20 @@ class CanvasRenderer {
 
 		ctx.beginPath()
 
-		points.forEach(({ x, y }, i) => {
+		points.forEach((p, i) => {
 			if (i === 0) {
-				ctx.moveTo(x, y)
+				ctx.moveTo(p.x, p.y)
 				return
 			}
 
-			ctx.lineTo(x, y)
+			if (p.name === 'point') {
+				ctx.lineTo(p.x, p.y)
+				return
+			}
+
+			if (p.name === 'arc-point') {
+				ctx.arcTo(p.p1.x, p.p1.y, p.p2.x, p.p2.y, p.radius)
+			}
 		})
 
 		ctx.stroke()

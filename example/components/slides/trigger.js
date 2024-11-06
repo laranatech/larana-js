@@ -1,52 +1,44 @@
-const { BaseComponent, text, layout } = require('larana-js')
+const { text, layout, list } = require('larana-js')
+const { SlideComponent } = require('../slide.js')
 
-
-class TriggerSlideComponent extends BaseComponent {
+class TriggerSlideComponent extends SlideComponent {
 	static steps = 9
-	step = 1
-
-	defaultStyle = {
-		direction: 'column',
-	}
-
-	constructor(options) {
-		super(options)
-		this.step = options.step
-	}
 
 	root() {
-		const lines = [
-			'',
-			'Много проблем с современным фронтендом:',
-			'- Большая нагрузка на клиент',
-			'- Открытый стейт',
-			'- Разница дев и прод сборок',
-			'- Рантайм',
-			'- сложно тестировать',
-			'- HTML & CSS',
-			'- Много типовых проблем',
-		]
+		const { state } = this.useState()
+
+		const lines = state.problems.map((p) => p.label)
 
 		return layout({
 			children: [
 				text({
-					style: 'h1Text',
+					style: 'h1',
 					value: 'Зачем нужен ещё один фреймворк?',
 				}),
+				layout({}),
 				layout({
-					style: ['column', 'gap_1', 'size_5'],
+					style: { size: 9 },
 					children: [
-						...lines.splice(0, this.step).map((line) => {
-							return text({
-								style: 'h2Text',
-								value: line,
-							})
-						}),
-						layout({
-							style: {
-								size: TriggerSlideComponent.steps - this.step,
+						layout({}),
+						list({
+							style: ['gap_3'],
+							value: lines,
+							offset: 0,
+							limit: this.step - 1,
+							template: (line, i) => {
+								return text({
+									style: [
+										'h1',
+										{
+											height: 'var:componentHeight',
+											textAlign: 'start',
+										},
+									],
+									value: `${i + 1}. ${line}`
+								})
 							},
 						}),
+						layout({}),
 					],
 				}),
 			],

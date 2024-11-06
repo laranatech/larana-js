@@ -1,20 +1,20 @@
 const { text, layout } = require('larana-js')
 const { SlideComponent } = require('../slide')
 
-class A11ySlideComponent extends SlideComponent {
+class TrafficSlideComponent extends SlideComponent {
 	root() {
 		return layout({
 			children: [
 				text({
 					style: 'h1',
-					value: 'Доступность (A11y)',
+					value: 'Трафик',
 				}),
 				layout({
 					style: ['column', 'gap_1', { size: 9 }],
 					children: [
 						text({
 							style: 'h1',
-							value: 'Как ларана работает с доступностью?',
+							value: 'Сколько трафика потребляет ларана?',
 						}),
 						// text({
 						// 	style: 'h2',
@@ -27,4 +27,4 @@ class A11ySlideComponent extends SlideComponent {
 	}
 }
 
-module.exports = { A11ySlideComponent }
+module.exports = { TrafficSlideComponent }

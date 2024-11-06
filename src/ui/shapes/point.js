@@ -3,7 +3,7 @@ const { Schemer } = require('@laranatech/schemer')
 const pointSchemer = new Schemer({ x: 'number', y: 'number' })
 
 class Point {
-	static name = 'point'
+	name = 'point'
 
 	x = 0
 	y = 0

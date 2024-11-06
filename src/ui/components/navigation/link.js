@@ -1,6 +1,6 @@
 const { BaseComponent } = require('../base')
 const { layout } = require('../layout.js')
-const { text } = require('../text.js')
+const { text } = require('../text/text.js')
 
 const { click } = require('../../events')
 

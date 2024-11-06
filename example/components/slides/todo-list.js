@@ -1,25 +1,15 @@
 const {
-	BaseComponent,
 	text,
 	layout,
 	button,
 	textInput,
 	list,
-	checkbox,
 } = require('larana-js')
+const { TodoItemComponent } = require('../todo-item.js')
+const { SlideComponent } = require('../slide.js')
 
-class TODOListSlideComponent extends BaseComponent {
-	static steps = 2
-	step = 1
-
-	defaultStyle = {
-		direction: 'column',
-	}
-
-	constructor(options) {
-		super(options)
-		this.step = options.step
-	}
+class TODOListSlideComponent extends SlideComponent {
+	static steps = 1
 
 	toggleItem(item, index) {
 		const { state, setState} = this.useState()
@@ -58,47 +48,23 @@ class TODOListSlideComponent extends BaseComponent {
 		})
 	}
 
-	templateItem = (item, i) => {
-		return layout({
-			children: [
-				text({ value: i }),
-				text({
-					style: ['text', { size: 9 }],
-					value: item.label,
-				}),
-				layout({
-					style: 'gap_2',
-					children: [
-						checkbox({
-							value: item.done,
-							onChange: () => {
-								this.toggleItem(item, i)
-							},
-						}),
-						button({
-							text: 'X',
-							onClick: () => {
-								this.deleteItem(item, i)
-							},
-						}),
-					],
-				}),
-			],
-		})
-	}
-
 	todoBody() {
 		return layout({
-			style: ['column', 'gap_1'],
+			style: ['column', 'gap_2'],
 			children: [
 				list({
-					style: 'size_5',
+					style: ['size_5', 'p_2', { borderColor: 'var:componentBorderColor' }],
 					model: 'todoItems',
-					template: this.templateItem,
+					template: (item, i) => new TodoItemComponent({
+						item,
+						onDone: () => this.toggleItem(item, i),
+						onDelete: () => this.deleteItem(item, i),
+					}),
 				}),
 				layout({
 					style: 'gap_2',
 					children: [
+						layout({}),
 						textInput({
 							model: 'todoInputValue',
 							onEnter: () => {
@@ -111,6 +77,7 @@ class TODOListSlideComponent extends BaseComponent {
 								this.createItem()
 							},
 						}),
+						layout({}),
 					],
 				}),
 			],
@@ -121,14 +88,13 @@ class TODOListSlideComponent extends BaseComponent {
 		return layout({
 			children: [
 				text({
-					style: 'h1Text',
+					style: 'h1',
 					value: 'TODO-List на LaranaJS',
 				}),
 				layout({
-					style: ['column', 'gap_1', 'size_5'],
+					style: ['column', 'gap_1', { size: 9 }],
 					children: [
-						this.step === 1 ? text({ value: 'Пример кода TODO list' })
-							: this.todoBody(),
+						this.todoBody(),
 					],
 				}),
 			],

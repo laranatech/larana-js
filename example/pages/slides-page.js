@@ -12,7 +12,9 @@ class SlidesPage extends Page {
 	init() {
 		const { initState } = this.useState()
 
-		const currentStep = Number(this.session.route.queryParams.step ?? 1)
+		const { queryParams } = this.useRoute()
+
+		const currentStep = Number(queryParams.step ?? 1)
 
 		const s = Object.values(slides)
 
@@ -20,10 +22,10 @@ class SlidesPage extends Page {
 			slides: s,
 			currentStep,
 			totalSteps: s.reduce((acc, curr) => acc + curr.steps, 0),
-			checkboxValue1: true,
-			checkboxValue2: false,
-			checkboxValue3: false,
-			radioValue: 'item_1',
+			checkbox1: true,
+			checkbox2: false,
+			checkbox3: false,
+			disabledCheckbox: 'checkbox1',
 			throbber: 0,
 			progress: 0,
 			chartItems: this.prepareChartItems(),
@@ -33,6 +35,16 @@ class SlidesPage extends Page {
 				{ ts: Date.now() + 4, label: 'Buy cookies', done: false },
 			],
 			todoInputValue: '',
+			problems: [
+				{ label: 'Большая нагрузка на клиент', done: false },
+				{ label: 'Множество разных клиентов', done: false },
+				{ label: 'HTML & CSS', done: false },
+				{ label: 'Открытый стейт', done: false },
+				{ label: 'Разница дев и прод сборок', done: false },
+				{ label: 'Рантайм', done: false },
+				{ label: 'Сложно тестировать', done: false },
+				{ label: 'Много типовых проблем', done: false },
+			],
 		})
 	}
 
@@ -128,11 +140,12 @@ class SlidesPage extends Page {
 						progressBar({
 							model: 'currentStep',
 							total: state.totalSteps,
-							style: { size: 12 },
+							style: { size: 12, height: 16, padding: 0 },
 						}),
 						layout({
 							children: [
 								button({
+									style: { height: 16 },
 									text: '←',
 									onClick: () => this.changeStep(-1),
 								}),
@@ -141,6 +154,7 @@ class SlidesPage extends Page {
 									value: state.currentStep,
 								}),
 								button({
+									style: { height: 16 },
 									text: '→',
 									onClick: () => this.changeStep(1),
 								}),

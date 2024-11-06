@@ -1,22 +1,26 @@
-const { BaseComponent, text, layout, barChart, lineChart } = require('larana-js')
+const { text, layout, barChart, lineChart, code } = require('larana-js')
+const { SlideComponent } = require('../slide.js')
 
-class ChartsSlideComponent extends BaseComponent {
+class ChartsSlideComponent extends SlideComponent {
 	static steps = 4
-	step = 1
-
-	defaultStyle = {
-		direction: 'column',
-	}
-
-	constructor(options) {
-		super(options)
-		this.step = options.step
-	}
 
 	root() {
-		const barChartCode = text({
-			style: 'h2Text',
-			value: 'Пример кода колончатого графика',
+		const barChartCode = code({
+			value: [
+				'init() {',
+				'    const { initState } = this.useState()',
+				'    initState({',
+				'        chartItems: [',
+				'            { value: 100, label: "01" }',
+				'            // more items...',
+				'        ],',
+				'    })',
+				'}',
+				'',
+				'root() {',
+				'    return barChart({ model: "chartItems" })',
+				'}',
+			],
 		})
 
 		const barChartExample = barChart({
@@ -24,9 +28,22 @@ class ChartsSlideComponent extends BaseComponent {
 			text: 'ссылка на сайт',
 		})
 
-		const lineChartCode = text({
-			style: 'h2Text',
-			value: 'Пример кода линейного графика',
+		const lineChartCode = code({
+			value: [
+				'init() {',
+				'    const { initState } = this.useState()',
+				'    initState({',
+				'        chartItems: [',
+				'            { value: 100, label: "01" }',
+				'            // more items...',
+				'        ],',
+				'    })',
+				'}',
+				'',
+				'root() {',
+				'    return lineChart({ model: "chartItems" })',
+				'}',
+			],
 		})
 
 		const lineChartExample = lineChart({
@@ -37,11 +54,11 @@ class ChartsSlideComponent extends BaseComponent {
 		return layout({
 			children: [
 				text({
-					style: 'h1Text',
+					style: 'h1',
 					value: 'Построение графиков',
 				}),
 				layout({
-					style: ['column', 'gap_1', 'size_5'],
+					style: ['column', 'gap_1', { size: 9 }],
 					children: [
 						[
 							barChartCode,

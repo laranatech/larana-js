@@ -1,6 +1,6 @@
 const { BaseComponent } = require('./base')
 const { layout } = require('./layout.js')
-const { text } = require('./text.js')
+const { text } = require('./text/text.js')
 
 class ListComponent extends BaseComponent {
 	defaultStyle = {
@@ -9,6 +9,9 @@ class ListComponent extends BaseComponent {
 		// padding: 'var:u2',
 		gap: 'var:u2',
 	}
+
+	offset = null
+	limit = null
 
 	template = (item, i) => {
 		return text({ value: String(item) })
@@ -20,13 +23,24 @@ class ListComponent extends BaseComponent {
 		if (options.template) {
 			this.template = options.template
 		}
+
+		const { offset = null, limit = null } = options
+
+		this.offset = offset
+		this.limit = limit
 	}
 
 	root() {
 		const { modelValue } = this.useModel()
 
+		let items = [...modelValue]
+
+		if (this.offset !== null && this.limit !== null) {
+			items = items.splice(this.offset, this.limit)
+		}
+
 		return layout({
-			children: modelValue.map((item, i) => {
+			children: items.map((item, i) => {
 				return this.template(item, i)
 			}),
 		})

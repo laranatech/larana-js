@@ -50,7 +50,7 @@ class BarPage extends Page {
 					children: [
 						text({
 							value: 'Loading data for chart',
-							style: 'h1Text',
+							style: 'h1',
 						}),
 					],
 				}),

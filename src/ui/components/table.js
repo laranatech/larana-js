@@ -1,7 +1,7 @@
 const { BaseComponent } = require('./base')
 const { layout } = require('./layout.js')
 const { list } = require('./list.js')
-const { text } = require('./text.js')
+const { text } = require('./text/text.js')
 
 class TableComponent extends BaseComponent {
 	defaultStyle = {
@@ -94,7 +94,7 @@ class TableComponent extends BaseComponent {
 		return text({
 			value: col.label,
 			style: [
-				'h3Text',
+				'h3',
 				{
 					size: col.size ?? 1,
 				},
