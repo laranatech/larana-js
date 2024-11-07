@@ -1,51 +1,102 @@
 const {
 	Page,
-	Style,
-	LayoutComponent,
-	TextComponent,
-	LinkComponent,
+	layout,
+	text,
+	radio,
+	checkbox,
+	toggle,
+	list,
 } = require('larana-js')
 
-const { styles } = require('../styles')
-const { HeaderComponent, CircleComponent } = require('../components')
+const { header, CircleComponent } = require('../components')
 
 class HomePage extends Page {
-	title = 'Home'
+	title() {
+		'Home'
+	}
 
-	prepareMeta() {
+	meta() {
 		return [
 			'<meta name="description" content="Larana-js example home page"/>',
 		].join('\n')
 	}
 
 	init() {
-		this.state = {
+		const { initState } = this.useState()
+
+		initState({
 			radius: 30,
 			d: 1,
-		}
+			checkbox1: true,
+			checkbox2: true,
+			checkbox3: true,
+			disabledCheckbox: 'checkbox1',
+		})
 	}
 
-	prepareRoot({ w, h }) {
-		return new LayoutComponent({
-			style: new Style({
-				...styles.get('body').json(),
-				gap: 8,
-				direction: 'column',
-			}),
+	root() {
+		const { state } = this.useState()
+
+		return layout({
+			style: [
+				'body',
+				{
+					gap: 'var:u2',
+					direction: 'column',
+				},
+			],
 			children: [
-				new HeaderComponent({}),
-				new LayoutComponent({
-					style: new Style({ size: 9 }),
+				header({}),
+				layout({
+					style: ['gap_2', 'size_1'],
 					children: [
-						new TextComponent({ text: 'Home' }),
+						list({
+							style: ['column', 'gap_2'],
+							value: [
+								{ name: 'checkbox1', text: 'checkbox1', fg: '#ff0' },
+								{ name: 'checkbox2', text: 'checkbox2', fg: '#f0f' },
+								{ name: 'checkbox3', text: 'checkbox3', fg: '#00f' },
+							],
+							template: (item) => layout({
+								style: 'gap_1',
+								children: [
+									radio({
+										model: 'disabledCheckbox',
+										name: item.name,
+										style: { fg: item.fg },
+									}),
+									text({ value: item.text, style: 'h2' }),
+								],
+							}),
+						}),
+						layout({
+							style: ['column', 'gap_2'],
+							children: [
+								list({
+									style: ['column', 'gap_2'],
+									value: ['checkbox1', 'checkbox2', 'checkbox3'],
+									template: (item) => checkbox({ model: item }),
+								}),
+								list({
+									style: ['column', 'gap_2'],
+									value: ['checkbox1', 'checkbox2', 'checkbox3'],
+									template: (item) => toggle({ model: item }),
+								}),
+							],
+						}),
+						text({ value: 'Home', style: 'h1' }),
 						new CircleComponent({
-							style: new Style({ size: 1 }),
-							radius: this.state.radius,
+							style: { size: 1, bg: 'var:accent', borderColor: '#f00' },
+							radius: state.radius,
 							onAnimate: () => {
-								if (this.state.radius >= 100 || this.state.radius <= 3) {
-									this.state.d *= -1
-								}
-								this.setState({ radius: this.state.radius + 1 * this.state.d })
+								// let d = state.d
+								// if (state.radius >= 100 || state.radius <= 3) {
+								// 	d *= -1
+								// }
+								// setState({
+								// 	radius: state.radius + 1 * d,
+								// 	d,
+								// })
 							},
 						}),
 					],

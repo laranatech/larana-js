@@ -1,77 +1,62 @@
 const {
 	Page,
-	Style,
-	LayoutComponent,
-	TextComponent,
-	ButtonComponent,
-	click,
-	hover,
-	useStyleVar,
+	text,
+	layout,
+	button,
 } = require('larana-js')
 
-const { styles } = require('../styles')
-const { HeaderComponent } = require('../components')
+const { header } = require('../components')
 
 class CounterPage extends Page {
-	title = 'Counter'
-
-	init() {
-		this.state = {
-			counter: 0,
-		}
+	title() {
+		'Counter'
 	}
 
-	prepareRoot({ w, h }) {
-		return new LayoutComponent({
-			style: new Style({
-				...styles.get('body').json(),
-				gap: 8,
-				direction: 'column',
-			}),
+	init() {
+		const { initState } = this.useState()
+
+		initState({ counter: 0 })
+	}
+
+	root() {
+		const { state, setState } = this.useState()
+
+		return layout({
+			style: [
+				'body',
+				{ gap: 'var:u2', direction: 'column' },
+			],
 			children: [
-				new HeaderComponent({}),
-				new LayoutComponent({
-					style: new Style({ size: 9, direction: 'column' }),
+				header({}),
+				layout({
+					style: { size: 9, direction: 'column' },
 					children: [
-						new TextComponent({
-							style: new Style({ size: 9 }),
-							text: `Counter: ${this.state.counter}`,
+						text({
+							style: [
+								'h2',
+								{ size: 9, fg: 'var:fg' },
+							],
+							value: `Counter: ${state.counter}`,
 						}),
-						new LayoutComponent({
-							style: new Style({
+						layout({
+							style: {
 								direction: 'row',
 								size: 1,
-								gap: 8,
-								padding: 8,
-							}),
+								gap: 'var:u2',
+								padding: 'var:u2',
+							},
 							children: [
-								new ButtonComponent({
+								button({
 									text: '+',
-									style: new Style({ bg: useStyleVar('componentBg'), fg: useStyleVar('fg') }),
-									events: [
-										click({
-											handler: () => {
-												this.setState({ counter: this.state.counter + 1 })
-											},
-										}),
-										hover({
-											style: new Style({ bg: useStyleVar('accent') }),
-										}),
-									],
+									onClick: () => {
+										setState({ counter: state.counter + 1 })
+									},
 								}),
-								new ButtonComponent({
+								button({
 									text: '-',
-									style: new Style({ bg: useStyleVar('componentBg'), fg: useStyleVar('fg') }),
-									events: [
-										click({
-											handler: () => {
-												this.setState({ counter: this.state.counter - 1 })
-											},
-										}),
-										hover({
-											style: new Style({ bg: useStyleVar('accent') }),
-										}),
-									],
+									onClick: () => {
+										setState({ counter: state.counter - 1 })
+									},
 								}),
 							],
 						}),

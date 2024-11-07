@@ -7,7 +7,9 @@ class BaseRouter {
 		this.routes = routes
 	}
 
-	resolve(url) {}
+	resolve(url) {
+		throw new Error('Not implemented')
+	}
 }
 
 module.exports = {

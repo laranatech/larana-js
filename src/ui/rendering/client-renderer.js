@@ -4,8 +4,10 @@ const path = require('path')
 const { BaseRenderer } = require('./base-renderer.js')
 
 const readClientCode = () => {
-	const clientPath = path.join(__dirname, 'static', 'client-renderer-client.js')
-	const canvasPath = path.join(__dirname, 'canvas-renderer.js')
+	// eslint-disable-next-line no-undef
+	const dir = __dirname
+	const clientPath = path.join(dir, 'static', 'client-renderer-client.js')
+	const canvasPath = path.join(dir, 'canvas-renderer.js')
 
 	const client = fs.readFileSync(clientPath, 'utf-8')
 	const classCode = fs.readFileSync(canvasPath, 'utf-8')

@@ -1,5 +1,10 @@
 module.exports = {
-	...require('./rect.js'),
-	...require('./point.js'),
 	...require('./shape.js'),
+	...require('./rect.js'),
+	...require('./line.js'),
+	...require('./arrow.js'),
+	...require('./point.js'),
+	...require('./arc-point.js'),
+	...require('./arc.js'),
+	...require('./t.js'),
 }

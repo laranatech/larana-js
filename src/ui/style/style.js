@@ -1,4 +1,7 @@
 const { Schemer, rules, common } = require('@laranatech/schemer')
+const { styleName } = require('./style-names')
+const { useStyleVar } = require('./style-variables')
+const { mixStyles } = require('./mix')
 
 const fontWeights = {
 	'100': 'thin',
@@ -92,7 +95,7 @@ const borderScheme = {
 	},
 }
 
-const styleSchemer = new Schemer({
+const styleScheme = {
 	gap: {
 		...common.positiveInt,
 		required: false,
@@ -126,16 +129,23 @@ const styleSchemer = new Schemer({
 	bg: 'any',
 	...borderScheme,
 	...textScheme,
-})
+}
+
+const styleSchemer = new Schemer(styleScheme)
 
 class Style {
 	alignment = 'start'
 	direction = 'row'
-	size = 1
+
+	size = null
+	width = null
 	minWidth = null
 	maxWidth = null
+	height = null
 	minHeight = null
 	maxHeight = null
+	aspectRatio = null
+
 	fg = null
 	bg = null
 	padding = 0
@@ -153,94 +163,45 @@ class Style {
 	borderCap = 'butt'
 
 	constructor(style) {
-		styleSchemer.validate(style)
+		// styleSchemer.validate(style)
 
-		const {
-			alignment,
-			direction,
-			size,
-			minWidth,
-			maxWidth,
-			minHeight,
-			maxHeight,
-			fg,
-			bg,
-			padding,
-			gap,
-			borderWidth,
-			borderColor,
-			borderCap,
-			radius,
-			fontSize,
-			fontWeight,
-			fontFamily,
-			textAlign,
-			textBaseline,
-		} = style
+		Object.keys(style).forEach((key) => {
+			const v = style[key]
 
-		if (size !== undefined) {
-			this.size = size
-		}
-		if (minWidth !== undefined) {
-			this.minWidth = minWidth
-		}
-		if (maxWidth !== undefined) {
-			this.maxWidth = maxWidth
-		}
-		if (minHeight !== undefined) {
-			this.minHeight = minHeight
-		}
-		if (maxHeight !== undefined) {
-			this.maxHeight = maxHeight
-		}
+			if (v !== undefined) {
+				this[key] = v
+			}
+		})
+	}
 
-		if (gap !== undefined) {
-			this.gap = gap
+	static compute(value, request, session) {
+		if (!value) {
+			throw new Error(`Cannot compute style: ${value}`)
 		}
-		if (padding !== undefined) {
-			this.padding = padding
+		if (Array.isArray(value)) {
+			const m = mixStyles(value.map((v) => Style.compute(v, request, session)))
+			return m
 		}
-		if (radius !== undefined) {
-			this.radius = radius
+		if (typeof value === 'object') {
+			return Style.resolveVars(value, request, session)
 		}
-		if (bg !== undefined) {
-			this.bg = bg
+		if (typeof value === 'string') {
+			const cs = Style.resolveVars(styleName(value), request, session)
+			return cs
 		}
-		if (direction) {
-			this.direction = direction
-		}
-		if (alignment) {
-			this.alignment = alignment
-		}
+		throw new Error(`Invalid type: [${typeof value}] ${value}`)
+	}
 
-		if (fg !== undefined) {
-			this.fg = fg
-		}
-		if (fontFamily !== undefined) {
-			this.fontFamily = fontFamily
-		}
-		if (fontSize !== undefined) {
-			this.fontSize = fontSize
-		}
-		if (fontWeight !== undefined) {
-			this.fontWeight = fontWeight
-		}
-		if (textAlign !== undefined) {
-			this.textAlign = textAlign
-		}
-		if (textBaseline !== undefined) {
-			this.textBaseline = textBaseline
-		}
+	static resolveVars(value, request, session) {
+		Object.keys(value).forEach((key) => {
+			const v = value[key]
+			if (typeof v !== 'string' || !v.startsWith('var:')) {
+				return
+			}
+			value[key] = useStyleVar(v.replace('var:', ''))(session.storage.theme)
+		})
 
-		if (borderWidth !== undefined) {
-			this.borderWidth = borderWidth
-		}
-		if (borderColor !== undefined) {
-			this.borderColor = borderColor
-		}
-		if (borderCap !== undefined) {
-			this.borderCap = borderCap
-		}
+		return value
 	}
 
 	get font() {
@@ -249,28 +210,17 @@ class Style {
 	}
 
 	json() {
-		return {
-			size: this.size ?? undefined,
-			minWidth: this.minWidth ?? undefined,
-			maxWidth: this.maxWidth ?? undefined,
-			minHeight: this.minHeight ?? undefined,
-			maxHeight: this.maxHeight ?? undefined,
-			alignment: this.alignment ?? undefined,
-			direction: this.direction ?? undefined,
-			fg: this.fg ?? undefined,
-			bg: this.bg ?? undefined,
-			padding: this.padding,
-			gap: this.gap,
-			borderWidth: this.borderWidth,
-			borderColor: this.borderColor,
-			borderCap: this.borderCap,
-			radius: this.radius,
-			fontSize: this.fontSize,
-			fontWeight: this.fontWeight,
-			fontFamily: this.fontFamily,
-			textAlign: this.textAlign,
-			textBaseline: this.textBaseline,
-		}
+		const result = {}
+
+		Object.keys(styleScheme).forEach((key) => {
+			const v = this[key]
+
+			if (v !== undefined) {
+				result[key] = v
+			}
+		})
+
+		return result
 	}
 
 	copy() {

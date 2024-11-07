@@ -1,9 +1,7 @@
 const { Schemer, common, rules } = require('@laranatech/schemer')
 
 const schemes = {
-	line: (options) => {
-		
-	},
+	line: (options) => {},
 	rect: (options) => {
 		// validate schema
 		/*
@@ -15,7 +13,6 @@ const schemes = {
 			fillStyle: Color
 			lineWidth?: int
 			lineStyle?: LineStyles
-			
 		*/
 	},
 	arc: (options) => {
@@ -51,7 +48,7 @@ const schemes = {
 					'center',
 					'start',
 					'end',
-				])
+				]),
 			],
 		},
 		baseline: {
@@ -80,13 +77,11 @@ class RenderQueue {
 	commands = []
 
 	/**
-	 * 
 	 * @param {string} command
-	 * @param {*} options 
+	 * @param {*} options
 	 */
 	add(command, options) {
-		const s = new Schemer(schemes[command])
-
+		// const s = new Schemer(schemes[command])
 		// s.validate(options)
 
 		this.commands.push({

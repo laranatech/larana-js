@@ -1,5 +1,24 @@
-const { BaseComponent } = require('./base-component.js')
+const { BaseComponent } = require('./base')
+const { rect } = require('../shapes')
 
-class LayoutComponent extends BaseComponent {}
+class LayoutComponent extends BaseComponent {
+	render(queue) {
+		const root = this.getRoot()
 
-module.exports = { LayoutComponent }
+		const d = root.computeDimensions()
+		const style = root.computeStyle()
+
+		rect({
+			...style,
+			...d,
+		}).to(queue)
+
+		return queue
+	}
+}
+
+const layout = (options) => {
+	return new LayoutComponent(options)
+}
+
+module.exports = { LayoutComponent, layout }

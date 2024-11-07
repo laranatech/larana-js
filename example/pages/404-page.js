@@ -1,33 +1,46 @@
-const { Page, LayoutComponent, TextComponent, Style } = require('larana-js')
+const { Page, layout, text } = require('larana-js')
 
-const { styles } = require('../styles')
-const { HeaderComponent } = require('../components')
+const { header } = require('../components')
 
 class NotFoundPage extends Page {
-	prepareRoot({ w, h }) {
-		return new LayoutComponent({
-			style: new Style({
-				...styles.get('body').json(),
-				direction: 'column',
-			}),
+	title() {
+		return '404 | Page not found'
+	}
+
+	root({ w }) {
+		return layout({
+			outlineColor: '#00f',
+			id: 'body',
+			style: [
+				'body',
+				'column',
+			],
 			children: [
-				new HeaderComponent({}),
-				new LayoutComponent({
-					style: new Style({
+				header({}),
+				layout({
+					id: 'layout1',
+					style: {
 						direction: w > 1028 ? 'row' : 'column',
 						size: 9,
-					}),
+						padding: 'var:u2',
+						gap: 'var:u2',
+					},
+					outlineColor: '#0f0',
 					children: [
-						new TextComponent({
-							text: '404',
-							style: styles.get('h1Text'),
+						text({
+							outlineColor: '#0ff',
+							id: 'text1',
+							value: '404',
+							style: 'h1',
 						}),
-						new TextComponent({
-							text: 'Go back to home',
-							style: styles.get('text'),
+						text({
+							outlineColor: '#0ff',
+							id: 'text2',
+							value: 'Go back to home',
+							style: 'text',
 						}),
 					],
-				})
+				}),
 			],
 		})
 	}

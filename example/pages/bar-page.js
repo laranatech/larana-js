@@ -1,70 +1,67 @@
 const {
 	Page,
-	Style,
-	useStyleVar,
-	LayoutComponent,
-	TextComponent,
-	BarChartComponent,
+	layout,
+	text,
+	barChart,
 } = require('larana-js')
 
-const { styles } = require('../styles')
-
-const { HeaderComponent } = require('../components')
+const { header } = require('../components')
 
 class BarPage extends Page {
 	loadingTextTimeout = null
 
-	title = 'Bar chart page'
+	title() {
+		return 'Bar chart page'
+	}
 
 	init() {
-		this.state = {
+		const { initState } = this.useState()
+
+		initState({
 			items: [],
 			loaded: false,
 			loadingTick: 0,
 			loadingText: 'Loading',
-		}
+		})
 
-		this.initialRoot = new LayoutComponent({
+		this.initialRoot = layout({
 			children: [
-				new TextComponent({ text: 'Loading...', style: styles.get('text') }),
+				text({ value: 'Loading...', style: 'text' }),
 			],
 		})
 
 		this.fetchData()
 	}
 
-	prepareRoot() {
-		return new LayoutComponent({
-			style: new Style({
-				...styles.get('body').json(),
-				gap: 8,
-				direction: 'column',
-			}),
+	root() {
+		const { state } = this.useState()
+
+		return layout({
+			style: [
+				'body',
+				{
+					gap: 'var:u2',
+					direction: 'column',
+				},
+			],
 			children: [
-				new HeaderComponent({}),
-				new LayoutComponent({
-					style: new Style({ size: 1, borderColor: '#f00' }),
+				header({}),
+				layout({
 					children: [
-						new TextComponent({
-							text: 'Loading data for chart',
-							style: styles.get('h1Text'),
+						text({
+							value: 'Loading data for chart',
+							style: 'h1',
 						}),
 					],
 				}),
-				new LayoutComponent({
-					style: new Style({ size: 9 }),
+				layout({
+					style: { size: 9 },
 					children: [
-						this.state.loaded
-							? new BarChartComponent({
-								model: 'items',
-								style: new Style({
-									fg: useStyleVar('fg'),
-									bg: '#3caa3c',
-								}),
-							})
-							: new TextComponent({
-								text: `Loading: ${this.state.loadingTick}`,
-								style: styles.get('text'),
+						state.loaded
+							? barChart({ model: 'items' })
+							: text({
+								value: `Loading: ${state.loadingTick}`,
+								style: 'text',
 							}),
 					],
 				}),
@@ -73,23 +70,25 @@ class BarPage extends Page {
 	}
 
 	fetchData() {
+		const { state, setState } = this.useState()
+
 		clearTimeout(this.loadingTextTimeout)
 		const tickLoading = () => {
-				if (this.state.loaded) {
-					return
-				}
-				this.setState({
-					loadingTick: this.state.loadingTick + 1,
-					loadingText: 'Loading',
-				})
-	
-				this.loadingTextTimeout = setTimeout(tickLoading, 100)
+			if (state.loaded) {
+				return
+			}
+			setState({
+				loadingTick: state.loadingTick + 1,
+				loadingText: 'Loading',
+			})
+
+			this.loadingTextTimeout = setTimeout(tickLoading, 100)
 		}
 
 		this.loadingTextTimeout = setTimeout(tickLoading, 100)
 
 		setTimeout(() => {
-			this.setState({
+			setState({
 				items: [
 					{ value: 100, label: '01' },
 					{ value: 90, label: '02' },

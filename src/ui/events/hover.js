@@ -1,4 +1,4 @@
-const { Point } = require('../shapes')
+const { point } = require('../shapes')
 
 const hover = ({ handler, style }) => {
 	return (component) => {
@@ -6,19 +6,19 @@ const hover = ({ handler, style }) => {
 			component.eventStyles.set('hover', style)
 		}
 
-		return (data, state) => {
-			const { x, y, event } = data
+		return (payload, handle = false) => {
+			const { x, y, type } = payload.request.event
 
-			if (event !== 'mousemove') {
+			if (type !== 'mousemove') {
 				return ''
 			}
 
-			const p = new Point({ x, y })
-			const d = component.getDimensions(state)
+			const p = point({ x, y })
+			const d = component.computeDimensions()
 
 			if (p.collide(d)) {
-				if (handler) {
-					handler(event, state)
+				if (handler && handle) {
+					handler(payload)
 				}
 				return 'hover'
 			}

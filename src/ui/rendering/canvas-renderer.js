@@ -1,4 +1,6 @@
 class CanvasRenderer {
+	images = new Map()
+
 	render(queue, { w, h }, initialCanvas) {
 		let canvas = initialCanvas
 
@@ -19,24 +21,22 @@ class CanvasRenderer {
 			startAngle = 0,
 			endAngle = Math.PI*2,
 			strokeStyle,
-			lineWidth = 1,
 			fillStyle,
 		} = options
 
-
-		ctx.lineWidth = lineWidth
+		this.applyLineParams(ctx, options)
 
 		ctx.beginPath()
 
 		ctx.arc(x, y, radius, startAngle, endAngle)
 
-		if (strokeStyle) {
-			ctx.strokeStyle = strokeStyle
-			ctx.stroke()
-		}
 		if (fillStyle) {
 			ctx.fillStyle = fillStyle
 			ctx.fill()
+		}
+		if (strokeStyle) {
+			ctx.strokeStyle = strokeStyle
+			ctx.stroke()
 		}
 
 		return canvas
@@ -45,9 +45,23 @@ class CanvasRenderer {
 	image(canvas, options) {
 		const ctx = canvas.getContext('2d')
 
-		const { x, y, w, h, data } = options
+		const { x, y, w, h, data, src } = options
 
-		ctx.drawImage(data, x, y, w, h)
+		const i = this.images.get(src)
+
+		if (i) {
+			ctx.drawImage(i, x, y, w, h)
+			return canvas
+		}
+
+		const img = new Image()
+
+		img.onload = () => {
+			ctx.drawImage(img, x, y, w, h)
+			this.images.set(src, img)
+		}
+
+		img.src = src ?? data
 
 		return canvas
 	}
@@ -78,14 +92,54 @@ class CanvasRenderer {
 			ctx.textAlign = align
 			ctx.textAlign = ''
 		}
-		
+
 		if (baseline) {
 			ctx.textBaseline = baseline
 		}
 
 		ctx.fillText(text, x, y, maxWidth)
-		
+
 		return canvas
+	}
+
+	applyLineParams(ctx, options) {
+		const {
+			lineWidth,
+			lineCap,
+			lineColor,
+			strokeStyle,
+			borderColor,
+			borderWidth,
+			borderCap,
+		} = options
+
+		if (borderColor) {
+			ctx.strokeStyle = borderColor
+		}
+
+		if (lineColor) {
+			ctx.strokeStyle = lineColor
+		}
+
+		if (strokeStyle) {
+			ctx.strokeStyle = strokeStyle
+		}
+
+		if (borderWidth) {
+			ctx.lineWidth = borderWidth
+		}
+
+		if (lineWidth) {
+			ctx.lineWidth = lineWidth
+		}
+
+		if (borderCap) {
+			ctx.lineCap = borderCap
+		}
+
+		if (lineCap) {
+			ctx.lineCap = lineCap
+		}
 	}
 
 	rect(canvas, options) {
@@ -98,15 +152,67 @@ class CanvasRenderer {
 			h,
 			strokeStyle,
 			fillStyle,
+			radius,
 		} = options
 
-		if (fillStyle) {
-			ctx.fillStyle = fillStyle
-			ctx.fillRect(x, y, w, h)
+		this.applyLineParams(ctx, options)
+
+		if (radius) {
+			ctx.beginPath()
+
+			if (fillStyle) {
+				ctx.fillStyle = fillStyle
+				ctx.roundRect(x, y, w, h, radius)
+				ctx.fill()
+			}
+
+			if (strokeStyle) {
+				ctx.strokeStyle = strokeStyle
+				ctx.roundRect(x, y, w, h, radius)
+				ctx.stroke()
+			}
+		} else {
+			if (fillStyle) {
+				ctx.fillStyle = fillStyle
+				ctx.fillRect(x, y, w, h)
+			}
+			if (strokeStyle) {
+				ctx.strokeStyle = strokeStyle
+				ctx.strokeRect(x, y, w, h)
+			}
 		}
-		if (strokeStyle) {
-			ctx.strokeStyle = strokeStyle
-			ctx.strokeRect(x, y, w, h)
+
+		return canvas
+	}
+
+	line(canvas, options) {
+		const ctx = canvas.getContext('2d')
+		const { points } = options
+		this.applyLineParams(ctx, options)
+
+		ctx.beginPath()
+
+		points.forEach((p, i) => {
+			if (i === 0) {
+				ctx.moveTo(p.x, p.y)
+				return
+			}
+
+			if (p.name === 'point') {
+				ctx.lineTo(p.x, p.y)
+				return
+			}
+
+			if (p.name === 'arc-point') {
+				ctx.arcTo(p.p1.x, p.p1.y, p.p2.x, p.p2.y, p.radius)
+			}
+		})
+
+		ctx.stroke()
+
+		if (options.fillStyle) {
+			ctx.fillStyle = options.fillStyle
+			ctx.fill()
 		}
 
 		return canvas

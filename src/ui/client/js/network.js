@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 var ENDPOINT = '%WS_PATH%';
 var SESSION_ID = '%SESSION_ID%';
 
@@ -5,6 +7,22 @@ var ws = null;
 
 var resizeTimeout = null;
 var eventTimeout = null;
+
+
+
+function throttle(mainFunction, delay) {
+	let timerFlag = null;
+
+	return (...args) => {
+		if (timerFlag !== null) {
+			return
+		}
+		mainFunction(...args);
+		timerFlag = setTimeout(() => {
+			timerFlag = null;
+		}, delay);
+	};
+}
 
 function getMessage(e) {
 	var data = JSON.parse(e.data);
@@ -20,12 +38,14 @@ function sendMessage(data) {
 	}));
 }
 
-function delayMessage(data) {
-	clearTimeout(eventTimeout);
-	eventTimeout = setTimeout(function() {
-		sendMessage(data);
-	}, 100);
-}
+// function delayMessage(data) {
+// 	clearTimeout(eventTimeout);
+// 	eventTimeout = setTimeout(function() {
+// 		sendMessage(data);
+// 	}, 100);
+// }
+
+const throttleMessage = throttle(sendMessage, 100);
 
 function connect() {
 	ws = new WebSocket(ENDPOINT);

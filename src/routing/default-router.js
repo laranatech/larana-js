@@ -3,9 +3,11 @@ const { BaseRouter } = require('./base-router.js')
 
 class DefaultRouter extends BaseRouter {
 	resolve(url) {
-		let route = this.routes.find((r) => r.path === url)
+		const p = url.split('?')[0]
 
-		const segments = url.split('?')[0]
+		let route = this.routes.find((r) => r.path === p)
+
+		const segments = p
 			.split('/')
 			.filter((item) => item)
 
@@ -54,7 +56,6 @@ class DefaultRouter extends BaseRouter {
 
 		if (!route) {
 			const notFoundRoute = this.routes.find((p) => p.name === 'not-found')
-			
 			return {
 				url,
 				name: 'not-found',

@@ -26,7 +26,7 @@ const rgbaSchemer = new Schemer(rgbaScheme)
 const hexSheme = {
 	type: 'string',
 	rules: [
-		rules.regexp(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3}|[A-Fa-f0-9]{8})$/)
+		rules.regexp(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3}|[A-Fa-f0-9]{8})$/),
 	],
 }
 

@@ -1,42 +1,24 @@
-const { Style, BaseComponent, LayoutComponent, TextComponent, useStyleVar } = require('larana-js')
-
-const { styles } = require('../styles')
+const { BaseComponent, layout, text } = require('larana-js')
 
 class HeaderComponent extends BaseComponent {
-	items = [
-		{ label: 'Home', name: 'home' },
-		{ label: 'Bar chart', name: 'home' },
-		{ label: 'Todo list', name: 'todo-list' },
-	]
-
-	constructor(data) {
-		super(data)
-
-		this.style.minHeight = 80
-		this.style.maxHeight = 100
+	defaultStyle = {
+		height: 80,
+		gap: 'var:u2',
+		bg: 'var:accent',
 	}
-
-	getChildren(state) {
-		return [
-			new LayoutComponent({
-				parent: this,
-				style: new Style({
-					direction: 'row',
-					gap: 8,
-					bg: '#333',
-				}),
-				children: [
-					new TextComponent({
-						text: 'LaranaJS',
-						style: new Style({
-							...styles.get('h1Text'),
-							fg: useStyleVar('accent'),
-						})
-					}),
-				],
-			})
-		]
+	root() {
+		const page = this.usePage()
+		return layout({
+			children: [
+				text({ value: 'LaranaJS', style: 'h1' }),
+				text({ value: page.title(), style: 'h3' }),
+			],
+		})
 	}
 }
 
-module.exports = { HeaderComponent }
+const header = (options) => {
+	return new HeaderComponent(options)
+}
+
+module.exports = { HeaderComponent, header }

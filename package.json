@@ -1,11 +1,11 @@
 {
 	"name": "larana-js",
-	"version": "0.1.1",
+	"version": "0.2.0",
 	"description": "Real SSR framework",
 	"main": "index.js",
 	"scripts": {
 		"test": "vitest run",
-		"format": "prettier --write src/"
+		"lint": "eslint . --ignore-pattern node_modules"
 	},
 	"repository": {
 		"type": "git",
@@ -26,12 +26,15 @@
 	},
 	"homepage": "https://github.com/laranatech/larana-js#readme",
 	"devDependencies": {
-		"prettier": "^3.3.3",
+		"@eslint/js": "^8.57.1",
+		"eslint": "^8.57.1",
+		"globals": "^15.11.0",
 		"vitest": "^2.0.5"
 	},
 	"dependencies": {
 		"@laranatech/schemer": "^1.0.6",
 		"canvas": "^2.11.2",
+		"qrcode": "^1.5.4",
 		"ws": "^8.18.0"
 	}
 }

@@ -1,4 +1,4 @@
-const { Point } = require('../shapes')
+const { point } = require('../shapes')
 
 const click = ({ handler, style }) => {
 	return (component) => {
@@ -6,19 +6,19 @@ const click = ({ handler, style }) => {
 			component.eventStyles.set('click', style)
 		}
 
-		return (data, state) => {
-			const { x, y, event } = data
-
-			if (event !== 'click') {
+		return (event, handle = false) => {
+			if (event.type !== 'click') {
 				return ''
 			}
 
-			const p = new Point({ x, y })
-			const d = component.getDimensions(state)
+			const { x, y } = event
+
+			const p = point({ x, y })
+			const d = component.computeDimensions()
 
 			if (p.collide(d)) {
-				if (handler) {
-					handler(event, state)
+				if (handler && handle) {
+					handler()
 				}
 				return 'click'
 			}

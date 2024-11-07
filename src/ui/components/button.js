@@ -1,44 +1,55 @@
-const { BaseComponent } = require('./base-component.js')
-const { LayoutComponent } = require('./layout.js')
-const { TextComponent } = require('./text.js')
-
-const { Style } = require('../style')
+const { click } = require('../events/click.js')
+const { BaseComponent } = require('./base')
+const { layout } = require('./layout.js')
+const { text } = require('./text/text.js')
 
 class ButtonComponent extends BaseComponent {
 	text = ''
 
-	defaultStyle = new Style({})
-
-	constructor(data) {
-		super(data)
-		const { text } = data
-
-		this.text = text
+	defaultStyle = {
+		fg: 'var:fg',
+		bg: 'var:componentBg',
+		radius: 'var:radius',
+		gap: 'var:u2',
+		height: 'var:componentHeight',
 	}
 
-	render(queue, state) {
-		const style = this.getStyle()
+	defaultHoveredStyle = {
+		borderColor: 'var:componentBorderColor',
+	}
 
-		const c = new LayoutComponent({
-			parent: this,
-			style,
+	onClick = null
+
+	constructor(options) {
+		super(options)
+		const { text, onClick } = options
+
+		this.text = text
+		this.onClick = onClick
+
+		this.events = [
+			...this.events,
+			click({
+				handler: this.onClick,
+			})(this),
+		]
+	}
+
+	root() {
+		const style = this.computeStyle()
+		return layout({
 			children: [
-				new TextComponent({
-					text: this.text,
-					style: new Style({
-						fg: style.fg,
-						fontFamily: style.fontFamily,
-						fontWeight: style.fontWeight,
-						fontSize: style.fontSize,
-					})
+				text({
+					value: this.text,
+					style,
 				}),
 			],
 		})
-
-		c.render(queue, state)
-
-		return queue
 	}
 }
 
-module.exports = { ButtonComponent }
+const button = (options) => {
+	return new ButtonComponent(options)
+}
+
+module.exports = { ButtonComponent, button }

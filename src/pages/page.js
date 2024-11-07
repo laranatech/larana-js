@@ -1,14 +1,15 @@
 const { RenderQueue } = require('../ui/rendering')
-const { LayoutComponent } = require('../ui/components')
+const { layout } = require('../ui/components')
+const { Request } = require('../network')
+const { point } = require('../ui/shapes')
+const { DebuggedPage } = require('./debug.js')
 
-class Page {
-	sessionId = ''
-	route = null
+class Page extends DebuggedPage {
+	_session = null
+	config = {}
 
-	state = {}
-	meta = {}
-	root = null
-	initialRoot = null
+	_root = null
+	_initialRoot = null
 
 	focused = ''
 
@@ -17,117 +18,135 @@ class Page {
 	lastRender = 0
 
 	rerenderDelay = 1
-
-	previousRender = null
-
-	title = ''
-	meta = ''
-	scripts = '123'
-	styles = ''
-
 	rerenderTimeout = null
 
-	constructor({ state, meta, config, sessionId, route }) {
-		this.sessionId = sessionId
-		this.route = route
+	previousRender = null
+	previousRequest = {}
 
-		if (state !== undefined) {
-			this.state = state
-		}
-		if (meta !== undefined) {
-			this.meta = meta
-		}
+	constructor(options) {
+		super(options)
 
+		const { config, appConfig } = options
+
+		this.config = appConfig
 		this.rerenderDelay = config.rerenderDelay
-
-		this.init()
 	}
-
-	setState(newState, options = { needsRerender: true }) {
-		this.state = { ...this.state, ...newState }
-
-		const { needsRerender } = options
-
-		if (needsRerender) {
-			this.rerender()
-		}
-	}
-
-	get state() {
-		return Object.freeze(structuredClone(this.state))
-	}
-
-	prepareTitle() {
-		return this.title
-	}
-
-	prepareMeta() {
-		return this.meta
-	}
-
-	prepareScripts() {
-		return this.scripts
-	}
-
-	prepareStyles() {
-		return this.styles
-	}
-
-	send() {}
 
 	init() {
-		this.root = new LayoutComponent({})
+		this._root = layout({})
 	}
 
-	prepareRoot({ w, h }) {
-		return this.root
+	focus(id) {
+		this.focused = id
 	}
 
-	prepareInitialRoot({ w, h }) {
-		if (this.initialRoot) {
-			return this.initialRoot
+	rerender() {
+		if (!this.tick) {
+			throw new Error('Page must have `tick()` method')
 		}
-		return this.prepareFirstRoot({ w, h })
+
+		clearTimeout(this.rerenderTimeout)
+
+		this.rerenderTimeout = setTimeout(() => {
+			this.tick({ w: this.lastW, h: this.lastH })
+		}, this.rerenderDelay)
 	}
 
-	prepareFirstRoot({ w, h }) {
-		return this.prepareRoot({ w, h })
+	// Meta info
+
+	title() {
+		return this._title
 	}
 
-	onUpdate(data) {}
+	meta() {
+		return this._meta
+	}
 
-	update(data) {
-		const root = this.prepareRoot(data)
+	scripts() {
+		return this._scripts
+	}
 
-		const dimensions = new Map()
-		return root.update({
-			w: data.w,
-			h: data.h,
-			event: data.data,
-			state: {
-				...this.state,
-				dimensions,
-				x: 0,
-				y: 0,
-				w: data.w,
-				h: data.h,
-			},
+	styles() {
+		return this._styles
+	}
+
+	content() {
+		return this._content
+	}
+
+	//
+
+	tick() {}
+
+	// Markup
+
+	root({ w, h, request }) {
+		return this._root
+	}
+
+	initialRoot({ w, h, request }) {
+		if (this._initialRoot) {
+			return this._initialRoot
+		}
+		return this.firstRoot({ w, h, request })
+	}
+
+	firstRoot({ w, h, request }) {
+		return this.root({ w, h, request })
+	}
+
+	_patchRoot(root, payload) {
+		root._setPayload(payload)
+	}
+
+	// Rendering
+
+	/**
+	 * @param {Request} request
+	 * @returns {RenderQueue}
+	 */
+	renderInitialDraw(request) {
+		const { w, h } = request
+
+		return this._r({
+			w,
+			h,
+			request,
+			root: this.prepareInitialRoot({ w, h, request }),
 		})
 	}
 
-	renderInitialDraw({ w = 128, h = 128 }) {
-		return this.r({ w, h, root: this.prepareInitialRoot({ w, h }) })
+	/**
+	 * @param {Request} request
+	 * @returns {RenderQueue}
+	 */
+	renderFirstDraw(request) {
+		const { w, h } = request
+
+		return this._r({
+			w,
+			h,
+			request,
+			root: this.prepareFirstRoot({ w, h, request }),
+		})
 	}
 
-	renderFirstDraw({ w, h }) {
-		return this.r({ w, h, root: this.prepareFirstRoot({ w, h })})
+	/**
+	 * @param {Request} request
+	 * @returns {RenderQueue}
+	 */
+	render(request) {
+		const { w, h } = request
+
+		return this._r({
+			w,
+			h,
+			request,
+			root: this.root({ w, h, request }),
+		})
 	}
 
-	render({ w, h }) {
-		return this.r({ w, h, root: this.prepareRoot({ w, h }) })
-	}
-
-	r({ w, h, root }) {
+	_r({ w, h, request, root }) {
 		this.lastW = w
 		this.lastH = h
 		this.lastRender = Date.now()
@@ -136,31 +155,63 @@ class Page {
 
 		const dimensions = new Map()
 
-		root.render(queue, {
-			state: {
-				...this.state,
-				dimensions,
-			},
+		const payload = {
+			state: this._state,
 			x: 0,
 			y: 0,
 			w,
 			h,
-		})
+			dimensions,
+			request,
+			session: this.useSession(),
+		}
+
+		this._patchRoot(root, payload)
+
+		root._render(queue)
+
+		this._renderDebug(queue)
 
 		return queue
 	}
 
-	rerender() {
-		if (!this.send) {
-			return
+	// Handling events
+
+	/**
+	 * @param {Request} request
+	 * @returns
+	 */
+	update(request) {
+		const { w, h } = request
+
+		const { setMouse } = this.useMouse()
+		const { state } = this.useState()
+
+		if (request.event.type === 'mousemove') {
+			setMouse(point({
+				x: request.event.x,
+				y: request.event.y,
+			}))
 		}
 
-		clearTimeout(this.rerenderTimeout)
+		const root = this.root({ w, h, request })
 
-		this.rerenderTimeout = setTimeout(() => {
-			this.send()
-		}, this.rerenderDelay)
+		const dimensions = new Map()
 
+		const payload = {
+			w,
+			h,
+			x: 0,
+			y: 0,
+			request,
+			dimensions,
+			state,
+			session: this.useSession(),
+		}
+
+		this._patchRoot(root, payload)
+
+		return root.update(payload)
 	}
 }
 

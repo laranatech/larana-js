@@ -25,7 +25,7 @@ const createTheme = (name) => {
 	try {
 		getTheme(name)
 		throw new Error(`Theme exists: ${name}`)
-	} catch(e) {}
+	} catch(_) {}
 
 	themes.push(name)
 }

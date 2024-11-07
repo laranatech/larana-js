@@ -1,39 +1,35 @@
-const { BaseComponent } = require('../base-component.js')
-const { LayoutComponent } = require('../layout.js')
-const { TextComponent } = require('../text.js')
-const { Style } = require('../../style')
+const { BaseComponent } = require('../base')
+const { layout } = require('../layout.js')
+const { text } = require('../text/text.js')
 
 class BarChartComponent extends BaseComponent {
-	model = ''
 	title = ''
-	items = []
 
-	constructor(data) {
-		super(data)
-		const { model, items, title } = data
+	defaultStyle = {
+		fg: 'var:fg',
+		// bg: 'var:accent',
+		padding: 'var:u2',
+		gap: 'var:u2',
+	}
 
-		if (model !== undefined) {
-			this.model = model
-		}
-
-		if (items !== undefined) {
-			this.items = items
-		}
+	constructor(options) {
+		super(options)
+		const { title } = options
 
 		if (title !== undefined) {
 			this.title = title
 		}
 	}
 
-	render(queue, state) {
-		const data = this.model ? state.state[this.model] : this.items
+	root() {
+		const { modelValue } = this.useModel()
+		const items = modelValue
+
+		const style = this.computeStyle()
 
 		let maxValue = 0
-		let totalValue = 0
 
-		data.forEach((item) => {
-			totalValue += item.value
-
+		items.forEach((item) => {
 			if (maxValue < item.value) {
 				maxValue = item.value
 			}
@@ -41,50 +37,45 @@ class BarChartComponent extends BaseComponent {
 
 		maxValue *= 1.05
 
-		const root = new LayoutComponent({
-			parent: this,
-			style: new Style({
-				gap: 4,
-				padding: 4,
-				direction: 'row',
-			}),
-			children: data.map((item) => {
+		return layout({
+			children: items.map((item) => {
 				const s = item.value / maxValue * 10
 
-				return new LayoutComponent({
-					style: new Style({
+				return layout({
+					style: {
 						direction: 'column',
 						gap: 4,
-					}),
+						bg: style.bg,
+					},
 					children: [
-						new LayoutComponent({
-							style: new Style({ size: 10 - s }),
+						layout({
+							style: { size: 10 - s, bg: style.bg },
 						}),
-						new LayoutComponent({
-							style: new Style({
+						layout({
+							style: {
 								size: s,
-								bg: item.color ?? this.getStyle().bg,
-							}),
+								bg: item.color ?? 'var:accent', // TODO: fix
+							},
 							children: [
-								new TextComponent({
-									text: item.value,
-									style: new Style({ fg: this.getStyle().fg }),
+								text({
+									value: item.value,
+									style: { fg: style.fg },
 								}),
 							],
 						}),
-						new TextComponent({
-							text: item.label,
-							style: new Style({ fg: this.getStyle().fg }),
+						text({
+							value: item.label,
+							style: { fg: style.fg },
 						}),
-					]
+					],
 				})
 			}),
 		})
-
-		root.render(queue, state)
-
-		return queue
 	}
 }
 
-module.exports = { BarChartComponent }
+const barChart = (options) => {
+	return new BarChartComponent(options)
+}
+
+module.exports = { BarChartComponent, barChart }
