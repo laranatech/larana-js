@@ -40,44 +40,11 @@ class CodeComponent extends BaseComponent {
 	prepareTree() {
 		const { modelValue } = this.useModel()
 
-		const colors = this.colors
-
 		const value = Array.isArray(modelValue) ? modelValue.join('\n') : modelValue
 
 		const tree = parseJS(value)
 
 		return tree
-
-		// const keywords = [
-		// 	'if', 'return', 'break', 'continue', 'switch', 'default', 'case',
-		// 	'for', 'while',
-		// ]
-
-		// const constVals = ['new', 'const', 'this', 'let', 'var']
-
-		// const lines = Array.isArray(modelValue) ? modelValue : modelValue.split('\n')
-
-		// return lines.map((line) => {
-		// 	const words = line.split(' ')
-
-		// 	const result = []
-
-		// 	words.forEach((word) => {
-		// 		if (keywords.includes(word)) {
-		// 			result.push({ value: word, color: colors.keyword })
-		// 			return
-		// 		}
-
-		// 		if (constVals.includes(word)) {
-		// 			result.push({ value: word, color: colors.const })
-		// 			return
-		// 		}
-
-		// 		result.push({ value: word, color: colors.operator })
-		// 	})
-
-		// 	return result
-		// })
 	}
 
 	lineTemplate(line, i) {
@@ -106,8 +73,6 @@ class CodeComponent extends BaseComponent {
 		const ctx = canvas.getContext('2d')
 		ctx.font = '32px medium monospace'
 
-		const charWidth = 16
-
 		const f = figure({
 			style: { padding: 0, size: 1 },
 			template: (fig, queue) => {
@@ -115,13 +80,13 @@ class CodeComponent extends BaseComponent {
 
 				let offset = 0
 
-				line.forEach((word, i) => {
+				line.forEach((word) => {
 					const tm = ctx.measureText(word.value)
 
 					if (['.', '('].includes(word.value)) {
 						offset += 2
 					}
-					
+
 					t({
 						// x: d.x + (d.w / 2),
 						// y: d.y + (d.h / 2),
@@ -145,7 +110,7 @@ class CodeComponent extends BaseComponent {
 						offset += 16
 					}
 				})
-			}
+			},
 		})
 
 		children.push(f)

@@ -1,7 +1,6 @@
 const { t } = require('../../shapes')
 const { BaseComponent } = require('../base')
 const { figure } = require('../figure')
-const { createCanvas } = require('canvas')
 
 class TextComponent extends BaseComponent {
 	defaultStyle = {
@@ -22,8 +21,6 @@ class TextComponent extends BaseComponent {
 				const d = fig.computeDimensions()
 
 				const r = t({
-					// x: d.x + (d.w / 2),
-					// y: d.y + (d.h / 2),
 					...d,
 					text: modelValue,
 					...style,

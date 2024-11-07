@@ -1,7 +1,6 @@
 const {
 	Page,
 	layout,
-	text,
 	textInput,
 	button,
 	list,
@@ -57,10 +56,7 @@ class TodoPage extends Page {
 		return layout({
 			style: ['gap_2', 'p_2', 'hug'],
 			children: [
-				textInput({
-					model: 'inputValue',
-					onEnter: () => this.addItem(),
-				}),
+				textInput({ model: 'inputValue', onEnter: () => this.addItem() }),
 				button({
 					text: 'Add',
 					disabled: state.inputValue === '',

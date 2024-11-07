@@ -1,19 +1,15 @@
 const { text, layout, list } = require('larana-js')
 const { SlideComponent } = require('../slide.js')
 
-class TriggerSlideComponent extends SlideComponent {
-	static steps = 10
+class ForWhoSlideComponent extends SlideComponent {
+	static steps = 6
 
 	root() {
-		const { state } = this.useState()
-
-		const lines = state.problems.map((p) => p.label)
-
 		return layout({
 			children: [
 				text({
 					style: 'h1',
-					value: 'Зачем нужен ещё один фреймворк?',
+					value: 'Кому нужна Larana',
 				}),
 				layout({}),
 				layout({
@@ -22,7 +18,13 @@ class TriggerSlideComponent extends SlideComponent {
 						layout({}),
 						list({
 							style: ['gap_3'],
-							value: lines,
+							value: [
+								'Банкоматы',
+								'Тонкие клиенты',
+								'Платформы с экслюзивным и платным контентом',
+								'Стриминг',
+								'Игры',
+							],
 							offset: 0,
 							limit: this.step - 1,
 							template: (line, i) => {
@@ -46,4 +48,4 @@ class TriggerSlideComponent extends SlideComponent {
 	}
 }
 
-module.exports = { TriggerSlideComponent }
+module.exports = { ForWhoSlideComponent }

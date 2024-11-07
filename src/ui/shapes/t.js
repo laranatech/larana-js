@@ -1,5 +1,3 @@
-const { line } = require('./line.js')
-const { point } = require('./point.js')
 const { Shape } = require('./shape.js')
 
 class T extends Shape {
@@ -26,8 +24,6 @@ class T extends Shape {
 
 	clear(text) {
 		return String(text)
-			// .replaceAll('"', '\\"')
-			// .replaceAll("'", "\\'")
 	}
 
 	command() {

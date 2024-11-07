@@ -85,14 +85,14 @@ class ReactivitySlideComponent extends SlideComponent {
 										{ name: 'checkbox3', text: 'checkbox3', fg: '#00f' },
 									],
 									template: (item) => layout({
-										style: ['hug', 'gap_1'],
+										style: ['hug', 'gap_2'],
 										children: [
 											radio({
 												model: 'disabledCheckbox',
 												name: item.name,
 												style: { fg: item.fg },
 											}),
-											text({ value: item.text, style: 'h2' }),
+											text({ value: item.text, style: ['h2', { textAlign: 'start' }] }),
 										],
 									}),
 								}),

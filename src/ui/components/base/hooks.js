@@ -37,8 +37,14 @@ class HookedComponent {
 		})
 	}
 
-	setPayload(payload) {
+	_setPayload(payload) {
 		this._payload = payload
+	}
+
+	useResolution() {
+		const { lastW, lastH } = this.usePage()
+
+		return { w: lastW, h: lastH }
 	}
 
 	usePayload() {
@@ -163,7 +169,7 @@ class HookedComponent {
 	}
 
 	_patch(root, payload) {
-		root.setPayload(payload)
+		root._setPayload(payload)
 
 		root.children.forEach((child) => {
 			root._patch(child, payload)

@@ -5,6 +5,8 @@ class VueranaSlideComponent extends SlideComponent {
 	static steps = 2
 
 	root() {
+		const { w } = this.useResolution()
+
 		const vueranaCode = code({
 			style: { size: 9 },
 			value: [
@@ -39,12 +41,17 @@ class VueranaSlideComponent extends SlideComponent {
 							'Vue + Larana = Vuerana',
 						][this.step-1], style: 'h1' }),
 						[
-							image({
+							layout({
 								style: { size: 9 },
-								src: 'https://kucheriavyi.ru/images/slides/vueact.png',
+								children: [
+									image({
+										style: { width: w * 0.99, aspectRatio: 1350 / 517 },
+										src: 'https://kucheriavyi.ru/images/slides/vueact.png',
+									}),
+								],
 							}),
 							vueranaCode,
-						][this.step-1]
+						][this.step-1],
 					],
 				}),
 			],

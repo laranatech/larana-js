@@ -2,7 +2,7 @@ const { text, layout } = require('larana-js')
 const { SlideComponent } = require('../slide.js')
 const { ProblemsComponent } = require('./misc')
 
-class ByDesignSlideComponent extends SlideComponent {
+class TestingProblemsSlideComponent extends SlideComponent {
 	static steps = 1
 
 	root() {
@@ -11,7 +11,7 @@ class ByDesignSlideComponent extends SlideComponent {
 			children: [
 				text({
 					style: 'h1',
-					value: 'Решение проблем на уровне архитектуры',
+					value: 'Решение проблем',
 				}),
 				layout({}),
 				new ProblemsComponent({}),
@@ -20,4 +20,4 @@ class ByDesignSlideComponent extends SlideComponent {
 	}
 }
 
-module.exports = { ByDesignSlideComponent }
+module.exports = { TestingProblemsSlideComponent }

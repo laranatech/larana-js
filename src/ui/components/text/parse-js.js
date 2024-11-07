@@ -1,8 +1,12 @@
 const parseJS = (code) => {
 	const lines = code.split('\n');
 	const parsedLines = [];
-	const keywords = new Set(['class', 'const', 'let', 'return']);
-	
+	const keywords = new Set([
+		'class', 'const', 'let', 'return', 'extends',
+		'if', 'else', 'for', 'while', 'var', 'switch',
+		'case', 'default', 'this',
+	]);
+
 	lines.forEach(line => {
 		const tokens = [];
 		let buffer = '';

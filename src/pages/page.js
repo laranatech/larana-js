@@ -96,7 +96,7 @@ class Page extends DebuggedPage {
 	}
 
 	_patchRoot(root, payload) {
-		root.setPayload(payload)
+		root._setPayload(payload)
 	}
 
 	// Rendering

@@ -2,7 +2,7 @@ const { text, layout, image, list } = require('larana-js')
 const { SlideComponent } = require('../slide.js')
 
 class WhoamiSlideComponent extends SlideComponent {
-	static steps = 7
+	static steps = 9
 
 	defaultStyle = {
 		direction: 'row',
@@ -20,12 +20,14 @@ class WhoamiSlideComponent extends SlideComponent {
 							offset: 0,
 							limit: this.step - 1,
 							value: [
-								'— 10+ лет программирую',
-								'— Организатор BeerJS Moscow DrinkUp',
-								'— Автор канала «Директор фронтенда»',
-								'— Бывший служитель церкви',
+								'— Программировал 10+ лет',
+								'— Поднимал и ронял стартапы',
+								'— Вносил вклад в MDN и Nuxt',
+								'— Организовывал BeerJS Moscow DrinkUp',
+								'— Писал в канал «Директор фронтенда» и на хабр',
+								'— Служил в церкви',
 								'— Умер и воскрес (клиническая смерть)',
-								'— Изобретатель LaranaJS',
+								'— Изобрёл LaranaJS',
 							],
 							template: (line) => text({
 								value: line,
@@ -34,13 +36,9 @@ class WhoamiSlideComponent extends SlideComponent {
 						}),
 					],
 				}),
-				layout({
-					children: [
-						image({
-							src: 'https://kucheriavyi.ru/images/evgenii-kucheriavyi_2.webp',
-							style: { width: 512, aspectRatio: 1 },
-						}),
-					],
+				image({
+					src: `https://kucheriavyi.ru/images/slides/${ this.step === 9 ? 'wink' : 'portrait' }_1.webp`,
+					style: { width: 512, aspectRatio: 9 / 16 },
 				}),
 			],
 		})

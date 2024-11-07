@@ -1,11 +1,39 @@
-const { Page, text, layout, keypress, progressBar, button, qrcode } = require('larana-js')
+const {
+	Page, text, layout, keypress, progressBar, button, qrcode, img,
+	image,
+} = require('larana-js')
 
 const { slides } = require('../components')
 
 class SlidesPage extends Page {
 	title() {
-		return 'LaranaJS | Slides'
+		return 'HolyJS 2024 Autumn'
 	}
+
+	images = [
+		'https://kucheriavyi.ru/images/slides/wink_1.webp',
+		'https://kucheriavyi.ru/images/slides/portrait_1.webp',
+		'https://kucheriavyi.ru/images/slides/vueact.png',
+		'https://kucheriavyi.ru/images/slides/larana-suit.jpg',
+		'https://kucheriavyi.ru/images/slides/techmeetup.jpg',
+		'https://kucheriavyi.ru/images/slides/techmeetup_fun.jpg',
+		'https://kucheriavyi.ru/images/slides/techmeetup_sad.jpg',
+		'https://kucheriavyi.ru/images/slides/point.jpg',
+		'https://larana.tech/larana.svg',
+		'https://kucheriavyi.ru/images/slides/money.jpg',
+		'https://kucheriavyi.ru/images/slides/no-money.jpg',
+		'https://kucheriavyi.ru/images/slides/point_larana.jpg',
+		'https://kucheriavyi.ru/images/slides/seo.jpeg',
+		'https://kucheriavyi.ru/images/slides/maul.jpg',
+		'https://kucheriavyi.ru/images/slides/hypejs.jpg',
+		'https://kucheriavyi.ru/images/slides/designer.png',
+	]
+
+	qrcodes = [
+		'Hello, world!',
+		'https://t.me/+1aK0hJw21ShlMWVi',
+		'https://t.me/+oiDOgBndnZ5hYzIy',
+	]
 
 	focused = 'body'
 
@@ -38,10 +66,11 @@ class SlidesPage extends Page {
 			problems: [
 				{ label: 'Большая нагрузка на клиент', done: false },
 				{ label: 'Множество разных клиентов', done: false },
-				{ label: 'HTML & CSS', done: false },
 				{ label: 'Открытый стейт', done: false },
 				{ label: 'Разница дев и прод сборок', done: false },
-				{ label: 'Рантайм', done: false },
+				{ label: 'HTML & CSS', done: false },
+				{ label: 'JavaScript', done: false },
+				{ label: 'Дизайнеры и верстальщики', done: false },
 				{ label: 'Сложно тестировать', done: false },
 				{ label: 'Много типовых проблем', done: false },
 			],
@@ -49,7 +78,8 @@ class SlidesPage extends Page {
 	}
 
 	loadResources() {
-		qrcode('Hello, world!')
+		this.images.forEach((src) => img(src))
+		this.qrcodes.forEach((qr) => qrcode(qr))
 	}
 
 	prepareChartItems() {
@@ -158,6 +188,13 @@ class SlidesPage extends Page {
 									text: '→',
 									onClick: () => this.changeStep(1),
 								}),
+							],
+						}),
+						layout({
+							style: { size: 0, width: 0, height: 0 },
+							children: [
+								...this.images.map((v) => image({ src: v })),
+								...this.qrcodes.map((v) => image({ qr: v })),
 							],
 						}),
 					],

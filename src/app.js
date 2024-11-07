@@ -130,8 +130,7 @@ class LaranaApp {
 		const w = this.config.initialW
 		const h = this.config.initialH
 
-		const request = new Request({ w, h, type: 'connect' })
-
+		// const request = new Request({ w, h, type: 'connect' })
 		// const queue = page.renderInitialDraw({ w, h, request })
 		// const image = this.renderer.render(queue, { w, h })
 

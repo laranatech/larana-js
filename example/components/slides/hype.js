@@ -1,8 +1,10 @@
-const { text, layout } = require('larana-js')
+const { text, layout, image } = require('larana-js')
 const { SlideComponent } = require('../slide.js')
 
-class HypeJSSlideComponent extends SlideComponent {
+class HypeSlideComponent extends SlideComponent {
 	root() {
+		const { h } = this.useResolution()
+
 		return layout({
 			children: [
 				text({
@@ -10,16 +12,14 @@ class HypeJSSlideComponent extends SlideComponent {
 					value: 'Hype.js',
 				}),
 				layout({
-					style: ['column', 'gap_1', { size: 9 }],
+					style: { size: 9 },
 					children: [
-						text({
-							style: 'h2',
-							value: 'Скрин доклада с холи',
+						layout({}),
+						image({
+							style: { height: h * 0.85, aspectRatio: 1280 / 720 },
+							src: 'https://kucheriavyi.ru/images/slides/hypejs.jpg',
 						}),
-						// text({
-						// 	style: 'h2',
-						// 	value: 'ссылка на сайт',
-						// }),
+						layout({}),
 					],
 				}),
 			],
@@ -27,4 +27,4 @@ class HypeJSSlideComponent extends SlideComponent {
 	}
 }
 
-module.exports = { HypeJSSlideComponent }
+module.exports = { HypeSlideComponent }

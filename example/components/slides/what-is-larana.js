@@ -1,4 +1,4 @@
-const { layout, text } = require('larana-js')
+const { layout, text, list } = require('larana-js')
 const { SlideComponent } = require('../slide.js')
 
 class WhatIsLaranaSlideComponent extends SlideComponent {
@@ -11,19 +11,15 @@ class WhatIsLaranaSlideComponent extends SlideComponent {
 					style: 'h1',
 					value: 'Что такое LaranaJS',
 				}),
-				layout({
-					style: ['column', 'gap_1', { size: 9 }],
-					children: [
-						text({}),
-						text({
-							style: 'h2',
-							value: 'Larana — философия',
-						}),
-						text({
-							style: 'h2',
-							value: 'LaranaJS — имплементация',
-						}),
-					].splice(0, this.step),
+				list({
+					style: { size: 9 },
+					value: [
+						'Larana — философия',
+						'LaranaJS — имплементация',
+					],
+					offset: 0,
+					limit: this.step -1,
+					template: (line) => text({ value: line, style: 'h0' }),
 				}),
 			],
 		})

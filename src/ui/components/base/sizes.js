@@ -128,7 +128,7 @@ class SizedComponent extends StyledComponent {
 			return stateDimensions
 		}
 
-		const { gap, padding, direction, size } = this.parent.preComputeStyle()
+		const { gap, padding, direction } = this.parent.preComputeStyle()
 		const pd = this.parent.computeDimensions()
 
 		if (this._isRoot) {

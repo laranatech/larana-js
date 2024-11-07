@@ -11,10 +11,11 @@ class ConfigSlideComponent extends SlideComponent {
 					value: [
 						'const router = new DefaultRouter({ routes })',
 						'',
+						'// ClientRenderer, VideoStreamRenderer, PDFRenderer, etc.',
 						'const renderer = new ServerRenderer({',
 						'    maxFPS: config.maxFPS,',
 						'})',
-						'',
+						'// RedisStateManager, MyMicroserviceStateManager',
 						'const stateManager = new MemoryStateManager({})',
 						'',
 						'const app = new LaranaApp({',

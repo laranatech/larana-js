@@ -13,7 +13,7 @@ class RealSSRSlideComponent extends SlideComponent {
 					style: ['column', 'gap_1', { size: 9 }],
 					children: [
 						text({
-							style: 'h2',
+							style: 'h0',
 							value: 'Фреймворк сам решает, как всё рендерить',
 						}),
 						// text({

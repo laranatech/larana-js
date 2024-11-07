@@ -262,12 +262,20 @@ class ArchitectureSlideComponent extends SlideComponent {
 							arrow({
 								points: [
 									point({
-										x: serverD.x + serverD.w * 0.5,
-										y: serverD.y + cardOffset * 4 + cardHeight * 4 - arrowOffset,
+										x: serverD.x - arrowOffset,
+										y: serverD.y + cardOffset * 4 + cardHeight * 4.5,
 									}),
 									point({
-										x: serverD.x + serverD.w * 0.5,
-										y: serverD.y + cardOffset * 2 + cardHeight * 3 + arrowOffset,
+										x: serverD.x - arrowOffset - cardHeight,
+										y: serverD.y + cardOffset * 4 + cardHeight * 4.5,
+									}),
+									point({
+										x: serverD.x - arrowOffset - cardHeight,
+										y: serverD.y + cardOffset * 1 + cardHeight * 1.5,
+									}),
+									point({
+										x: serverD.x - arrowOffset,
+										y: serverD.y + cardOffset * 1 + cardHeight * 1.5,
 									}),
 								],
 								...style,

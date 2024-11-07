@@ -1,13 +1,11 @@
 # Roadmap
 
-# 0.2.0
+# 0.3.0
 
+- feat: static files
 - feat: min/max dimensions
 - feat: `alignment`: `start|center|end|stretch`
 - feat: root style fix
-
-# 0.3.0
-
 - feat: save session id to `localStorage`
 - feat: `scroll`
 - feat: `list` cursor and limit

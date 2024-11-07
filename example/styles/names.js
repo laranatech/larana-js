@@ -10,6 +10,10 @@ const initStyleNames = () => {
 
 	styleNames({
 		text,
+		h0: {
+			...text,
+			fontSize: 'var:h0FontSize',
+		},
 		h1: {
 			...text,
 			fontSize: 'var:h1FontSize',

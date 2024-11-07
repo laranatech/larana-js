@@ -98,7 +98,7 @@ class PagesSlideComponent extends SlideComponent {
 			`                header({}),`,
 			`                layout({`,
 			`                    style: { size: 9, gap: "var:u2", direction: "column" },`,
-			`                    children: [this.todoList(), this.inputBar()],`,
+			`                    children: [ this.todoList(), this.inputBar() ],`,
 			`                }),`,
 			`            ],`,
 			`       })`,
