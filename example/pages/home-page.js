@@ -12,7 +12,7 @@ const { header } = require('../components')
 
 class HomePage extends Page {
 	title() {
-		'Home'
+		return 'Home'
 	}
 
 	meta() {

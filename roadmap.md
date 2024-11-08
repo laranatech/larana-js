@@ -4,6 +4,7 @@
 
 - fix: client fonts
 - fix: images jittering
+- feat: initDefaultStyles inside LaranaApp
 - feat: `toggleTheme`
 - feat: `router.push()`
 
