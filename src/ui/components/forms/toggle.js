@@ -15,6 +15,7 @@ class ToggleComponent extends CheckboxComponent {
 
 	root() {
 		const style = this.computeStyle()
+		const { theme } = this.useTheme()
 		const { modelValue } = this.useModel()
 
 		return figure({
@@ -32,7 +33,7 @@ class ToggleComponent extends CheckboxComponent {
 					y: y + h / 2,
 					x: modelValue ? x + w * 0.75 : x + w * 0.25,
 					radius: radius * 0.8,
-					bg: '#fff',
+					bg: useStyleVar('fg')(theme),
 				}).to(queue)
 			},
 		})

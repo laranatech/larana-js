@@ -3,6 +3,7 @@ const { figure } = require('../figure.js')
 const { layout } = require('../layout.js')
 const { list } = require('../list.js')
 const { line, point, arc } = require('../../shapes')
+const { useStyleVar } = require('../../style/style-variables.js')
 
 class LineChartComponent extends BaseComponent {
 	title = ''
@@ -12,7 +13,6 @@ class LineChartComponent extends BaseComponent {
 		borderWidth: 'var:u1',
 		borderCap: 'round',
 		direction: 'column',
-		borderColor: 'var:accent',
 	}
 
 	constructor(options) {
@@ -45,6 +45,7 @@ class LineChartComponent extends BaseComponent {
 				figure({
 					style: { size: 10 },
 					template: (fig, queue) => {
+						const { theme } = fig.useTheme()
 						const d = fig.computeDimensions()
 
 						const deltaW = d.w / items.length
@@ -59,7 +60,7 @@ class LineChartComponent extends BaseComponent {
 									y: bottom - d.h * s,
 								})
 							}),
-							borderColor: style.borderColor,
+							borderColor: style.borderColor ?? useStyleVar('accent')(theme),
 							borderWidth: style.borderWidth,
 							borderCap: style.borderCap,
 						}).to(queue)
@@ -69,7 +70,7 @@ class LineChartComponent extends BaseComponent {
 							arc({
 								x: d.x + i * deltaW + deltaW / 2,
 								y: bottom - d.h * s,
-								borderColor: style.borderColor,
+								borderColor: style.borderColor ?? useStyleVar('accent')(theme),
 								bg: style.bg,
 								radius: style.borderWidth,
 							}).to(queue)

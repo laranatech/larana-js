@@ -9,6 +9,7 @@ module.exports = {
 	...require('./table.js'),
 	...require('./figure.js'),
 	...require('./larana-logo.js'),
+	...require('./qr.js'),
 	...require('./text'),
 	...require('./charts'),
 	...require('./forms'),

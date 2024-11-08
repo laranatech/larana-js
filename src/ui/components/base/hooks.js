@@ -161,10 +161,20 @@ class HookedComponent {
 	}
 
 	useTheme() {
-		const { storage } = this.useStorage()
+		const { storage, setStorage } = this.useStorage()
+
+		const theme = storage.theme ?? 'dark'
+
+		const setTheme = (newTheme) => {
+			setStorage({ theme: newTheme })
+		}
 
 		return {
-			theme: storage.theme ?? 'dark',
+			theme,
+			toggleTheme: () => {
+				setTheme(theme === 'dark' ? 'main' : 'dark')
+			},
+			setTheme,
 		}
 	}
 

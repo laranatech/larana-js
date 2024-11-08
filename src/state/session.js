@@ -23,8 +23,8 @@ class Session {
 	}
 
 	setStorage(newStorage) {
-		this.storage = {
-			...this.storage,
+		this._storage = {
+			...this._storage,
 			...newStorage,
 		}
 	}

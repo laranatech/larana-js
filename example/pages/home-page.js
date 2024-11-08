@@ -8,11 +8,11 @@ const {
 	list,
 } = require('larana-js')
 
-const { header, CircleComponent } = require('../components')
+const { header } = require('../components')
 
 class HomePage extends Page {
 	title() {
-		'Home'
+		return 'Home'
 	}
 
 	meta() {
@@ -85,20 +85,6 @@ class HomePage extends Page {
 							],
 						}),
 						text({ value: 'Home', style: 'h1' }),
-						new CircleComponent({
-							style: { size: 1, bg: 'var:accent', borderColor: '#f00' },
-							radius: state.radius,
-							onAnimate: () => {
-								// let d = state.d
-								// if (state.radius >= 100 || state.radius <= 3) {
-								// 	d *= -1
-								// }
-								// setState({
-								// 	radius: state.radius + 1 * d,
-								// 	d,
-								// })
-							},
-						}),
 					],
 				}),
 			],

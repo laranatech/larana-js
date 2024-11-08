@@ -1,4 +1,3 @@
-const { point } = require('./point.js')
 // const { Schemer } = require('@laranatech/schemer')
 
 // const pointSchemer = new Schemer({ x: 'number', y: 'number' })
@@ -6,25 +5,31 @@ const { point } = require('./point.js')
 class ArcPoint {
 	name = 'arc-point'
 
-	p1 = point({ x: 0, y: 0 })
-	p2 = point({ x: 0, y: 0 })
+	x = 0
+	y = 0
 	radius = 0
+	start = 0
+	end = 0
 
 	/**
-	 * @param {{ x: number; y: number }} p1
-	 * @param {{ x: number; y: number }} p2
-	 * @param {number} radius
+	 * @param {{ x: number; y: number, start: number, end: number, radius: number }} options
 	 */
-	constructor(p1, p2, radius) {
+	constructor(options) {
 		// pointSchemer.validate(p)
-		this.p1 = p1
-		this.p2 = p2
+		const { x, y, radius, start, end } = options
+		this.x = x
+		this.y = y
 		this.radius = radius
+		this.start = start
+		this.end = end
 	}
 }
 
-const arcPoint = (...args) => {
-	return new ArcPoint(...args)
+/**
+ * @param {{ x: number; y: number, start: number, end: number, radius: number }} options
+ */
+const arcPoint = (options) => {
+	return new ArcPoint(options)
 }
 
 module.exports = { ArcPoint, arcPoint }

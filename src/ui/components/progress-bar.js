@@ -8,8 +8,8 @@ class ProgressBarComponent extends BaseComponent {
 	defaultStyle = {
 		radius: 'var:radius',
 		padding: 'var:u2',
-		bg: '#333',
-		fg: '#3caa3c',
+		bg: 'var:componentBg',
+		fg: 'var:accent',
 		height: 'var:componentHeight',
 	}
 

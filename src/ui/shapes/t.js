@@ -34,6 +34,8 @@ class T extends Shape {
 
 		if (textAlign === 'center') {
 			x = x + this.w * 0.5
+		} else if (textAlign === 'end') {
+			x = x + this.w
 		}
 
 		if (textBaseline === 'middle') {

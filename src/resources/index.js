@@ -1,6 +1,5 @@
 const QRCode = require('qrcode')
 
-
 const resources = new Map()
 
 const resource = (name, value = null) => {
@@ -45,30 +44,7 @@ const img = (src, onFirstLoad = (value) => {}) => {
 	return resource(src, 'pending')
 }
 
-const generateQR = async (text, onFirstLoad) => {
-	try {
-		const result = await QRCode.toDataURL(text)
-
-		resource(text, result)
-		onFirstLoad(result)
-	} catch (err) {
-		console.error(err)
-	}
-}
-
-const qrcode = (value, onFirstLoad) => {
-	try {
-		const image = resource(value)
-		return image
-	} catch(_) {}
-
-	generateQR(value, onFirstLoad)
-
-	return resource(value, 'pending')
-}
-
 module.exports = {
 	resource,
 	img,
-	qrcode,
 }

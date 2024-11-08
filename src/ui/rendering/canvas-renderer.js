@@ -204,16 +204,16 @@ class CanvasRenderer {
 			}
 
 			if (p.name === 'arc-point') {
-				ctx.arcTo(p.p1.x, p.p1.y, p.p2.x, p.p2.y, p.radius)
+				ctx.arc(p.x, p.y, p.radius, p.start, p.end)
 			}
 		})
-
-		ctx.stroke()
 
 		if (options.fillStyle) {
 			ctx.fillStyle = options.fillStyle
 			ctx.fill()
 		}
+
+		ctx.stroke()
 
 		return canvas
 	}

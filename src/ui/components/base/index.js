@@ -108,8 +108,10 @@ class BaseComponent extends DebuggedComponent {
 
 		const { lastMouse, currMouse } = this.useMouse()
 
-		const wasHovered = lastMouse.collide(d)
-		const isHovered = currMouse.collide(d)
+		const hasHoverStyles = Object.keys(this.defaultHoveredStyle).length > 0 || Object.keys(this.hoveredStyle).length > 0
+
+		const wasHovered = lastMouse.collide(d) && hasHoverStyles
+		const isHovered = currMouse.collide(d) && hasHoverStyles
 
 		const hoverChanged = (wasHovered && !isHovered) || (!wasHovered && isHovered)
 
@@ -154,10 +156,16 @@ class BaseComponent extends DebuggedComponent {
 		}
 
 		root.style = this.preComputeStyle([root.style, root.defaultStyle])
+		root.defaultHoveredStyle = this.defaultHoveredStyle
+		root.hoveredStyle = this.hoveredStyle
+		root.defaultFocusedStyle = this.defaultFocusedStyle
+		root.focusedStyle = this.focusedStyle
+		root.defaultDisabledStyle = this.defaultDisabledStyle
+		root.disabledStyle = this.disabledStyle
+
 		if (this._computedDimensions) {
 			root._computedDimensions = this._computedDimensions
 		}
-		// root._computedDimensions = this.computeDimensions() // TODO: hug
 
 		this._patch(root, payload)
 

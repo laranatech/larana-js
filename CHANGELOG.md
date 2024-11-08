@@ -1,8 +1,20 @@
+# 0.2.1
+
+- **fix:** defaultStyles
+- **fix:** reduced rerenders on mousemove
+- **feat:** more default `styleNames`
+- **feat:** better `qr`
+- **feat:** `PieChart`
+- **feat:** `DonutChart`
+- **feat:** `textAlign`
+- **refactor:** removed slides from example
+
 # 0.2.0
 
 - **fix:** reduced animation freezing
 - **fix:** `queryParams` bug
 - **fix:** min/max dimensions now don't break layout
+- **feat:** `list` offset and limit
 - **feat:** `CodeComponent`
 - **feat:** `size`: `hug`
 - **feat:** `TableComponent`
