@@ -19,8 +19,8 @@ class Line extends Shape {
 			}
 
 			if (p.name === 'arc-point') {
-				const { p1, p2, radius, name } = p
-				return { p1, p2, radius, name }
+				const { x, y, radius, name, start, end } = p
+				return { x, y, radius, name, start, end }
 			}
 		})
 

@@ -1,5 +1,12 @@
 # Roadmap
 
+# 0.2.2
+
+- fix: client fonts
+- fix: images jittering
+- feat: `toggleTheme`
+- feat: `router.push()`
+
 # 0.3.0
 
 - feat: static files
@@ -8,7 +15,6 @@
 - feat: root style fix
 - feat: save session id to `localStorage`
 - feat: `scroll`
-- feat: `list` cursor and limit
 - feat: `blur` event
 - feat: `wrap`
 - demo: `/game` page
@@ -17,7 +23,6 @@
 
 - feat: seo features
 - feat: a11y features
-- feat: `router.push()`
 
 # 0.5.0
 
@@ -33,24 +38,21 @@
 
 # 0.7.0
 
-- fix: client fonts
 - fix: errors when using quotes in text
-- feat: `textAlign`
 - feat: text decoration
 
 # 0.8.0
 
-- feat: calendar
-- feat: timesheet
-- feat: modal
-- feat: donut chart
-- feat: lineChart props
-- feat: barChart props
-- feat: funnel chart
-- feat: pyramid chart
+- feat: `calendar`
+- feat: `timesheet`
+- feat: `modal`
+- feat: `lineChart` props
+- feat: `barChart` props
+- feat: `funnelChart`
+- feat: `pyramidChart`
 - feat: multiple series on a chart
-- feat: Gantt
-- feat: venn
+- feat: `ganttChart`
+- feat: `vennChart`
 
 # 0.9.0
 
@@ -75,4 +77,4 @@
 
 # 1.1.0
 
-- feat: designer
+- feat: laranigma

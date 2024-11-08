@@ -1,5 +1,5 @@
 const { BaseComponent } = require('./base')
-const { resource, img, qrcode } = require('../../resources')
+const { resource, img } = require('../../resources')
 const { line, rect, point } = require('../shapes')
 const { figure } = require('./figure')
 
@@ -8,7 +8,6 @@ class ImageComponent extends BaseComponent {
 	h = 0
 	alt = ''
 	src = null
-	qr = null
 	loaded = false
 	rerenderOnLoad = true
 	onLoad = () => {}
@@ -23,7 +22,7 @@ class ImageComponent extends BaseComponent {
 	constructor(options) {
 		super(options)
 
-		const { src, qr, alt, w, h, onLoad, rerenderOnLoad = true } = options
+		const { src, alt, w, h, onLoad, rerenderOnLoad = true } = options
 
 		this.alt = alt
 		this.w = w
@@ -35,34 +34,21 @@ class ImageComponent extends BaseComponent {
 			this.onLoad = onLoad
 		}
 
-		if (qr) {
-			this.qr = qr
-			qrcode(qr, () => {
-				if (this.rerenderOnLoad) {
-					try {
-						const page = this.usePage()
-						page.rerender()
-					} catch(_) {}
-				}
-				this.onLoad()
-			})
-		} else {
-			this.src = src
-			img(src, () => {
-				if (this.rerenderOnLoad) {
-					try {
-						const page = this.usePage()
-						page.rerender()
-					} catch(_) {}
-				}
-				this.onLoad()
-			})
-		}
+		this.src = src
+		img(src, () => {
+			if (this.rerenderOnLoad) {
+				try {
+					const page = this.usePage()
+					page.rerender()
+				} catch(_) {}
+			}
+			this.onLoad()
+		})
 	}
 
 	root() {
 		const style = this.computeStyle()
-		const r = resource(this.qr ?? this.src)
+		const r = resource(this.src)
 
 		return figure({
 			template: (fig, queue) => {

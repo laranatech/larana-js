@@ -10,7 +10,7 @@ NPM package: [larana-js](https://www.npmjs.com/package/larana-js)
 
 ## Quickstart
 
-Docs will be added ASAP. For now you can [see example](https://github.com/laranatech/larana-js/tree/main/example)
+Docs will be added ASAP. For now you can [see example](https://github.com/laranatech/larana-js-demo)
 
 ## Contacts
 

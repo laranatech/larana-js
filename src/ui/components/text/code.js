@@ -96,6 +96,7 @@ class CodeComponent extends BaseComponent {
 						text: word.value,
 						// ...style,
 						font: '32px meduim monospace',
+						textAlign: 'start',
 						fg: this.colors[word.type] ?? this.colors.operator,
 						// w: tm.width,
 					}).to(queue)

@@ -16,7 +16,6 @@ const fontWeights = {
 	'950': 'extra black',
 }
 
-
 const textScheme = {
 	fg: 'any',
 	fontWeight: {
@@ -41,7 +40,7 @@ const textScheme = {
 		type: 'string',
 		required: false,
 		rules: [
-			rules.allowlist(['start', 'end', 'left', 'right', 'center']),
+			rules.allowlist(['start', 'end', 'center']),
 		],
 	},
 	textBaseline: {
@@ -183,16 +182,16 @@ class Style {
 			return m
 		}
 		if (typeof value === 'object') {
-			return Style.resolveVars(value, request, session)
+			return Style._resolveVars(value, request, session)
 		}
 		if (typeof value === 'string') {
-			const cs = Style.resolveVars(styleName(value), request, session)
+			const cs = Style._resolveVars(styleName(value), request, session)
 			return cs
 		}
 		throw new Error(`Invalid type: [${typeof value}] ${value}`)
 	}
 
-	static resolveVars(value, request, session) {
+	static _resolveVars(value, request, session) {
 		Object.keys(value).forEach((key) => {
 			const v = value[key]
 			if (typeof v !== 'string' || !v.startsWith('var:')) {
