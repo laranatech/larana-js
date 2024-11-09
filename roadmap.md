@@ -1,16 +1,16 @@
 # Roadmap
 
-# 0.2.2
+# 0.2.3
 
 - fix: client fonts
 - fix: images jittering
+- feat: rerender on fullscreen
 - feat: initDefaultStyles inside LaranaApp
 - feat: `toggleTheme`
 - feat: `router.push()`
 
 # 0.3.0
 
-- feat: static files
 - feat: min/max dimensions
 - feat: `alignment`: `start|center|end|stretch`
 - feat: root style fix

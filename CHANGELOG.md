@@ -1,3 +1,7 @@
+# 0.2.2
+
+- **feat:** static files
+
 # 0.2.1
 
 - **fix:** defaultStyles
