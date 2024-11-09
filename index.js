@@ -14,4 +14,6 @@ module.exports = {
 	...require('./src/shared'),
 	resources: require('./src/resources'),
 	...require('./src/resources'),
+	static: require('./src/static'),
+	...require('./src/static'),
 }

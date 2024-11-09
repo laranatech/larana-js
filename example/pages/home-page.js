@@ -35,8 +35,6 @@ class HomePage extends Page {
 	}
 
 	root() {
-		const { state } = this.useState()
-
 		return layout({
 			style: [
 				'body',

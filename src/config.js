@@ -55,6 +55,10 @@ const configSchemer = new Schemer({
 		nullable: true,
 		required: false,
 	},
+	host: {
+		type: 'string',
+		required: false,
+	},
 })
 
 const defaultConfig = {
@@ -77,7 +81,10 @@ const defaultConfig = {
 	defaultTheme: 'dark',
 	defaultLang: 'en',
 	staticDir: null,
+	host: 'http://localhost',
 }
+
+let config = { ...defaultConfig }
 
 /**
  * @param {{
@@ -97,13 +104,16 @@ const defaultConfig = {
  * }} config
  * @returns validated config
  */
-const createConfig = (config) => {
-	configSchemer.validate(config)
+const defineConfig = (newConfig) => {
+	configSchemer.validate(newConfig)
 
-	return mergeDeep(defaultConfig, config)
+	let config = mergeDeep(defaultConfig, newConfig)
+
+	return Object.freeze(config)
 }
 
 module.exports = {
+	config,
 	defaultConfig,
-	createConfig,
+	defineConfig,
 }
