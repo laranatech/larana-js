@@ -83,15 +83,61 @@ class LaranaApp {
 		initDefaultStyleNames()
 	}
 
-	serveFavicon(req, res) {
-		res.setHeader('Content-type', 'image/x-icon')
-		res.statusCode = 200
-		res.end(favicon)
+	async serveStatic(req, res) {
+		console.log(this.config.staticDir)
+
+		const url = req.url
+
+		const path = this.config.staticDir + url.replace('/static', '')
+		const ext = path.split('.').pop()
+
+		const contentTypes = {
+			'txt': 'text/plain',
+			'png': 'image/png',
+			'jpg': 'image/jpeg',
+			'webp': 'image/webp',
+			'svg': 'image/svg+xml',
+			'ico': 'image/x-icon',
+			// TODO: more types
+		}
+
+		const contentType = contentTypes[ext] ?? 'text/plain'
+
+		res.setHeader('Content-type', contentType)
+
+		fs.readFile(path, (err, data) => {
+			if (err) {
+				res.statusCode = 404
+				res.end()
+				return
+			}
+
+			res.statusCode = 200
+			res.end(data)
+		})
+	}
+
+	async serveFavicon(req, res) {
+		const path = this.config.staticDir + '/favicon.ico'
+		fs.readFile(path, (err, data) => {
+			if (err) {
+				res.statusCode = 404
+				res.end()
+				return
+			}
+
+			res.statusCode = 200
+			res.end(data)
+		})
 	}
 
 	server(req, res) {
 		if (req.url === '/favicon.ico') {
 			this.serveFavicon(req, res)
+			return
+		}
+		if (this.config.staticDir && req.url.startsWith('/static/')) {
+			this.serveStatic(req, res)
 			return
 		}
 		const route = this.router.resolve(req.url)

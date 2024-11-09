@@ -50,6 +50,11 @@ const configSchemer = new Schemer({
 		type: 'string',
 		required: false,
 	},
+	staticDir: {
+		type: 'string',
+		nullable: true,
+		required: false,
+	},
 })
 
 const defaultConfig = {
@@ -71,6 +76,7 @@ const defaultConfig = {
 	initialH: 512,
 	defaultTheme: 'dark',
 	defaultLang: 'en',
+	staticDir: null,
 }
 
 /**
@@ -87,6 +93,7 @@ const defaultConfig = {
  * initialH: number;
  * defaultTheme: string;
  * defaultLang: string;
+ * staticDir: string|null;
  * }} config
  * @returns validated config
  */
