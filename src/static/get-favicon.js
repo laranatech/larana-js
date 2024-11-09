@@ -1,8 +1,6 @@
 const fs = require('node:fs')
 const { getContentType } = require('./get-content-type.js')
 
-getContentType
-
 const getFavicon = (callback) => {
 	const faviconPath = __dirname + '/default/favicon.ico'
 
