@@ -2,6 +2,7 @@ const { BaseComponent } = require('./base')
 const { resource, img } = require('../../resources')
 const { line, rect, point } = require('../shapes')
 const { figure } = require('./figure')
+const { config } = require('../../config.js')
 
 class ImageComponent extends BaseComponent {
 	w = 0
@@ -34,8 +35,14 @@ class ImageComponent extends BaseComponent {
 			this.onLoad = onLoad
 		}
 
-		this.src = src
-		img(src, () => {
+		let s = src
+
+		if (s.startsWith('/static/')) {
+			s = `${config.host}:${config.port}${s}`
+		}
+
+		this.src = s
+		img(this.src, () => {
 			if (this.rerenderOnLoad) {
 				try {
 					const page = this.usePage()

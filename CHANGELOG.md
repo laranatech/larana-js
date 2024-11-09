@@ -1,3 +1,9 @@
+# 0.2.3
+
+- **feat:** read static images
+- **feat:** default favicon
+- **refactor:** static files moved to dedicated dir
+
 # 0.2.2
 
 - **feat:** static files

@@ -1,5 +1,3 @@
-const fs = require('node:fs')
-const path = require('path')
 const { WebSocketServer } = require('ws')
 const { createServer } = require('http')
 const { MemoryStateManager, Session } = require('./state')
@@ -9,15 +7,9 @@ const { Response, Request } = require('./network')
 const { prepareTemplate } = require('./ui/client')
 const { DefaultRouter } = require('./routing')
 const { initDefaultStyleVars, initDefaultStyleNames } = require('./ui/style')
-
-const readFavicon = () => {
-	// eslint-disable-next-line no-undef
-	const dir = __dirname
-	const clientPath = path.join(dir, 'static', 'favicon.ico')
-	return fs.readFileSync(clientPath, 'utf-8')
-}
-
-const favicon = readFavicon()
+const { prepareStatic } = require('./static/read-static-file.js')
+const { getContentType } = require('./static/get-content-type.js')
+const { getFavicon } = require('./static/get-favicon.js')
 
 class LaranaApp {
 	config = { ...defaultConfig }
@@ -30,6 +22,7 @@ class LaranaApp {
 	onServe = (data) => {}
 	onMessage = (data) => {}
 	onClose = (data) => {}
+	readStaticFile = (url, callback) => {}
 
 	constructor(options) {
 		const config = options.config
@@ -81,34 +74,32 @@ class LaranaApp {
 
 		initDefaultStyleVars()
 		initDefaultStyleNames()
+
+		this.readStaticFile = prepareStatic(this.config.staticDir)
 	}
 
-	async serveStatic(req, res) {
-		console.log(this.config.staticDir)
-
-		const url = req.url
-
-		const path = this.config.staticDir + url.replace('/static', '')
-		const ext = path.split('.').pop()
-
-		const contentTypes = {
-			'txt': 'text/plain',
-			'png': 'image/png',
-			'jpg': 'image/jpeg',
-			'webp': 'image/webp',
-			'svg': 'image/svg+xml',
-			'ico': 'image/x-icon',
-			// TODO: more types
-		}
-
-		const contentType = contentTypes[ext] ?? 'text/plain'
-
-		res.setHeader('Content-type', contentType)
-
-		fs.readFile(path, (err, data) => {
+	_serveStatic(req, res) {
+		this.readStaticFile(req.url, (err, data) => {
 			if (err) {
 				res.statusCode = 404
 				res.end()
+				return
+			}
+
+			const contentType = getContentType(req.url)
+			res.setHeader('Content-type', contentType)
+			res.statusCode = 200
+			res.end(data)
+		})
+	}
+
+	_serveFavicon(_, res) {
+		this.readStaticFile('/static/favicon.ico', (err, data) => {
+			if (err) {
+				getFavicon(({ favicon }) => {
+					res.statusCode = 200
+					res.end(favicon)
+				})
 				return
 			}
 
@@ -117,27 +108,13 @@ class LaranaApp {
 		})
 	}
 
-	async serveFavicon(req, res) {
-		const path = this.config.staticDir + '/favicon.ico'
-		fs.readFile(path, (err, data) => {
-			if (err) {
-				res.statusCode = 404
-				res.end()
-				return
-			}
-
-			res.statusCode = 200
-			res.end(data)
-		})
-	}
-
-	server(req, res) {
+	_server(req, res) {
 		if (req.url === '/favicon.ico') {
-			this.serveFavicon(req, res)
+			this._serveFavicon(req, res)
 			return
 		}
 		if (this.config.staticDir && req.url.startsWith('/static/')) {
-			this.serveStatic(req, res)
+			this._serveStatic(req, res)
 			return
 		}
 		const route = this.router.resolve(req.url)
@@ -204,7 +181,7 @@ class LaranaApp {
 		this.onServe({ req, route, sessionId })
 	}
 
-	socket(ws) {
+	_socket(ws) {
 		ws.send('Connecting')
 
 		this.clients.add(ws)
@@ -280,11 +257,11 @@ class LaranaApp {
 	}
 
 	run() {
-		const server = createServer((req, res) => this.server(req, res))
+		const server = createServer((req, res) => this._server(req, res))
 
 		const wss = new WebSocketServer({ server })
 
-		wss.on('connection', (ws) => this.socket(ws))
+		wss.on('connection', (ws) => this._socket(ws))
 
 		server.listen(this.config.port, () => {
 			console.log(`Listening on port: ${this.config.port}`)

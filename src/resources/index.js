@@ -1,5 +1,3 @@
-const QRCode = require('qrcode')
-
 const resources = new Map()
 
 const resource = (name, value = null) => {
@@ -22,8 +20,14 @@ const loadImage = async (src, onFirstLoad, retries = 3) => {
 		return
 	}
 	try {
-		const r = await fetch(src)
-		const b = Buffer.from(await r.arrayBuffer())
+		let b = ''
+
+		if (src.startsWith('/static')) {
+		} else {
+			const r = await fetch(src)
+			b = Buffer.from(await r.arrayBuffer())
+		}
+
 		const value = `data:image/png;base64,${b.toString('base64')}`
 
 		resource(src, value)

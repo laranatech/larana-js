@@ -9,6 +9,7 @@ const {
 	NotFoundPage,
 	SizesPage,
 	TablePage,
+	ImagePage,
 	QuizPage,
 } = require('./pages')
 
@@ -24,6 +25,7 @@ module.exports = {
 		{ path: '/sizes', name: 'sizes', page: SizesPage },
 		{ path: '/table', name: 'table', page: TablePage },
 		{ path: '/quiz', name: 'quiz', page: QuizPage },
+		{ path: '/image', name: 'image', page: ImagePage },
 
 		{ path: '404', name: 'not-found', page: NotFoundPage },
 	],
