@@ -23,6 +23,9 @@ const renderer = new ClientRenderer({
 	debug: config.debug,
 	DRM: false,
 	maxFPS: config.maxFPS,
+	fonts: [
+		'/static/monospace.ttf',
+	],
 })
 
 const stateManager = new MemoryStateManager({

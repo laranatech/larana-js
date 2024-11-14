@@ -1,10 +1,12 @@
 class BaseRenderer {
 	debug = false
 	trimOffset = 10
+	fonts = []
 
-	constructor({ debug, trimOffset = 10 }) {
+	constructor({ debug, trimOffset = 10, fonts = [] }) {
 		this.debug = debug
 		this.trimOffset = trimOffset
+		this.fonts = fonts
 	}
 
 	get clientCode() {

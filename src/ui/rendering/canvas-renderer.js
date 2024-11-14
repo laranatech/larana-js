@@ -56,6 +56,8 @@ class CanvasRenderer {
 
 		const img = new Image()
 
+		img.crossOrigin = 'anonymous'
+
 		img.onload = () => {
 			ctx.drawImage(img, x, y, w, h)
 			this.images.set(src, img)
@@ -193,7 +195,7 @@ class CanvasRenderer {
 		ctx.beginPath()
 
 		points.forEach((p, i) => {
-			if (i === 0) {
+			if (i === 0 || p.name === 'move-point') {
 				ctx.moveTo(p.x, p.y)
 				return
 			}

@@ -13,7 +13,10 @@ const readClientCode = () => {
 	const classCode = fs.readFileSync(canvasPath, 'utf-8')
 
 	return client
-		.replace('"%RENDERER_CLASS%"', classCode.replace('module.exports = { CanvasRenderer }', ''))
+		.replace(
+			'"%RENDERER_CLASS%"',
+			classCode.replace('module.exports = { CanvasRenderer }', '')
+		)
 }
 
 let clientCode = readClientCode()
