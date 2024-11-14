@@ -1,6 +1,6 @@
 # Roadmap
 
-# 0.2.5
+# 0.2.6
 
 - fix: images jittering
 - fix: client fonts

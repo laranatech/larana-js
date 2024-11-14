@@ -1,3 +1,7 @@
+# 0.2.5
+
+- **feat:** image bufferization
+
 # 0.2.4
 
 - **fix:** crossorigin images

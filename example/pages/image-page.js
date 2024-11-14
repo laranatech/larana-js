@@ -1,10 +1,14 @@
-const { Page, layout, image } = require('larana-js')
+const { Page, layout, image, button } = require('larana-js')
 
 const { header } = require('../components')
 
 class ImagePage extends Page {
 	title() {
 		return 'Image example'
+	}
+
+	handleClick() {
+
 	}
 
 	root({ w }) {
@@ -29,6 +33,10 @@ class ImagePage extends Page {
 					children: [
 						image({
 							src: '/static/images/larana.svg',
+						}),
+						button({
+							text: 'Change',
+							onClick: () => this.handleClick(),
 						}),
 					],
 				}),
