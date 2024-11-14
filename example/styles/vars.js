@@ -7,7 +7,7 @@ const initStyleVars = () => {
 		accent: hex('#3caa3c'),
 		componentBg: hex('#fff'),
 		fontWeight: 'medium',
-		fontFamily: 'Montserrat',
+		fontFamily: 'monospace',
 		h0FontSize: 64,
 		h1FontSize: 32,
 		h2FontSize: 28,

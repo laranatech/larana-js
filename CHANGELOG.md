@@ -1,3 +1,7 @@
+# 0.2.4
+
+- **fix:** crossorigin images
+
 # 0.2.3
 
 - **feat:** read static images

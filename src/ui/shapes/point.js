@@ -1,6 +1,9 @@
 const { Schemer } = require('@laranatech/schemer')
 
-const pointSchemer = new Schemer({ x: 'number', y: 'number' })
+const pointSchemer = new Schemer({ x: 'number', y: 'number', moveTo: {
+	type: 'bool',
+	required: false,
+}})
 
 class Point {
 	name = 'point'
@@ -14,6 +17,10 @@ class Point {
 	constructor(p) {
 		pointSchemer.validate(p)
 		const { x, y } = p
+
+		if (p.moveTo) {
+			this.name = 'move-point'
+		}
 
 		this.x = x
 		this.y = y

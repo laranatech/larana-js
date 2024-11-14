@@ -153,7 +153,7 @@ class Style {
 
 	fontSize = 16
 	fontWeight = '400'
-	fontFamily = 'monospace'
+	fontFamily = 'my-mono'
 	textAlign = 'center'
 	textBaseline = 'middle'
 
