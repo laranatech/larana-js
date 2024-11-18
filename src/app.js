@@ -160,7 +160,6 @@ class LaranaApp {
 		res.statusCode = 200
 
 		const clientCode = prepareTemplate({
-			wsPath: this.config.wsPath,
 			sessionId,
 			lang: session.storage.lang,
 			title: page.title(),
@@ -264,7 +263,7 @@ class LaranaApp {
 		wss.on('connection', (ws) => this._socket(ws))
 
 		server.listen(this.config.port, () => {
-			console.log(`Listening on port: ${this.config.port}`)
+			console.log(`Running on: ${this.config.host}:${this.config.port}`)
 		})
 	}
 }
