@@ -1,14 +1,15 @@
 # Roadmap
 
-# 0.2.6
+# 0.2.x
 
-- fix: images jittering
+- fix: images on server
 - fix: client fonts
-- feat: rerender on fullscreen
 - feat: rerender on fullscreen
 - feat: `toggleTheme`
 - feat: `router.push()`
 - feat: initDefaultStyles inside LaranaApp
+- feat: setState scheduling
+- docs: howto
 
 # 0.3.0
 
@@ -75,7 +76,6 @@
 - feat: `npm init larana-js`
 - docs: jsdocs for everything
 - docs: styleguide
-- docs: howto
 
 # 1.1.0
 

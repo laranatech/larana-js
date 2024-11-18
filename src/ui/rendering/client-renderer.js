@@ -15,7 +15,7 @@ const readClientCode = () => {
 	return client
 		.replace(
 			'"%RENDERER_CLASS%"',
-			classCode.replace('module.exports = { CanvasRenderer }', '')
+			classCode.replace('module.exports = { CanvasRenderer }', ''),
 		)
 }
 

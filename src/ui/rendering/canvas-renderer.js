@@ -1,9 +1,8 @@
 var buffers = new Map()
+var images = new Map()
 
 class CanvasRenderer {
 	images = new Map()
-
-	isOnClient = true
 
 	render(queue, { w, h }, initialCanvas) {
 		let canvas = initialCanvas
@@ -47,11 +46,13 @@ class CanvasRenderer {
 	}
 
 	image(canvas, options) {
+		const isOnClient = window && document && false
+
 		const ctx = canvas.getContext('2d')
 
 		const { x, y, w, h, data, src } = options
 
-		const i = buffers.get(src)
+		const i = isOnClient ? buffers.get(src) : images.get(src)
 
 		if (i) {
 			ctx.drawImage(i, x, y, w, h)
@@ -63,7 +64,7 @@ class CanvasRenderer {
 		img.crossOrigin = 'anonymous'
 
 		img.onload = () => {
-			if (this.isOnClient) {
+			if (isOnClient) {
 				ctx.drawImage(img, x, y, w, h)
 				const buffer = document.createElement('canvas')
 				buffer.width = w
@@ -75,7 +76,7 @@ class CanvasRenderer {
 			}
 
 			ctx.drawImage(img, x, y, w, h)
-			buffers.set(src, img)
+			images.set(src, img)
 		}
 
 		img.src = src ?? data

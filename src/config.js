@@ -14,10 +14,6 @@ const configSchemer = new Schemer({
 		...common.positiveInt,
 		required: false,
 	},
-	wsPath: {
-		type: 'string',
-		required: false,
-	},
 	maxFPS: {
 		...common.positiveInt,
 		required: false,
@@ -71,7 +67,6 @@ const defaultConfig = {
 		logMessages: false,
 	},
 	port: 1610,
-	wsPath: 'ws://localhost:1610/',
 	maxFPS: 30,
 	maxBandwidth: 10 * 1024, // TODO
 	sessionLifetime: 5 * (60 * 1000), // TODO

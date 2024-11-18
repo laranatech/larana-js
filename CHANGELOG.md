@@ -1,3 +1,7 @@
+# 0.2.6
+
+- **fix:** host and wsPath
+
 # 0.2.5
 
 - **feat:** image bufferization
