@@ -25,12 +25,24 @@ LaranaJS is a powerfull fullstack web-development framework.
 
 ## [Tooling](./tooling/)
 
-- [Testing](./tooling/testing.md)
 - [Clirana](./tooling/clirana.md)
 - [Ligma](./tooling/ligma.md)
 - [Schemer](./tooling/schemer.md)
+
+## [Testing](./testing/)
+
+- [e2e](./testing/e2e.md)
+- [screenshots](./testing/sreenshots.md)
 
 ## [Extensions](./extensions/)
 
 - [Rendering](./extensions/rendering.md)
 
+## [Architecture](./architecture/)
+
+- [Modules](./architecture/modules.md)
+- [Microservices](./architecture/microservices.md)
+
+## [misc](./misc/)
+
+- [FAQ](./misc/faq.md)
