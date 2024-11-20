@@ -1,3 +1,11 @@
+# 0.2.7
+
+- **feat:** rerender on fullscreen
+- **feat:** `setState()` is now deboucing rerenders
+- **feat:** border radius for images
+- **feat:** `npm init larana-js`
+- **docs:** pages, routing, config, quickstart and many more docs
+
 # 0.2.6
 
 - **fix:** host and wsPath

@@ -4,15 +4,15 @@
 
 - fix: images on server
 - fix: client fonts
-- feat: rerender on fullscreen
 - feat: `toggleTheme`
 - feat: `router.push()`
 - feat: initDefaultStyles inside LaranaApp
-- feat: setState scheduling
 - docs: howto
 
-# 0.3.0
+# 0.3.x
 
+- fix: ssr
+- fix: remove blinking on resize
 - feat: min/max dimensions
 - feat: `alignment`: `start|center|end|stretch`
 - feat: root style fix
@@ -22,29 +22,28 @@
 - feat: `wrap`
 - demo: `/game` page
 
-# 0.4.0
+# 0.4.x
 
 - feat: seo features
 - feat: a11y features
 
-# 0.5.0
+# 0.5.x
 
 - feat: `TextInput` carret
 - feat: `FormConstructor`
 - feat: `SelectComponent`
 - feat: `DatePicker`
 
-# 0.6.0
+# 0.6.x
 
-- feat: border radius for images
 - feat: visual filters
 
-# 0.7.0
+# 0.7.x
 
 - fix: errors when using quotes in text
 - feat: text decoration
 
-# 0.8.0
+# 0.8.x
 
 - feat: `calendar`
 - feat: `timesheet`
@@ -57,26 +56,25 @@
 - feat: `ganttChart`
 - feat: `vennChart`
 
-# 0.9.0
+# 0.9.x
 
 - feat: style validation
 - feat: style modificators: `_disabled`, `_hovered`, `_focused` etc.
 
-# 0.10.0
+# 0.10.x
 
 - feat: tooltips
 
-# 0.11.0
+# 0.11.x
 
 - feat: state testing
 - feat: screenshot testing
 
-# 1.0.0
+# 1.0.x
 
-- feat: `npm init larana-js`
 - docs: jsdocs for everything
 - docs: styleguide
 
-# 1.1.0
+# 1.1.x
 
-- feat: laranigma
+- feat: ligma

@@ -7,8 +7,6 @@ var ws = null;
 var resizeTimeout = null;
 var eventTimeout = null;
 
-
-
 function throttle(mainFunction, delay) {
 	let timerFlag = null;
 

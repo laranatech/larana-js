@@ -14,12 +14,14 @@ const route = this.useRoute()
 route === {
     path: '/articles/:slug/',
     name: 'article',
-    page: [class HomePage extends Page],
+    page: [class ArticlePage extends Page],
     url: '/articles/how-to/?section=comments',
     params: { slug: 'how-to' },
-    queryParams: { section: 'comments' }
+    queryParams: { section: 'comments' },
 }
 ```
+
+> More details are in the [routing](./routing.md) manual.
 
 ## useRouter
 

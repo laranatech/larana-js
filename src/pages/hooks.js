@@ -2,6 +2,9 @@ const { point } = require('../ui')
 
 class HookedPage {
 	_state = {}
+	_rerenderTimeout = null
+	_rerenderDelay = 10
+
 	_session = null
 	_storage = null
 	_componentsState = new Map()
@@ -15,13 +18,21 @@ class HookedPage {
 		}
 	}
 
+	_scheduleRerender() {
+		clearTimeout(this._rerenderTimeout)
+
+		this._rerenderTimeout = setTimeout(() => {
+			this.rerender()
+		}, this._rerenderDelay)
+	}
+
 	_setState(newState, options = { needsRerender: true }) {
 		this._state = { ...this._state, ...newState }
 
 		const { needsRerender } = options
 
 		if (needsRerender) {
-			this.rerender()
+			this._scheduleRerender()
 		}
 	}
 

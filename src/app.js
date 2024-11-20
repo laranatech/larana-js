@@ -188,35 +188,39 @@ class LaranaApp {
 		this.onConnect({ ws })
 
 		ws.on('message', (message) => {
-			const payload = JSON.parse(message.toString())
-			const session = this.stateManager.getSession(payload.sessionId)
-			session.update()
-
-			const { w, h, data } = payload
-
-			const request = new Request({
-				w, h,
-				type: data.event,
-				value: data.value,
-				x: data.x,
-				y: data.y,
-			})
-
-			this.onMessage({ message })
-
-			if (request.event.type === 'open') {
-				this._onOpen({ ws, request, session })
-				return
-			}
-
-			const updated = session.page.update(request)
-
-			if (updated) {
-				session.page.tick(request)
-			}
+			this._onMessage({ ws, message })
 		})
 
 		this._onClose(ws)
+	}
+
+	_onMessage({ ws, message }) {
+		const payload = JSON.parse(message.toString())
+		const session = this.stateManager.getSession(payload.sessionId)
+		session.update()
+
+		const { w, h, data } = payload
+
+		const request = new Request({
+			w, h,
+			type: data.event,
+			value: data.value,
+			x: data.x,
+			y: data.y,
+		})
+
+		this.onMessage({ message })
+
+		if (request.event.type === 'open') {
+			this._onOpen({ ws, request, session })
+			return
+		}
+
+		const updated = session.page.update(request)
+
+		if (updated || request.event.type === 'resize') {
+			session.page.tick(request)
+		}
 	}
 
 	_onOpen({ ws, request, session }) {

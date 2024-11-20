@@ -62,11 +62,14 @@ class ImageComponent extends BaseComponent {
 				const d = fig.computeDimensions()
 				const { x, y, w, h } = d
 
+				const maxRadius = fig.computeMaxRadius()
+
 				if (r && r !== 'pending') {
 					queue.add('image', {
 						...d,
 						data: r,
 						src: this.src,
+						radius: style.radius > maxRadius ? maxRadius : style.radius,
 					})
 					return queue
 				}
