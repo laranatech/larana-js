@@ -8,9 +8,9 @@ npm install larana-js
 
 NPM package: [larana-js](https://www.npmjs.com/package/larana-js)
 
-## Quickstart
+## Docs and Quickstart
 
-Docs will be added ASAP. For now you can [see example](https://github.com/laranatech/larana-js-demo)
+Read the [docs](./docs/).
 
 ## Contacts
 
