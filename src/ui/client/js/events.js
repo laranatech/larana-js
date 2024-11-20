@@ -1,10 +1,23 @@
 /* eslint-disable */
 
-window.addEventListener('resize', function () {
+function handleResize() {
 	clearTimeout(resizeTimeout);
 	resizeTimeout = setTimeout(function() {
 		resizeCanvas();
+		sendMessage({ event: 'resize' });
 	}, 100);
+}
+
+if (typeof ResizeObserver !== 'undefined') {
+	const resizeObserver = new ResizeObserver(() => {
+		handleResize();
+	});
+
+	resizeObserver.observe(document.body);
+}
+
+window.addEventListener('resize', function () {
+	handleResize();
 });
 
 window.addEventListener('click', function (e) {

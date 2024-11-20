@@ -34,9 +34,22 @@ class ImagePage extends Page {
 						image({
 							src: '/static/images/larana.svg',
 						}),
-						button({
-							text: 'Change',
-							onClick: () => this.handleClick(),
+						layout({
+							style: ['column', 'gap_2'],
+							children: [
+								image({
+									src: '/static/images/96x96.jpg',
+									style: {
+										radius: 96,
+										width: 96,
+										aspectRatio: 1,
+									},
+								}),
+								button({
+									text: 'Change',
+									onClick: () => this.handleClick(),
+								}),
+							],
 						}),
 					],
 				}),

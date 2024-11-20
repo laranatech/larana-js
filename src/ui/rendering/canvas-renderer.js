@@ -4,6 +4,8 @@ var images = new Map()
 class CanvasRenderer {
 	images = new Map()
 
+	isOnClient = typeof window !== 'undefined' && typeof 'document' !== 'undefined'
+
 	render(queue, { w, h }, initialCanvas) {
 		let canvas = initialCanvas
 
@@ -45,27 +47,67 @@ class CanvasRenderer {
 		return canvas
 	}
 
-	image(canvas, options) {
-		const isOnClient = window && document && false
+	pasteImage(canvas, options, img) {
+		function roundedImage(ctx, x, y, width, height, radius){
+			ctx.beginPath();
+			ctx.moveTo(x + radius, y);
+			ctx.lineTo(x + width - radius, y);
+			ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+			ctx.lineTo(x + width, y + height - radius);
+			ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+			ctx.lineTo(x + radius, y + height);
+			ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+			ctx.lineTo(x, y + radius);
+			ctx.quadraticCurveTo(x, y, x + radius, y);
+			ctx.closePath();
+		}
+
+		const { x, y, w, h, radius = 0 } = options
 
 		const ctx = canvas.getContext('2d')
 
-		const { x, y, w, h, data, src } = options
+		if (radius !== 0) {
+			ctx.save()
+		}
 
-		const i = isOnClient ? buffers.get(src) : images.get(src)
+		if (radius !== 0) {
+			roundedImage(ctx, x, y, w, h, radius)
+			ctx.clip()
+		}
+
+		ctx.drawImage(img, x, y, w, h)
+
+		if (radius !== 0) {
+			ctx.restore()
+		}
+
+		return canvas
+	}
+
+	image(canvas, options) {
+		const { w, h, data, src } = options
+
+		const i = this.isOnClient ? buffers.get(src) : images.get(src)
 
 		if (i) {
-			ctx.drawImage(i, x, y, w, h)
+			this.pasteImage(canvas, options, i)
 			return canvas
 		}
 
-		const img = new Image()
+		let img = null
+
+		if (!this.isOnClient) {
+			const { Image } = require('canvas')
+			img = new Image()
+		} else {
+			img = new Image()
+		}
 
 		img.crossOrigin = 'anonymous'
 
 		img.onload = () => {
-			if (isOnClient) {
-				ctx.drawImage(img, x, y, w, h)
+			this.pasteImage(canvas, options, img)
+			if (this.isOnClient) {
 				const buffer = document.createElement('canvas')
 				buffer.width = w
 				buffer.height = h
@@ -74,8 +116,6 @@ class CanvasRenderer {
 				buffers.set(src, buffer)
 				return
 			}
-
-			ctx.drawImage(img, x, y, w, h)
 			images.set(src, img)
 		}
 

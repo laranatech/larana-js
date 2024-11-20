@@ -2,7 +2,11 @@ const { point } = require('../ui')
 
 class HookedPage {
 	_state = {}
+	_rerenderTimeout = null
+	_rerenderDelay = 10
+
 	_session = null
+	_storage = null
 	_componentsState = new Map()
 
 	_currMouse = point({ x: 0, y: 0 })
@@ -14,13 +18,21 @@ class HookedPage {
 		}
 	}
 
+	_scheduleRerender() {
+		clearTimeout(this._rerenderTimeout)
+
+		this._rerenderTimeout = setTimeout(() => {
+			this.rerender()
+		}, this._rerenderDelay)
+	}
+
 	_setState(newState, options = { needsRerender: true }) {
 		this._state = { ...this._state, ...newState }
 
 		const { needsRerender } = options
 
 		if (needsRerender) {
-			this.rerender()
+			this._scheduleRerender()
 		}
 	}
 
@@ -46,6 +58,34 @@ class HookedPage {
 
 	useSession() {
 		return this._session
+	}
+
+	useStorage() {
+		if (this._storage) {
+			return this._storage
+		}
+
+		this._storage = this.useSession().useStorage()
+
+		return this._storage
+	}
+
+	useTheme() {
+		const { storage, setStorage } = this.useStorage()
+
+		const theme = storage.theme ?? 'dark'
+
+		const setTheme = (newTheme) => {
+			setStorage({ theme: newTheme })
+		}
+
+		return {
+			theme,
+			toggleTheme: () => {
+				setTheme(theme === 'dark' ? 'main' : 'dark')
+			},
+			setTheme,
+		}
 	}
 
 	useRoute() {
