@@ -1,18 +1,10 @@
 # Roadmap
 
-# 0.2.x
-
-- fix: images on server
-- fix: client fonts
-- feat: `toggleTheme`
-- feat: `router.push()`
-- feat: initDefaultStyles inside LaranaApp
-- docs: howto
-
 # 0.3.x
 
 - fix: ssr
 - fix: remove blinking on resize
+- feat: client code in every app component
 - feat: min/max dimensions
 - feat: `alignment`: `start|center|end|stretch`
 - feat: root style fix
@@ -20,6 +12,14 @@
 - feat: `scroll`
 - feat: `blur` event
 - feat: `wrap`
+- fix: images on server
+- fix: client fonts
+- feat: `toggleTheme`
+- feat: `router.push()`
+- feat: initDefaultStyles inside LaranaApp
+- feat: lifecycle hooks
+- feat: more arrow directions
+- docs: howto
 - demo: `/game` page
 
 # 0.4.x
