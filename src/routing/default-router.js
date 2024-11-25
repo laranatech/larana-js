@@ -53,7 +53,6 @@ class DefaultRouter extends BaseRouter {
 
 		const queryParams = this.extractQueryParams(url)
 
-
 		if (!route) {
 			const notFoundRoute = this.routes.find((p) => p.name === 'not-found')
 			return {
@@ -88,8 +87,11 @@ class DefaultRouter extends BaseRouter {
 
 		return result
 	}
-}
 
+	get clientCode() {
+		return ''
+	}
+}
 
 module.exports = {
 	DefaultRouter,

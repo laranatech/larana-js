@@ -1,7 +1,7 @@
 const crypto = require('crypto')
 
 
-class BaseStateManager {
+class BaseSessionManager {
 	generateSessionId() {
 		return crypto.randomUUID()
 	}
@@ -13,7 +13,10 @@ class BaseStateManager {
 	getSession(id) {
 		throw new Error('Not implemented')
 	}
+
+	get clientCode() {
+		return ''
+	}
 }
 
-
-module.exports = { BaseStateManager }
+module.exports = { BaseSessionManager }

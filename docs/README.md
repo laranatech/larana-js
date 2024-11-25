@@ -6,11 +6,12 @@ LaranaJS is a powerfull fullstack web-development framework.
 
 ## [How to](./how-to/)
 
+- [Preview](./how-to/README.md)
 - [Quick start](./how-to/quickstart.md)
 - [File structure](./how-to/file-structure.md)
-- [Config](./how-to/config.md)
 - [Pages](./how-to/pages.md)
 - [Routing](./how-to/routing.md)
+- [Config](./how-to/config.md)
 - [Components](./how-to/components.md)
 - [UIKit](./ui-how-to/kit.md)
 - [Styles](./how-to/styles.md)
@@ -25,24 +26,32 @@ LaranaJS is a powerfull fullstack web-development framework.
 
 ## [Tooling](./tooling/)
 
+- [Preview](./tooling/README.md)
 - [Clirana](./tooling/clirana.md)
 - [Ligma](./tooling/ligma.md)
 - [Schemer](./tooling/schemer.md)
 
 ## [Testing](./testing/)
 
+- [Preview](./testing/README.md)
 - [e2e](./testing/e2e.md)
 - [screenshots](./testing/sreenshots.md)
 
-## [Extensions](./extensions/)
+## [App modules](./app-modules/)
 
-- [Rendering](./extensions/rendering.md)
+- [Preview](./app-modules/README.md)
+- [Renderer](./app-modules/renderer.md)
+- [SessionManager](./app-modules/session-manager.md)
+- [Networker](./app-modules/networker.md)
+- [Router](./app-modules/router.md)
 
 ## [Architecture](./architecture/)
 
+- [Preview](./architecture/README.md)
 - [Modules](./architecture/modules.md)
 - [Microservices](./architecture/microservices.md)
 
 ## [misc](./misc/)
 
+- [Preview](./misc/README.md)
 - [FAQ](./misc/faq.md)

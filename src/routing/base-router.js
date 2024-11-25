@@ -10,6 +10,10 @@ class BaseRouter {
 	resolve(url) {
 		throw new Error('Not implemented')
 	}
+
+	get clientCode() {
+		return ''
+	}
 }
 
 module.exports = {

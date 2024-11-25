@@ -1,6 +1,7 @@
 /* eslint-disable */
 
 var SESSION_ID = '%SESSION_ID%';
+var WS_PATH = '%WS_PATH';
 
 var ws = null;
 
@@ -45,11 +46,13 @@ function sendMessage(data) {
 const throttleMessage = throttle(sendMessage, 100);
 
 function connect() {
-	var port = location.port;
 	var host = location.host;
-	var endpoint = "ws://" + host
-	console.log(endpoint)
-	// ws = new WebSocket(ENDPOINT);
+	var endpoint = "ws://" + host;
+
+	if (WS_PATH !== 'null' || WS_PATH !== null) {
+		endpoint = WS_PATH;
+	}
+
 	ws = new WebSocket(endpoint);
 	ws.onmessage = function (e) {
 		getMessage(e);

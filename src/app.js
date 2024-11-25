@@ -1,6 +1,6 @@
 const { WebSocketServer } = require('ws')
 const { createServer } = require('http')
-const { MemoryStateManager, Session } = require('./state')
+const { MemorySessionManager, Session } = require('./sessions/index.js')
 const { ServerRenderer } = require('./ui/rendering')
 const { defaultConfig } = require('./config.js')
 const { Response, Request } = require('./network')
@@ -15,7 +15,7 @@ class LaranaApp {
 	config = { ...defaultConfig }
 	router = new DefaultRouter({})
 	renderer = new ServerRenderer({ debug: false })
-	stateManager = new MemoryStateManager({})
+	sessionManager = new MemorySessionManager({})
 	clients = new Set()
 
 	onConnect = (data) => {}
@@ -29,7 +29,7 @@ class LaranaApp {
 		const {
 			router,
 			renderer,
-			stateManager,
+			sessionManager,
 			onConnect = (data) => {
 				if (!config.debug || !config.debugOptions.logMessages) {
 					return
@@ -68,8 +68,8 @@ class LaranaApp {
 		if (renderer) {
 			this.renderer = renderer
 		}
-		if (stateManager) {
-			this.stateManager = stateManager
+		if (sessionManager) {
+			this.sessionManager = sessionManager
 		}
 
 		initDefaultStyleVars()
@@ -118,7 +118,7 @@ class LaranaApp {
 			return
 		}
 		const route = this.router.resolve(req.url)
-		const sessionId = this.stateManager.generateSessionId()
+		const sessionId = this.sessionManager.generateSessionId()
 		console.log(route)
 
 		const PageClass = route.page
@@ -146,7 +146,7 @@ class LaranaApp {
 			route,
 			storage: { lang: this.config.defaultLang, theme: this.config.defaultTheme },
 		})
-		this.stateManager.addSession(sessionId, session)
+		this.sessionManager.addSession(sessionId, session)
 		page._setSession(session)
 		page.init()
 
@@ -161,6 +161,7 @@ class LaranaApp {
 
 		const clientCode = prepareTemplate({
 			sessionId,
+			wsPath: this.config.wsPath,
 			lang: session.storage.lang,
 			title: page.title(),
 			meta: page.meta(),
@@ -196,7 +197,7 @@ class LaranaApp {
 
 	_onMessage({ ws, message }) {
 		const payload = JSON.parse(message.toString())
-		const session = this.stateManager.getSession(payload.sessionId)
+		const session = this.sessionManager.getSession(payload.sessionId)
 		session.update()
 
 		const { w, h, data } = payload
