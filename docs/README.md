@@ -12,6 +12,7 @@ LaranaJS is a powerfull fullstack web-development framework.
 - [Pages](./how-to/pages.md)
 - [Routing](./how-to/routing.md)
 - [Config](./how-to/config.md)
+- [Subsystems](./how-to/subsystems.md)
 - [Components](./how-to/components.md)
 - [UIKit](./ui-how-to/kit.md)
 - [Styles](./how-to/styles.md)
@@ -37,13 +38,13 @@ LaranaJS is a powerfull fullstack web-development framework.
 - [e2e](./testing/e2e.md)
 - [screenshots](./testing/sreenshots.md)
 
-## [App modules](./app-modules/)
+## [Subsystems](./subsystems/)
 
-- [Preview](./app-modules/README.md)
-- [Renderer](./app-modules/renderer.md)
-- [SessionManager](./app-modules/session-manager.md)
-- [Networker](./app-modules/networker.md)
-- [Router](./app-modules/router.md)
+- [Preview](./subsystems/README.md)
+- [Renderer](./subsystems/renderer.md)
+- [SessionManager](./subsystems/session-manager.md)
+- [Networker](./subsystems/networker.md)
+- [Router](./subsystems/router.md)
 
 ## [Architecture](./architecture/)
 

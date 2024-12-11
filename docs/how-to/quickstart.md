@@ -8,7 +8,7 @@ Run the following comand to create a project:
 npm init larana-js my-project
 ```
 
-You will be prompted a few questions and then your project will be ready.
+> You will be prompted a few questions and then your project will be ready.
 
 ### Initialization options
 

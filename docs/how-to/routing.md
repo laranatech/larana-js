@@ -8,6 +8,7 @@ If you initialized your project with `npm init larana-js` command, you should ha
 
 ```js
 const {
+	HomePage,
 	ArticlePage,
 	NotFoundPage,
 } = require('./pages')

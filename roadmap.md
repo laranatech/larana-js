@@ -2,6 +2,8 @@
 
 # 0.3.x
 
+- fix: debug cursor
+- fix: images on server
 - fix: ssr
 - fix: remove blinking on resize
 - feat: client code in every app component
@@ -12,7 +14,6 @@
 - feat: `scroll`
 - feat: `blur` event
 - feat: `wrap`
-- fix: images on server
 - fix: client fonts
 - feat: `toggleTheme`
 - feat: `router.push()`

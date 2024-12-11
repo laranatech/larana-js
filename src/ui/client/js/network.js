@@ -24,6 +24,9 @@ function throttle(mainFunction, delay) {
 
 function getMessage(e) {
 	var data = JSON.parse(e.data);
+	responseListeners.forEach((l) => {
+		l.applyResponse(data);
+	});
 	applyResponse(data);
 }
 
@@ -49,7 +52,7 @@ function connect() {
 	var host = location.host;
 	var endpoint = "ws://" + host;
 
-	if (WS_PATH !== 'null' || WS_PATH !== null) {
+	if (WS_PATH !== 'null' && WS_PATH !== null) {
 		endpoint = WS_PATH;
 	}
 
