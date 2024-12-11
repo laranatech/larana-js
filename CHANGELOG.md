@@ -1,3 +1,7 @@
+# 0.2.8
+
+- **fix:** circle images
+
 # 0.2.7
 
 - **feat:** rerender on fullscreen
