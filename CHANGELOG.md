@@ -1,3 +1,7 @@
+# 0.2.9
+
+- **feat:** change wsPath to `ws://%HOST%/ws`
+
 # 0.2.8
 
 - **fix:** circle images
