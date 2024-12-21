@@ -47,7 +47,7 @@ const throttleMessage = throttle(sendMessage, 100);
 function connect() {
 	var port = location.port;
 	var host = location.host;
-	var endpoint = "ws://" + host
+	var endpoint = "ws://" + host + "/ws";
 	console.log(endpoint)
 	// ws = new WebSocket(ENDPOINT);
 	ws = new WebSocket(endpoint);
