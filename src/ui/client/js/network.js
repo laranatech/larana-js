@@ -44,13 +44,16 @@ function sendMessage(data) {
 
 const throttleMessage = throttle(sendMessage, 100);
 
-function connect() {
-	var port = location.port;
-	var host = location.host;
-	var endpoint = "ws://" + host + "/ws";
+function connect(endpoint) {
 	console.log(endpoint)
-	// ws = new WebSocket(ENDPOINT);
 	ws = new WebSocket(endpoint);
+
+	ws = new WebSocket(endpoint);
+	ws.onerror = function (_) {
+		endpoint = endpoint.replace("wss://", "ws://");
+		connect(endpoint);
+	};
+
 	ws.onmessage = function (e) {
 		getMessage(e);
 	};
@@ -72,5 +75,8 @@ document.addEventListener('DOMContentLoaded', function () {
 	var initialResponse = JSON.parse('%INITIAL_RESPONSE%');
 
 	applyResponse(initialResponse);
-	connect();
+
+	var host = location.host;
+	var endpoint = "wss://" + host + "/ws";
+	connect(endpoint);
 });
