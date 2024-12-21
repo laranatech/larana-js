@@ -1,3 +1,7 @@
+# 0.2.10
+
+- **feat:** ws/wss
+
 # 0.2.9
 
 - **feat:** change wsPath to `ws://%HOST%/ws`
