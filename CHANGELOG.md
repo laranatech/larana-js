@@ -4,6 +4,23 @@
 - **refactor:** `stateManager` -> `sessionManager`
 - **docs:** config
 
+# 0.2.11
+
+- **fix:** fixed `move-point`
+- **feat:** protocol detection
+
+# 0.2.10
+
+- **feat:** ws/wss
+
+# 0.2.9
+
+- **feat:** change wsPath to `ws://%HOST%/ws`
+
+# 0.2.8
+
+- **fix:** circle images
+
 # 0.2.7
 
 - **feat:** rerender on fullscreen

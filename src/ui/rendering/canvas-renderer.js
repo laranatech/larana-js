@@ -48,7 +48,16 @@ class CanvasRenderer {
 	}
 
 	pasteImage(canvas, options, img) {
-		function roundedImage(ctx, x, y, width, height, radius){
+		function roundedImage(ctx, x, y, width, height, radius) {
+			const halfWidth = width / 2
+			const halfHeight = height / 2
+			
+			if (radius >= halfWidth) {
+				ctx.beginPath();
+				ctx.arc(x + halfWidth, y + halfHeight, halfWidth, 0, Math.PI * 2, false)
+				ctx.closePath();
+				return
+			}
 			ctx.beginPath();
 			ctx.moveTo(x + radius, y);
 			ctx.lineTo(x + width - radius, y);

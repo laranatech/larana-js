@@ -13,7 +13,7 @@ class Line extends Shape {
 
 	command() {
 		const points = this.points.map((p) => {
-			if (p.name === 'point') {
+			if (p.name === 'point' || p.name === 'move-point') {
 				const { x, y, name } = p
 				return { x, y, name }
 			}

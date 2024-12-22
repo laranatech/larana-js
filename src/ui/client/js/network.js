@@ -48,15 +48,14 @@ function sendMessage(data) {
 
 const throttleMessage = throttle(sendMessage, 100);
 
-function connect() {
-	var host = location.host;
-	var endpoint = "ws://" + host;
-
-	if (WS_PATH !== 'null' && WS_PATH !== null) {
-		endpoint = WS_PATH;
-	}
-
+function connect(endpoint) {
 	ws = new WebSocket(endpoint);
+	ws.onerror = function (_) {
+		endpoint = endpoint.replace("wss://", "ws://");
+		ws.close();
+		connect(endpoint);
+	};
+
 	ws.onmessage = function (e) {
 		getMessage(e);
 	};
@@ -78,5 +77,17 @@ document.addEventListener('DOMContentLoaded', function () {
 	var initialResponse = JSON.parse('%INITIAL_RESPONSE%');
 
 	applyResponse(initialResponse);
-	connect();
+
+	var host = location.host;
+	var protocol = "ws://";
+	if (this.location.protocol == "https:") {
+		protocol = "wss://";
+	}
+	var endpoint = protocol + host + "/ws";
+
+	if (WS_PATH !== 'null' && WS_PATH !== null) {
+		endpoint = WS_PATH;
+	}
+
+	connect(endpoint);
 });
