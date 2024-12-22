@@ -1,4 +1,4 @@
-const { Page, layout, text } = require('larana-js')
+const { Page, layout, text, laranaLogo } = require('larana-js')
 
 const { header } = require('../components')
 
@@ -8,6 +8,8 @@ class NotFoundPage extends Page {
 	}
 
 	root({ w }) {
+		const logoH = 512
+
 		return layout({
 			outlineColor: '#00f',
 			id: 'body',
@@ -17,6 +19,14 @@ class NotFoundPage extends Page {
 			],
 			children: [
 				header({}),
+				// layout({}),
+				// laranaLogo({
+				// 	style: {
+				// 		width: logoH * (16 / 9),
+				// 		height: logoH,
+				// 	},
+				// }),
+				// layout({}),
 				layout({
 					id: 'layout1',
 					style: {

@@ -9,6 +9,7 @@ class LaranaLogoComponent extends BaseComponent {
 	}
 
 	root() {
+		const { w, h } = this.computeSize()
 		const color = useStyleVar('accent')()
 		const borderColor = '#308830'
 
@@ -16,10 +17,10 @@ class LaranaLogoComponent extends BaseComponent {
 			const a = arc({
 				x,
 				y,
-				radius: 60,
+				radius: w * 0.05,
 				bg: '#000',
 				borderColor,
-				borderWidth: 32,
+				borderWidth: w * 0.02,
 			})
 
 			return {
@@ -28,12 +29,14 @@ class LaranaLogoComponent extends BaseComponent {
 		}
 
 		const nostril = ({ x, y }) => {
+			const width = w * 0.03
+			const height = h * 0.07
 			const r = rect({
-				x: x - 12,
-				y: y - 16,
-				w: 24,
-				h: 32,
-				radius: 16,
+				x: x - width / 2,
+				y: y - height / 2,
+				w: width,
+				h: height,
+				radius: width,
 				bg: borderColor,
 			})
 
@@ -45,15 +48,19 @@ class LaranaLogoComponent extends BaseComponent {
 		const mouth = (s, e, r = 30) => {
 			const l = line({
 				points: [
-					point(s),
-					arcPoint(
-						point({ x: (e.x - s.x) / 2, y: s.y }),
-						point(e),
-						r,
-					),
+					point({ ...s, moveTo: true }),
+					arcPoint({
+						x: 100,
+						y: 200,
+						start: 0,
+						end: Math.PI,
+						radius: r,
+					}),
 				],
 				borderWidth: 16,
 			})
+
+			console.log(l)
 
 			return {
 				to: (queue) => { l.to(queue) },
@@ -108,7 +115,6 @@ class LaranaLogoComponent extends BaseComponent {
 			},
 		})
 	}
-
 }
 
 const laranaLogo = (options) => {
