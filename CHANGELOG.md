@@ -1,3 +1,8 @@
+# 0.2.11
+
+- **fix:** fixed `move-point`
+- **feat:** protocol detection
+
 # 0.2.10
 
 - **feat:** ws/wss

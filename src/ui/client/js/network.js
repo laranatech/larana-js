@@ -51,6 +51,7 @@ function connect(endpoint) {
 	ws = new WebSocket(endpoint);
 	ws.onerror = function (_) {
 		endpoint = endpoint.replace("wss://", "ws://");
+		ws.close();
 		connect(endpoint);
 	};
 
@@ -77,6 +78,10 @@ document.addEventListener('DOMContentLoaded', function () {
 	applyResponse(initialResponse);
 
 	var host = location.host;
-	var endpoint = "wss://" + host + "/ws";
+	var protocol = "ws://";
+	if (this.location.protocol == "https:") {
+		protocol = "wss://";
+	}
+	var endpoint = protocol + host + "/ws";
 	connect(endpoint);
 });
