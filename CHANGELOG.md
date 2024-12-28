@@ -4,6 +4,10 @@
 - **refactor:** `stateManager` -> `sessionManager`
 - **docs:** config
 
+# 0.2.12
+
+- **fix:** removed duplicate client code
+
 # 0.2.11
 
 - **fix:** fixed `move-point`

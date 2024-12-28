@@ -50,24 +50,17 @@ const throttleMessage = throttle(sendMessage, 100);
 
 function connect(endpoint) {
 	ws = new WebSocket(endpoint);
+
 	ws.onerror = function (_) {
 		endpoint = endpoint.replace("wss://", "ws://");
 		ws.close();
 		connect(endpoint);
 	};
-
 	ws.onmessage = function (e) {
 		getMessage(e);
 	};
-	ws.onopen = function (e) {
-		ws.send(JSON.stringify({
-			data: {
-				event: 'open',
-			},
-			w: window.innerWidth,
-			h: window.innerHeight,
-			sessionId: SESSION_ID,
-		}));
+	ws.onopen = function (_) {
+		sendMessage({ event: 'open' });
 	};
 }
 
