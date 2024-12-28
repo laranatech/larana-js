@@ -48,7 +48,6 @@ function connect(endpoint) {
 	console.log(endpoint)
 	ws = new WebSocket(endpoint);
 
-	ws = new WebSocket(endpoint);
 	ws.onerror = function (_) {
 		endpoint = endpoint.replace("wss://", "ws://");
 		ws.close();
@@ -58,15 +57,8 @@ function connect(endpoint) {
 	ws.onmessage = function (e) {
 		getMessage(e);
 	};
-	ws.onopen = function (e) {
-		ws.send(JSON.stringify({
-			data: {
-				event: 'open',
-			},
-			w: window.innerWidth,
-			h: window.innerHeight,
-			sessionId: SESSION_ID,
-		}));
+	ws.onopen = function (_) {
+		sendMessage({ event: 'open' });
 	};
 }
 
