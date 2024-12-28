@@ -1,6 +1,7 @@
 const {
 	Page,
-	layout,
+	row,
+	column,
 	text,
 	radio,
 	checkbox,
@@ -35,17 +36,14 @@ class HomePage extends Page {
 	}
 
 	root() {
-		return layout({
+		return column({
 			style: [
 				'body',
-				{
-					gap: 'var:u2',
-					direction: 'column',
-				},
+				{ gap: 'var:u2' },
 			],
 			children: [
 				header({}),
-				layout({
+				row({
 					style: ['gap_2', 'size_1'],
 					children: [
 						list({
@@ -55,7 +53,7 @@ class HomePage extends Page {
 								{ name: 'checkbox2', text: 'checkbox2', fg: '#f0f' },
 								{ name: 'checkbox3', text: 'checkbox3', fg: '#00f' },
 							],
-							template: (item) => layout({
+							template: (item) => row({
 								style: 'gap_1',
 								children: [
 									radio({
@@ -67,7 +65,7 @@ class HomePage extends Page {
 								],
 							}),
 						}),
-						layout({
+						row({
 							style: ['column', 'gap_2'],
 							children: [
 								list({

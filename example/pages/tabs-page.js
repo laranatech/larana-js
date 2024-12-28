@@ -1,6 +1,6 @@
 const {
 	Page,
-	layout,
+	column,
 	text,
 	tabs,
 } = require('larana-js')
@@ -29,17 +29,14 @@ class TabsPage extends Page {
 	root() {
 		const { state } = this.useState()
 
-		return layout({
+		return column({
 			style: [
 				'body',
-				{
-					gap: 'var:u2',
-					direction: 'column',
-				},
+				{ gap: 'var:u2' },
 			],
 			children: [
 				header({}),
-				layout({
+				column({
 					style: { size: 9, direction: 'column', padding: 'var:u2' },
 					children: [
 						tabs({

@@ -1,7 +1,7 @@
 const { arc, t } = require('../ui')
-const { HookedPage } = require('./hooks.js')
+const { ProvidablePage } = require('./provider.js')
 
-class DebuggedPage extends HookedPage {
+class DebuggedPage extends ProvidablePage {
 	_renderCursor(queue) {
 		const { x, y } = this.currMouse
 

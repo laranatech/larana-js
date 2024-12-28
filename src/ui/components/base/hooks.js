@@ -37,8 +37,12 @@ class HookedComponent {
 		})
 	}
 
+	init() {}
+
 	_setPayload(payload) {
 		this._payload = payload
+
+		this.init()
 	}
 
 	useResolution() {

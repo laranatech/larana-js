@@ -1,4 +1,4 @@
-const { Page, layout, text, list, radio, button } = require('larana-js')
+const { Page, layout, row, column, text, list, radio, button } = require('larana-js')
 
 const { header } = require('../components')
 
@@ -69,14 +69,13 @@ class QuizPage extends Page {
 
 		const question = questions[current]
 
-		return layout({
-			style: 'column',
+		return column({
 			children: [
 				text({ value: question.caption, style: 'h1' }),
 				list({
 					value: question.options,
 					template: (item) => {
-						return layout({
+						return row({
 							style: { gap: 'var:u2', height: 'var:componentHeight' },
 							children: [
 								layout({ style: { size: 2 } }),
@@ -91,7 +90,7 @@ class QuizPage extends Page {
 					},
 				}),
 				layout({}),
-				layout({
+				row({
 					children: [
 						layout({}),
 						button({
@@ -135,8 +134,7 @@ class QuizPage extends Page {
 			}
 		})
 
-		return layout({
-			style: 'column',
+		return column({
 			children: [
 				text({ value: `Your score: ${score}/${totalScore}`, style: 'h1' }),
 				list({
@@ -147,7 +145,7 @@ class QuizPage extends Page {
 						const correct = answer === item.correctAnswer
 						const selectedOption = item.options.find((o) => o.value === answer)
 
-						return layout({
+						return row({
 							children: [
 								layout({ style: { size: 1 } }),
 								text({ value: item.caption, style: 'h3' }),
@@ -174,17 +172,14 @@ class QuizPage extends Page {
 
 		const allAnswered = state.answers.length === state.questions.length
 
-		return layout({
+		return column({
 			outlineColor: '#00f',
 			id: 'body',
-			style: [
-				'body',
-				'column',
-			],
+			style: 'body',
 			children: [
 				header({}),
 				text({ value: 'Larana Quiz', style: 'h1' }),
-				layout({
+				row({
 					id: 'layout1',
 					style: {
 						size: 9,

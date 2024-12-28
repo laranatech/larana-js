@@ -1,4 +1,4 @@
-const { Page, layout, image, button } = require('larana-js')
+const { Page, layout, column, image, button } = require('larana-js')
 
 const { header } = require('../components')
 
@@ -12,13 +12,10 @@ class ImagePage extends Page {
 	}
 
 	root({ w }) {
-		return layout({
+		return column({
 			outlineColor: '#00f',
 			id: 'body',
-			style: [
-				'body',
-				'column',
-			],
+			style: 'body',
 			children: [
 				header({}),
 				layout({
@@ -34,8 +31,8 @@ class ImagePage extends Page {
 						image({
 							src: '/static/images/larana.svg',
 						}),
-						layout({
-							style: ['column', 'gap_2'],
+						column({
+							style: 'gap_2',
 							children: [
 								image({
 									src: '/static/images/96x96.jpg',

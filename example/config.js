@@ -4,7 +4,7 @@ const { defineConfig } = require('larana-js')
 module.exports = defineConfig({
 	port: 1610,
 	defaultTheme: 'dark',
-	debug: false,
+	debug: true,
 	debugOptions: {
 		renderOutline: true,
 		renderPaddings: true,

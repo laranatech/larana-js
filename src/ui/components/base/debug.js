@@ -1,7 +1,7 @@
-const { SizedComponent } = require('./sizes.js')
+const { ProvidableComponent } = require('./provider.js')
 const { rect, line, point } = require('../../shapes')
 
-class DebuggedComponent extends SizedComponent {
+class DebuggedComponent extends ProvidableComponent {
 	_outlineColor = 'rgba(255, 0, 0, 0.4)'
 	_outlineWidth = 1
 	_gapColor = 'rgba(255, 0, 255, 0.3)'
