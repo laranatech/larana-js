@@ -1,6 +1,6 @@
 const { HookedPage } = require('./hooks.js')
 
-class ProvidablePage extends HookedPage {
+class ProvidingPage extends HookedPage {
 	_provided = new Map()
 
 	provide(name, value) {
@@ -18,4 +18,4 @@ class ProvidablePage extends HookedPage {
 	}
 }
 
-module.exports = { ProvidablePage }
+module.exports = { ProvidingPage }

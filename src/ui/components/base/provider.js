@@ -1,6 +1,6 @@
 const { SizedComponent } = require('./sizes.js')
 
-class ProvidableComponent extends SizedComponent {
+class ProvidingComponent extends SizedComponent {
 	_provided = new Map()
 
 	provide(name, value) {
@@ -22,4 +22,4 @@ class ProvidableComponent extends SizedComponent {
 	}
 }
 
-module.exports = { ProvidableComponent }
+module.exports = { ProvidingComponent }

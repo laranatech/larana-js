@@ -8,7 +8,7 @@ class NotFoundPage extends Page {
 	}
 
 	root({ w }) {
-		const logoH = 512
+		// const logoH = 512
 
 		return column({
 			outlineColor: '#00f',

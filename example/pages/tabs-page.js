@@ -37,7 +37,7 @@ class TabsPage extends Page {
 			children: [
 				header({}),
 				column({
-					style: { size: 9, direction: 'column', padding: 'var:u2' },
+					style: { size: 9, padding: 'var:u2' },
 					children: [
 						tabs({
 							tabs: state.tabs,

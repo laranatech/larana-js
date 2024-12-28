@@ -2,6 +2,7 @@
 
 - **feat:** provide/inject
 - **feat:** `row` and `column` components
+- **feat:** removed `lastW` and `lastH`, added `useResolution()`
 
 # 0.2.12
 

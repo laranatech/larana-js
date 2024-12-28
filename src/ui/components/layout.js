@@ -36,6 +36,8 @@ const prepareOpts = (options, direction) => {
 			opts.style,
 			{ direction },
 		]
+	} else if (typeof opts.style === 'object') {
+		opts.style.direction = direction
 	}
 
 	return opts
