@@ -12,6 +12,8 @@ class HookedPage {
 	_currMouse = point({ x: 0, y: 0 })
 	_lastMouse = point({ x: 0, y: 0 })
 
+	_resolution = { w: 0, h: 0 }
+
 	constructor(options) {
 		if (options.state !== undefined) {
 			this._state = options.state
@@ -38,6 +40,14 @@ class HookedPage {
 
 	_initState(state) {
 		this._state = state
+	}
+
+	setResolution({ w, h }) {
+		this._resolution = { w, h }
+	}
+
+	useResolution() {
+		return { ...this._resolution }
 	}
 
 	useState() {

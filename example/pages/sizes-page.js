@@ -1,4 +1,4 @@
-const { Page, layout } = require('larana-js')
+const { Page, layout, column, row } = require('larana-js')
 
 class SizesPage extends Page {
 	title() {
@@ -6,12 +6,11 @@ class SizesPage extends Page {
 	}
 
 	root() {
-		return layout({
+		return column({
 			outlineColor: '#00f',
 			id: 'body',
 			style: [
 				'body',
-				'column',
 				'gap_2',
 				'p_4',
 			],
@@ -20,7 +19,7 @@ class SizesPage extends Page {
 					id: 'green',
 					style: { bg: '#0f0', height: 30 },
 				}),
-				layout({
+				row({
 					id: 'blue',
 					style: { bg: '#00f', size: 3, padding: 'var:u2', gap: 'var:u2' },
 					children: [
@@ -31,12 +30,11 @@ class SizesPage extends Page {
 						layout({ style: { size: 10, bg: '#0ff' } }),
 						layout({ style: { size: 10, bg: '#0ff' } }),
 						layout({ style: { size: 10, bg: '#0ff' } }),
-						layout({
+						column({
 							id: 'hug',
 							style: {
 								size: 'hug',
 								bg: '#0ff',
-								direction: 'column',
 								gap: 'var:u2',
 								padding: 'var:u2',
 							},

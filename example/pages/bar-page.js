@@ -1,6 +1,7 @@
 const {
 	Page,
-	layout,
+	column,
+	row,
 	text,
 	barChart,
 } = require('larana-js')
@@ -24,7 +25,7 @@ class BarPage extends Page {
 			loadingText: 'Loading',
 		})
 
-		this.initialRoot = layout({
+		this.initialRoot = row({
 			children: [
 				text({ value: 'Loading...', style: 'text' }),
 			],
@@ -36,17 +37,14 @@ class BarPage extends Page {
 	root() {
 		const { state } = this.useState()
 
-		return layout({
+		return column({
 			style: [
 				'body',
-				{
-					gap: 'var:u2',
-					direction: 'column',
-				},
+				{ gap: 'var:u2' },
 			],
 			children: [
 				header({}),
-				layout({
+				row({
 					children: [
 						text({
 							value: 'Loading data for chart',
@@ -54,7 +52,7 @@ class BarPage extends Page {
 						}),
 					],
 				}),
-				layout({
+				row({
 					style: { size: 9 },
 					children: [
 						state.loaded
