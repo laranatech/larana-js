@@ -1,6 +1,7 @@
 # 0.2.13
 
 - **fix:** tabs height
+- **fix:** DEBUG warning position
 - **feat:** provide/inject
 - **feat:** `row` and `column` components
 - **feat:** removed `lastW` and `lastH`, added `useResolution()`
