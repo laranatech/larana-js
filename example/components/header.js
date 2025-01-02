@@ -1,4 +1,5 @@
-const { BaseComponent, layout, text } = require('larana-js')
+const { BaseComponent, row, text } = require('larana-js')
+const { TitleComponent } = require('./title.js')
 
 class HeaderComponent extends BaseComponent {
 	defaultStyle = {
@@ -6,12 +7,18 @@ class HeaderComponent extends BaseComponent {
 		gap: 'var:u2',
 		bg: 'var:accent',
 	}
-	root() {
+
+	init() {
 		const page = this.usePage()
-		return layout({
+
+		this.provide('title', page.title())
+	}
+
+	root() {
+		return row({
 			children: [
 				text({ value: 'LaranaJS', style: 'h1' }),
-				text({ value: page.title(), style: 'h3' }),
+				new TitleComponent({}),
 			],
 		})
 	}

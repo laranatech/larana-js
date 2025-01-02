@@ -10,7 +10,7 @@ class TabsComponent extends BaseComponent {
 		padding: 'var:u2',
 		bg: 'var:componentBg',
 		radius: 'var:radius',
-		height: 'var:componentHeight',
+		size: 'hug',
 	}
 
 	onChange = null

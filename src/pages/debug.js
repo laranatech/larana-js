@@ -1,7 +1,7 @@
 const { arc, t } = require('../ui')
-const { HookedPage } = require('./hooks.js')
+const { ProvidingPage } = require('./provider.js')
 
-class DebuggedPage extends HookedPage {
+class DebuggedPage extends ProvidingPage {
 	_renderCursor(queue) {
 		const { x, y } = this.currMouse
 
@@ -16,15 +16,18 @@ class DebuggedPage extends HookedPage {
 	}
 
 	_renderStamp(queue) {
+		const { w, h } = this.useResolution()
+
 		t({
 			text: 'DEBUG',
 			font: '256px bold monospace',
-			x: 512,
-			y: 512,
-			w: 1024,
-			h: 1024,
+			x: 0,
+			y: 0,
+			w,
+			h,
 			textAlign: 'center',
 			textBaseline: 'middle',
+			fg: '#ff000022'
 		}).to(queue)
 	}
 
