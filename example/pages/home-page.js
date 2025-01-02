@@ -1,6 +1,7 @@
 const {
 	Page,
-	layout,
+	row,
+	column,
 	text,
 	radio,
 	checkbox,
@@ -35,18 +36,15 @@ class HomePage extends Page {
 	}
 
 	root() {
-		return layout({
-			style: [
-				'body',
-				{
-					gap: 'var:u2',
-					direction: 'column',
-				},
-			],
+		const { state } = this.useState()
+		const { disabledCheckbox } = state
+
+		return column({
+			style: 'body',
 			children: [
 				header({}),
-				layout({
-					style: ['gap_2', 'size_1'],
+				row({
+					style: ['gap_2', 'size_1', 'p_2'],
 					children: [
 						list({
 							style: ['column', 'gap_2'],
@@ -55,30 +53,36 @@ class HomePage extends Page {
 								{ name: 'checkbox2', text: 'checkbox2', fg: '#f0f' },
 								{ name: 'checkbox3', text: 'checkbox3', fg: '#00f' },
 							],
-							template: (item) => layout({
-								style: 'gap_1',
+							template: (item) => row({
+								style: ['gap_1', 'hug'],
 								children: [
 									radio({
 										model: 'disabledCheckbox',
 										name: item.name,
 										style: { fg: item.fg },
 									}),
-									text({ value: item.text, style: 'h2' }),
+									text({ value: item.text, style: ['h2', { textAlign: 'left' }] }),
 								],
 							}),
 						}),
-						layout({
+						row({
 							style: ['column', 'gap_2'],
 							children: [
 								list({
 									style: ['column', 'gap_2'],
 									value: ['checkbox1', 'checkbox2', 'checkbox3'],
-									template: (item) => checkbox({ model: item }),
+									template: (item) => checkbox({
+										model: item,
+										disabled: disabledCheckbox === item,
+									}),
 								}),
 								list({
 									style: ['column', 'gap_2'],
 									value: ['checkbox1', 'checkbox2', 'checkbox3'],
-									template: (item) => toggle({ model: item }),
+									template: (item) => toggle({
+										model: item,
+										disabled: disabledCheckbox === item,
+									}),
 								}),
 							],
 						}),

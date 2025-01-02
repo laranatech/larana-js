@@ -1,4 +1,4 @@
-const { Page, layout, text } = require('larana-js')
+const { Page, layout, column, text } = require('larana-js')
 
 const { header } = require('../components')
 
@@ -8,11 +8,8 @@ class ShapesPage extends Page {
 	}
 
 	root({ w }) {
-		return layout({
-			style: [
-				'body',
-				{ direction: 'column' },
-			],
+		return column({
+			style: 'body',
 			children: [
 				header({}),
 				layout({

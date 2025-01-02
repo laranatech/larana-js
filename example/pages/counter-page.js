@@ -1,7 +1,8 @@
 const {
 	Page,
 	text,
-	layout,
+	row,
+	column,
 	button,
 } = require('larana-js')
 
@@ -21,15 +22,15 @@ class CounterPage extends Page {
 	root() {
 		const { state, setState } = this.useState()
 
-		return layout({
+		return column({
 			style: [
 				'body',
-				{ gap: 'var:u2', direction: 'column' },
+				{ gap: 'var:u2' },
 			],
 			children: [
 				header({}),
-				layout({
-					style: { size: 9, direction: 'column' },
+				column({
+					style: { size: 9 },
 					children: [
 						text({
 							style: [
@@ -38,9 +39,8 @@ class CounterPage extends Page {
 							],
 							value: `Counter: ${state.counter}`,
 						}),
-						layout({
+						row({
 							style: {
-								direction: 'row',
 								size: 1,
 								gap: 'var:u2',
 								padding: 'var:u2',

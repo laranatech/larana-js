@@ -1,4 +1,4 @@
-const { Page, layout, text, table } = require('larana-js')
+const { Page, row, column, text, table } = require('larana-js')
 
 const { header } = require('../components')
 
@@ -23,17 +23,14 @@ class TablePage extends Page {
 	}
 
 	root() {
-		return layout({
+		return column({
 			outlineColor: '#00f',
 			id: 'body',
-			style: [
-				'body',
-				'column',
-			],
+			style: 'body',
 			children: [
 				header({}),
 				text({ value: 'Larana implementations', style: 'h1' }),
-				layout({
+				row({
 					id: 'layout1',
 					style: ['p_2', { size: 9 }],
 					outlineColor: '#0f0',

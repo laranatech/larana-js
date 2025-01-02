@@ -1,4 +1,4 @@
-const { Page, text, layout } = require('larana-js')
+const { Page, text, layout, column } = require('larana-js')
 
 const { header } = require('../components')
 
@@ -8,11 +8,8 @@ class GamePage extends Page {
 	}
 
 	root({ w }) {
-		return layout({
-			style: [
-				'body',
-				{ direction: 'column' },
-			],
+		return column({
+			style: 'body',
 			children: [
 				header({}),
 				layout({

@@ -1,5 +1,7 @@
 const {
 	Page,
+	row,
+	column,
 	layout,
 	textInput,
 	button,
@@ -53,7 +55,7 @@ class TodoPage extends Page {
 	inputBar() {
 		const { state } = this.useState()
 
-		return layout({
+		return row({
 			style: ['gap_2', 'p_2', 'hug'],
 			children: [
 				textInput({ model: 'inputValue', onEnter: () => this.addItem() }),
@@ -80,12 +82,12 @@ class TodoPage extends Page {
 	}
 
 	root() {
-		return layout({
-			style: ['body', 'gap_5', 'column'],
+		return column({
+			style: ['body', 'gap_5'],
 			children: [
 				header({}),
-				layout({
-					style: { size: 9, gap: 'var:u2', direction: 'column' },
+				column({
+					style: { size: 9, gap: 'var:u2' },
 					children: [
 						this.todoList(),
 						this.inputBar(),

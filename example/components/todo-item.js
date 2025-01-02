@@ -1,4 +1,4 @@
-const { BaseComponent, text, layout, button, checkbox } = require('larana-js')
+const { BaseComponent, text, row, button, checkbox } = require('larana-js')
 
 class TodoItemComponent extends BaseComponent {
 	defaultStyle = {
@@ -24,13 +24,13 @@ class TodoItemComponent extends BaseComponent {
 	}
 
 	root() {
-		return layout({
+		return row({
 			children: [
 				text({
 					value: this.item.label,
 					style: ['text', { size: 9 }],
 				}),
-				layout({
+				row({
 					style: ['gap_2', { height: 'var:componentHeight' }],
 					children: [
 						checkbox({

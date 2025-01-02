@@ -21,4 +21,38 @@ const layout = (options) => {
 	return new LayoutComponent(options)
 }
 
-module.exports = { LayoutComponent, layout }
+const prepareOpts = (options, direction) => {
+	const opts = { ...options }
+
+	if (!opts.style) {
+		opts.style = { direction }
+	} else if(Array.isArray(opts.style)) {
+		opts.style = [
+			...opts.style,
+			{ direction },
+		]
+	} else if (typeof opts.style === 'string') {
+		opts.style = [
+			opts.style,
+			{ direction },
+		]
+	} else if (typeof opts.style === 'object') {
+		opts.style.direction = direction
+	}
+
+	return opts
+}
+
+const row = (options) => {
+	const opts = prepareOpts(options, 'row')
+
+	return layout(opts)
+}
+
+const column = (options) => {
+	const opts = prepareOpts(options, 'column')
+
+	return layout(opts)
+}
+
+module.exports = { LayoutComponent, layout, row, column }

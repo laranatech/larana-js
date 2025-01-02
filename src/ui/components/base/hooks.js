@@ -37,14 +37,18 @@ class HookedComponent {
 		})
 	}
 
+	init() {}
+
 	_setPayload(payload) {
 		this._payload = payload
+
+		this.init()
 	}
 
 	useResolution() {
-		const { lastW, lastH } = this.usePage()
+		const page = this.usePage()
 
-		return { w: lastW, h: lastH }
+		return page.useResolution()
 	}
 
 	usePayload() {
