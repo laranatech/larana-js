@@ -8,6 +8,7 @@ If you initialized your project with `npm init larana-js` command, you should ha
 
 ```js
 const {
+	HomePage,
 	ArticlePage,
 	NotFoundPage,
 } = require('./pages')
@@ -60,12 +61,12 @@ Here is an example of route:
 
 ```js
 const route = {
-    path: '/articles/:slug/',
-    name: 'article',
-    page: [class ArticlePage extends Page],
-    url: '/articles/how-to/?section=comments',
-    params: { slug: 'how-to' },
-    queryParams: { section: 'comments' },
+	path: '/articles/:slug/',
+	name: 'article',
+	page: [class ArticlePage extends Page],
+	url: '/articles/how-to/?section=comments',
+	params: { slug: 'how-to' },
+	queryParams: { section: 'comments' },
 }
 ```
 

@@ -10,6 +10,7 @@ Your initial file structure will be something like this:
 		- `home-page.js`
 		- `404-page.js`
 		- `index.js`
+	- `services` — a directory for your business logic.
 	- `static` — a directory for [static files](./static.md)
 		- `larana.svg`
 	- `styles` — a directory for [styles](./styles.md)
@@ -31,16 +32,19 @@ If your project is bigger than a few files, it is recomended to separete your co
 		- `account`
 			- `components`
 			- `pages`
+			- `services`
 			- `routes.js`
 			- `index.js`
 		- `auth`
 			- `components`
 			- `pages`
+			- `services`
 			- `routes.js`
 			- `index.js`
 		- `cart`
 			- `components`
 			- `pages`
+			- `services`
 			- `routes.js`
 			- `index.js`
 	- `routes.js`

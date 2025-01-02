@@ -1,6 +1,7 @@
 /* eslint-disable */
 
 var SESSION_ID = '%SESSION_ID%';
+var WS_PATH = '%WS_PATH';
 
 var ws = null;
 
@@ -23,6 +24,9 @@ function throttle(mainFunction, delay) {
 
 function getMessage(e) {
 	var data = JSON.parse(e.data);
+	responseListeners.forEach((l) => {
+		l.applyResponse(data);
+	});
 	applyResponse(data);
 }
 
@@ -45,7 +49,6 @@ function sendMessage(data) {
 const throttleMessage = throttle(sendMessage, 100);
 
 function connect(endpoint) {
-	console.log(endpoint)
 	ws = new WebSocket(endpoint);
 
 	ws.onerror = function (_) {
@@ -53,7 +56,6 @@ function connect(endpoint) {
 		ws.close();
 		connect(endpoint);
 	};
-
 	ws.onmessage = function (e) {
 		getMessage(e);
 	};
@@ -75,5 +77,10 @@ document.addEventListener('DOMContentLoaded', function () {
 		protocol = "wss://";
 	}
 	var endpoint = protocol + host + "/ws";
+
+	if (WS_PATH !== 'null' && WS_PATH !== null) {
+		endpoint = WS_PATH;
+	}
+
 	connect(endpoint);
 });

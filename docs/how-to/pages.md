@@ -29,7 +29,10 @@ class ArticlePage extends Page {
 
 	styles() {
 		// will be pasted inside of <head>
-		return '<link rel="stylesheet" href="/static/style.css"/>'
+		return [
+			'<link rel="stylesheet" href="/static/style.css"/>',
+			'<style>body { background-color: #333; }</style>',
+		].join('\n')
 	}
 
 	content() {
@@ -61,7 +64,7 @@ class ArticlePage extends Page {
 			throbber: 0,
 		})
 
-		myAPI.fetchArticle(route.params.id).then((r) => {
+		myAPI.fetchArticle(route.params.slug).then((r) => {
 			setState({ article: r.data })
 		})
 	}
@@ -85,6 +88,9 @@ class ArticlePage extends Page {
 		const { state } = this.useState()
 
 		return layout({
+			style: {
+				direction: w < 1280 ? 'column' : 'row',
+			},
 			children: [
 				state.article ? text({ value: article.title }) : throbber({ model: 'throbber' }),
 			],

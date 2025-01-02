@@ -10,5 +10,6 @@ module.exports = {
 	...require('./table-page.js'),
 	...require('./quiz-page.js'),
 	...require('./image-page.js'),
+	...require('./donate-page.js'),
 	...require('./404-page.js'),
 }

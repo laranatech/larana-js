@@ -1,3 +1,9 @@
+# 0.3.0
+
+- **feat:** `wsPath` is now optional
+- **refactor:** `stateManager` -> `sessionManager`
+- **docs:** config
+
 # 0.2.13
 
 - **fix:** tabs height
