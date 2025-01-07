@@ -1,5 +1,5 @@
 const {
-	MemoryStateManager,
+	MemorySessionManager,
 	// ServerRenderer,
 	ClientRenderer,
 	LaranaApp,
@@ -28,14 +28,14 @@ const renderer = new ClientRenderer({
 	],
 })
 
-const stateManager = new MemoryStateManager({
+const sessionManager = new MemorySessionManager({
 	debug: config.debug,
 })
 
 const app = new LaranaApp({
 	config,
 	renderer,
-	stateManager,
+	sessionManager,
 	router,
 })
 

@@ -1,7 +1,7 @@
 const crypto = require('crypto')
 
 
-class BaseStateManager {
+class BaseSessionManager {
 	generateSessionId() {
 		return crypto.randomUUID()
 	}
@@ -16,4 +16,4 @@ class BaseStateManager {
 }
 
 
-module.exports = { BaseStateManager }
+module.exports = { BaseSessionManager }

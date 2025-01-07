@@ -1,6 +1,6 @@
-const { BaseStateManager } = require('./base-state-manager.js')
+const { BaseSessionManager } = require('./base-session-manager.js')
 
-class MemoryStateManager extends BaseStateManager {
+class MemorySessionManager extends BaseSessionManager {
 	sessions = new Map()
 
 	addSession(id, session) {
@@ -16,4 +16,4 @@ class MemoryStateManager extends BaseStateManager {
 	}
 }
 
-module.exports = { MemoryStateManager }
+module.exports = { MemorySessionManager }
